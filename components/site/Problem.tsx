@@ -28,18 +28,29 @@ export default function Problem() {
             <span className="report-tag">{problem.panelTag}</span>
           </div>
 
+          {/* שורת כותרות העמודות — בלעדיה הטבלה נקראת כרשימה סתמית,
+              ואי אפשר לדעת מה כל טור מוסר. */}
+          <div className="report-cols" aria-hidden="true">
+            <span>{problem.colFinding}</span>
+            <span>{problem.colMeaning}</span>
+            <span className="report-cols-status">{problem.colStatus}</span>
+          </div>
+
           <ol className="report-rows">
             {problem.findings.map((f, i) => (
               <li key={f.title} className="report-row">
                 <span className="report-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                <div className="report-body">
+                <div className="report-finding">
                   <h3 className="report-row-title">{f.title}</h3>
                   <p className="report-row-text">{f.text}</p>
                 </div>
+                <p className="report-meaning">{f.meaning}</p>
                 <span className="report-flag">{f.flag}</span>
               </li>
             ))}
           </ol>
+
+          <p className="report-foot">{problem.panelFoot}</p>
         </div>
       </div>
     </section>

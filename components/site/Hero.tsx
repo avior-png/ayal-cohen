@@ -19,10 +19,9 @@ export default function Hero({
   showStats?: boolean;
 }) {
   return (
-    <section className="hero" aria-labelledby="hero-title">
-      {/* התצלום ממוקם מוחלט בתוך .hero-main בלבד. אם הוא היה ממוקם מול
-          ה-section כולו, הוא היה מכסה גם את רצועת המספרים שמתחת. */}
-      <div className="hero-main">
+    <>
+      <section className="hero" aria-labelledby="hero-title">
+        {/* התצלום ממוקם מול ה-section כולו ויורד עד תחתיתו. */}
         <div className="hero-photo">
           <img
             src={asset(heroContent.photo.src)}
@@ -59,8 +58,11 @@ export default function Hero({
             </ul>
           </div>
         </div>
-      </div>
+      </section>
 
+      {/* מחוץ ל-section בכוונה: ההיררו חותך את מה שגולש ממנו
+          (overflow: hidden עבור התצלום והזוהר), ובתוכו התיבה הייתה
+          נחתכת בדיוק בקו התפר. כאן היא שכן יכולה לשבת עליו. */}
       {showStats && (
         <div className="container hero-stats-wrap">
           <ul className="hero-stats" aria-label="נתונים בקצרה">
@@ -73,6 +75,6 @@ export default function Hero({
           </ul>
         </div>
       )}
-    </section>
+    </>
   );
 }

@@ -61,16 +61,6 @@ export default function Header({ site }: { site: SiteContent['site'] }) {
 
   return (
     <div className={cls}>
-      <div className="topbar">
-        <div className="container topbar-inner">
-          <span className="topbar-note">שיחת אבחון ראשונה ללא עלות ובלי התחייבות</span>
-          <ul className="topbar-links">
-            <li><a href={site.phoneHref}>{site.phone}</a></li>
-            <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          </ul>
-        </div>
-      </div>
-
       <header className="site-header">
         <div className="container header-inner">
           <Logo name={site.name} sub="תכנון פרישה" />

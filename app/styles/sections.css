@@ -18,21 +18,6 @@
 }
 .header-stack.is-solid { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px); box-shadow: var(--shadow-sm); }
 
-/* --- הפס העליון --- */
-.topbar { display: none; background: rgba(255, 255, 255, 0.04); border-block-end: 1px solid rgba(255, 255, 255, 0.07); }
-.is-solid .topbar { background: var(--brand-strong); border-block-end-color: transparent; }
-.topbar-inner {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg);
-  min-height: 40px;
-  font-size: var(--fs-micro); color: rgba(255, 255, 255, 0.82);
-}
-.topbar-inner a { color: #fff; text-decoration: none; font-weight: 700; }
-.topbar-inner a:hover { color: var(--gold); }
-.topbar-note { display: inline-flex; align-items: center; gap: 0.5em; }
-.topbar-note::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
-.topbar-links { display: flex; gap: var(--space-lg); margin: 0; }
-@media (min-width: 901px) { .topbar { display: block; } }
-
 /* --- שורת הכותרת --- */
 .header-inner {
   display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg);
@@ -146,9 +131,7 @@
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
   background: var(--ink); color: var(--on-ink);
-  /* בלי ריפוד: התצלום מגיע עד שולי האזור, והריווח עבר לטקסט.
-     --stats-lift הוא כמה הרצועה המרחפת נכנסת אל תוך הסקשן הבא. */
-  --stats-lift: clamp(2.25rem, 1.5rem + 2.5vw, 3.5rem);
+  /* בלי ריפוד: התצלום מגיע עד שולי האזור, והריווח עבר לטקסט. */
   padding-block: 0;
 }
 .hero .bg-photo { z-index: -3; }
@@ -166,10 +149,13 @@
 @media (min-width: 1000px) { .hero-text { max-width: 50%; padding-inline-end: var(--space-xl); } }
 /* במובייל התצלום מגיע אחרי הכותרת והכפתורים. */
 @media (max-width: 999px) {
-  /* כותרת וכפתורים קודם, התצלום אחריהם. */
-  .hero-main { display: flex; flex-direction: column; }
+  /* כותרת וכפתורים קודם, התצלום אחריהם — ובנוכחות אמיתית. */
+  .hero { display: flex; flex-direction: column; }
   .hero-inner { order: 1; }
   .hero-photo { order: 2; margin-block-start: var(--space-xl); }
+  .hero-photo img { height: 400px; }
+  /* בשתי שורות התיבה גבוהה יותר, ולכן גם החצי שיוצא מכל צד. */
+  .hero-stats-wrap { --stats-half: 104px; }
 }
 
 .hero-title {
@@ -203,7 +189,6 @@
 /* --- תצלום ההיררו ---
    חצי מסך, נוגע בשולי האזור. מיקום מוחלט ולא עמודת גריד, כי עמודה
    נעצרת בשולי המיכל והתצלום צריך לרדת עד קצה המסך. */
-.hero-main { position: relative; }
 .hero-photo { position: relative; z-index: 0; }
 .hero-photo img { width: 100%; height: 320px; object-fit: cover; object-position: 50% center; display: block; }
 /* המעבר יושב על הקצה הפנימי בלבד — לא מכהה את התצלום כולו. */
@@ -212,12 +197,11 @@
   background: linear-gradient(to bottom, var(--ink) 0%, rgba(7, 24, 44, 0.55) 14%, transparent 42%);
 }
 @media (min-width: 1000px) {
-  /* מוחלט מול .hero-main, כך שהוא מגיע לשולי אזור הטקסט ולא לרצועה. */
   .hero-photo {
     position: absolute; inset-block: 0; inset-inline-end: 0;
-    width: 50%; z-index: 0;
+    width: 54%; z-index: 0;
   }
-  .hero-photo img { height: 100%; min-height: 590px; object-position: 48% center; }
+  .hero-photo img { height: 100%; min-height: 640px; object-position: 48% center; }
   .hero-photo::after {
     background: linear-gradient(to left, var(--ink) 0%, rgba(7, 24, 44, 0.84) 12%, transparent 38%);
   }
@@ -227,7 +211,14 @@
    בזרימה הרגילה היא הוסיפה ריפוד לתחתית ההיררו. כאן היא יוצאת מהזרימה
    ומרחפת על התפר בין ההיררו לאזור שמתחתיו: חצי בכל צד, בתיבה מוצללת
    בגוון כהה משלה. המרווח השלילי מקוזז בריפוד של הסקשן הבא. */
-.hero-stats-wrap { position: relative; z-index: 3; margin-block-start: calc(var(--stats-lift) * -1); }
+.hero-stats-wrap {
+  /* --stats-half הוא חצי מגובה התיבה. שוליים שליליים בשני הכיוונים
+     נותנים לה גובה נטו אפס, ולכן מרכזה נופל בדיוק על קו התפר בין
+     ההיררו לסקשן שאחריו — בלי לדחוף אף אחד מהם. */
+  --stats-half: 62px;
+  position: relative; z-index: 3;
+  margin-block: calc(var(--stats-half) * -1);
+}
 .hero-stats {
   display: grid; grid-template-columns: repeat(2, 1fr); margin: 0;
   background: var(--ink-alt);
@@ -317,12 +308,13 @@
 
 /* ====================== הפער השקט ====================== */
 .problem { background: var(--bg-alt); }
-/* מקום לחצי התחתון של רצועת המספרים המרחפת. */
-.hero + .problem { padding-block-start: calc(var(--section-y) + clamp(2.25rem, 1.5rem + 2.5vw, 3.5rem)); }
+/* הריפוד העליון הרגיל של הסקשן כבר מפנה מקום לחצי התחתון של התיבה. */
 .problem-inner { display: grid; gap: clamp(2rem, 1.2rem + 3vw, 3.5rem); align-items: start; }
 @media (min-width: 1000px) {
-  .problem-inner { grid-template-columns: 0.78fr 1.22fr; }
-  .problem-aside { position: sticky; top: 140px; }
+  /* הטבלה נושאת ארבעה טורים ולכן היא מקבלת את רוב הרוחב; בעמודה
+     צרה יותר כותרות הממצאים נשברו לשתי שורות. */
+  .problem-inner { grid-template-columns: 0.62fr 1.38fr; }
+  .problem-aside { position: sticky; top: 120px; }
 }
 .problem-aside .section-head { margin-bottom: var(--space-lg); }
 .problem-note {
@@ -331,7 +323,10 @@
   font-size: var(--fs-small); color: var(--text);
 }
 
-/* --- לוח הממצאים --- */
+/* --- לוח הממצאים ---
+   טבלה ולא רשימה: כותרות עמודות, טור סטטוס ברוחב קבוע שכל התוויות
+   מתיישרות בו, ושורת סיכום בתחתית. בלי אלה חמש שורות טקסט נקראות
+   כרשימה מקרית ולא כממצאי בדיקה. */
 .report {
   background: var(--surface); border: 1px solid #CFDBEA;
   box-shadow: var(--shadow);
@@ -339,43 +334,74 @@
 .report-head {
   display: flex; align-items: baseline; justify-content: space-between;
   gap: var(--space-md); flex-wrap: wrap;
-  padding: var(--space-md) clamp(1rem, 0.7rem + 1vw, 1.75rem);
+  padding: var(--space-md) clamp(1rem, 0.7rem + 1vw, 1.6rem);
   background: var(--ink); color: #fff;
 }
 .report-title { font-family: var(--font-heading); font-size: var(--fs-h4); font-weight: 700; }
-.report-tag {
-  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.12em; color: var(--gold);
+.report-tag { font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.12em; color: var(--gold); }
+
+.report-cols {
+  display: none;
+  padding: 0.6rem clamp(1rem, 0.7rem + 1vw, 1.6rem);
+  background: var(--bg-alt); border-block-end: 1px solid #D8E1EC;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.11em; color: var(--text-muted);
 }
 .report-rows { display: grid; margin: 0; }
 .report-row {
   display: grid; align-items: start;
-  grid-template-columns: auto 1fr auto;
-  gap: 0.35rem var(--space-md);
-  padding: clamp(1rem, 0.8rem + 0.7vw, 1.4rem) clamp(1rem, 0.7rem + 1vw, 1.75rem);
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem var(--space-md);
+  padding: clamp(0.95rem, 0.8rem + 0.6vw, 1.3rem) clamp(1rem, 0.7rem + 1vw, 1.6rem);
   border-block-end: 1px solid #E4EAF2;
   transition: background var(--transition);
 }
-.report-row:last-child { border-block-end: 0; }
 .report-row:hover { background: var(--bg-alt); }
 .report-num {
   font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700;
   color: var(--accent-strong); font-variant-numeric: tabular-nums; padding-top: 0.15em;
 }
-.report-body { grid-column: 2; }
 .report-row-title { font-size: var(--fs-h4); margin-bottom: 0.2rem; }
 .report-row-text { color: var(--text-muted); font-size: var(--fs-small); }
-/* התווית היא הממצא: היא מה שהופך שורה בטקסט להתראה. */
+/* "מה זה אומר בפועל" — הוא שהופך ממצא טכני למשהו שאפשר להבין. */
+.report-meaning {
+  grid-column: 2; margin-top: 0.35rem;
+  padding-inline-start: var(--space-sm);
+  border-inline-start: 2px solid var(--accent-soft);
+  font-size: var(--fs-small); color: var(--text);
+}
 .report-flag {
-  grid-row: 1; grid-column: 3; align-self: start;
+  grid-column: 2; justify-self: start; margin-top: 0.5rem;
   padding: 0.28rem 0.7rem;
   background: var(--accent-soft); color: var(--accent-strong);
   border: 1px solid rgba(176, 128, 31, 0.34);
   font-size: var(--fs-micro); font-weight: 700; white-space: nowrap;
   clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
 }
-@media (max-width: 560px) {
-  .report-row { grid-template-columns: auto 1fr; }
-  .report-flag { grid-row: 2; grid-column: 2; justify-self: start; margin-top: 0.4rem; }
+.report-foot {
+  padding: var(--space-md) clamp(1rem, 0.7rem + 1vw, 1.6rem);
+  background: var(--bg-alt);
+  font-size: var(--fs-small); font-weight: 600; color: var(--text);
+}
+
+@media (min-width: 860px) {
+  /* שלושה טורים: הממצא, המשמעות, והסטטוס ברוחב קבוע כדי שהתוויות
+     ייפלו על קו אחד ויהיו ניתנות לסריקה מלמעלה למטה. */
+  .report-cols { display: grid; grid-template-columns: 1.05fr 1fr 5.6rem; gap: var(--space-md); }
+  .report-cols-status { text-align: start; }
+  .report-row {
+    grid-template-columns: auto 1.05fr 1fr 5.6rem;
+    gap: var(--space-md); align-items: start;
+  }
+  .report-finding { grid-column: 2; }
+  .report-meaning {
+    grid-column: 3; grid-row: 1; margin-top: 0;
+    padding-inline-start: var(--space-md); border-inline-start-color: #E4EAF2;
+  }
+  .report-flag { grid-column: 4; grid-row: 1; margin-top: 0.1rem; }
+}
+/* יישור כותרות העמודות מול תוכן השורות (הטור הראשון הוא המספר). */
+@media (min-width: 860px) {
+  .report-cols { padding-inline-start: calc(clamp(1rem, 0.7rem + 1vw, 1.6rem) + 1.8rem + var(--space-md)); }
 }
 
 /* ====================== תחומי העיסוק ====================== */
