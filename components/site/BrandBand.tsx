@@ -19,7 +19,8 @@ export default function BrandBand({
     <section className="brand-band on-dark" aria-label={title}>
       <PhotoLayer
         src={image.src}
-        scrim="linear-gradient(to left, rgba(7,24,44,.88) 0%, rgba(7,24,44,.55) 52%, rgba(7,24,44,.25) 100%)"
+        scrim="linear-gradient(rgba(5,22,35,.56), rgba(5,22,35,.56))"
+        position="center 58%"
       />
       <div className="container brand-band-inner">
         <p className="eyebrow">{eyebrow}</p>

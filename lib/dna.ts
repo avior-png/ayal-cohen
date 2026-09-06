@@ -23,6 +23,8 @@ export interface DnaColors {
   /** זהב על משטח כהה — טקסט, מספרים, כפתור ראשי בסקשן כהה. */
   gold: string;
   bg: string; bgAlt: string; surface: string; border: string;
+  /** רקע נייר חם לאזור התוצר. */
+  paper: string;
   /** משטחים כהים: היררו, סקשן התהליך, ה-CTA והפוטר. */
   ink: string; inkAlt: string; onInk: string; onInkMuted: string;
   text: string; textMuted: string; textOnBrand: string;

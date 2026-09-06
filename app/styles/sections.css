@@ -146,9 +146,9 @@
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
   background: var(--ink); color: var(--on-ink);
-  /* הריפוד התחתון הגדול היה קיים כדי שהכרטיס הלבן יוכל לחפוף עליו.
-     הרצועה עכשיו בפנים, ולכן הוא חוזר להיות סימטרי. */
-  padding-block: clamp(3.25rem, 1.8rem + 5.5vw, 5.5rem) clamp(2.5rem, 1.5rem + 3vw, 4rem);
+  /* בלי ריפוד עליון: התצלום צריך להגיע עד שולי אזור ההיררו, וריפוד
+     כאן היה משאיר פס נייבי בין הכותרת לתצלום. הריווח עבר לטקסט. */
+  padding-block: 0 clamp(2.5rem, 1.5rem + 3vw, 4rem);
 }
 .hero .bg-photo { z-index: -3; }
 /* זוהר זהב רך מאחורי הכותרת. */
@@ -160,9 +160,16 @@
   pointer-events: none;
 }
 .hero-inner { display: grid; gap: clamp(2.5rem, 1.5rem + 4vw, 4.5rem); align-items: center; }
-/* אסימטרי: הטקסט נושא את ההיררו, הדיוקן מלווה אותו. */
-@media (min-width: 1000px) { .hero-inner { grid-template-columns: 1.18fr 0.82fr; } }
-@media (min-width: 1000px) { .portrait { max-width: 400px; margin-inline-start: auto; } }
+.hero-inner { position: relative; z-index: 1; padding-block: clamp(2.75rem, 1.5rem + 4.5vw, 4.75rem); }
+/* חצי מיכל בלבד: החצי השני תפוס בתצלום שמאחורי המיכל. */
+@media (min-width: 1000px) { .hero-text { max-width: 50%; padding-inline-end: var(--space-xl); } }
+/* במובייל התצלום מגיע אחרי הכותרת והכפתורים. */
+@media (max-width: 999px) {
+  /* כותרת וכפתורים קודם, התצלום אחריהם. */
+  .hero-main { display: flex; flex-direction: column; }
+  .hero-inner { order: 1; }
+  .hero-photo { order: 2; margin-block-start: var(--space-xl); }
+}
 
 .hero-title {
   font-size: var(--fs-display); line-height: var(--lh-tight);
@@ -192,34 +199,28 @@
 }
 
 /* --- כרטיס "מפת התכנון" --- */
-/* --- מסגרת הדיוקן ---
-   סימני פינה בזהב במקום מסגרת מלאה: אותה שפה של סימני יישור במסמך,
-   והם משאירים את התצלום עצמו נקי. */
-.portrait { position: relative; margin: 0; }
-.portrait-frame {
-  position: relative; display: block;
-  border: 1px solid rgba(216, 180, 90, 0.28);
-  padding: 10px; background: rgba(255, 255, 255, 0.03);
+/* --- תצלום ההיררו ---
+   חצי מסך, נוגע בשולי האזור. מיקום מוחלט ולא עמודת גריד, כי עמודה
+   נעצרת בשולי המיכל והתצלום צריך לרדת עד קצה המסך. */
+.hero-main { position: relative; }
+.hero-photo { position: relative; z-index: 0; }
+.hero-photo img { width: 100%; height: 320px; object-fit: cover; object-position: 50% center; display: block; }
+/* המעבר יושב על הקצה הפנימי בלבד — לא מכהה את התצלום כולו. */
+.hero-photo::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, var(--ink) 0%, rgba(7, 24, 44, 0.55) 14%, transparent 42%);
 }
-.portrait-frame::before, .portrait-frame::after {
-  content: ''; position: absolute; z-index: 2;
-  width: var(--bracket); height: var(--bracket);
-  border: var(--bracket-w) solid var(--gold);
+@media (min-width: 1000px) {
+  /* מוחלט מול .hero-main, כך שהוא מגיע לשולי אזור הטקסט ולא לרצועה. */
+  .hero-photo {
+    position: absolute; inset-block: 0; inset-inline-end: 0;
+    width: 50%; z-index: 0;
+  }
+  .hero-photo img { height: 100%; min-height: 590px; object-position: 48% center; }
+  .hero-photo::after {
+    background: linear-gradient(to left, var(--ink) 0%, rgba(7, 24, 44, 0.84) 12%, transparent 38%);
+  }
 }
-.portrait-frame::before { inset-block-start: -1px; inset-inline-start: -1px; border-block-end: 0; border-inline-end: 0; }
-.portrait-frame::after  { inset-block-end: -1px; inset-inline-end: -1px; border-block-start: 0; border-inline-start: 0; }
-.portrait-frame img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; }
-
-.portrait-plate {
-  display: grid; gap: 2px;
-  margin-block-start: -1px;
-  padding: var(--space-md) var(--space-lg);
-  background: var(--gold); color: var(--ink);
-  /* פינה חתוכה — שפת הצורה של המותג, על משטח מלא שאין לו מסגרת לשבור */
-  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
-}
-.portrait-name { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; line-height: 1.1; }
-.portrait-role { font-size: var(--fs-micro); font-weight: 600; opacity: 0.78; }
 
 /* --- רצועת המספרים, בתוך המשטח הכהה ולא ככרטיס שצף עליו --- */
 .hero-stats {
@@ -247,68 +248,55 @@
 }
 
 /* ====================== מפת התכנון (התוצר) ====================== */
-.plan-section { background: var(--brand-soft); }
+/* overflow-x: clip ולא hidden — חותך את מה שגולש (העיגול שמאחורי
+   התצלום, והתצלום עצמו ברוחב 110% במובייל) בלי ליצור מכל גלילה
+   ובלי להרחיב את רוחב המסמך. */
+.plan-section { background: var(--paper); overflow-x: clip; }
 .plan-inner { display: grid; gap: clamp(2.5rem, 1.5rem + 4vw, 4.5rem); align-items: center; }
 /* אסימטרי בכוונה: העמודה שנושאת את המסמך רחבה מזו שמסבירה אותו. */
 @media (min-width: 1000px) { .plan-inner { grid-template-columns: 5fr 7fr; } }
 .plan-note {
-  margin-top: var(--space-lg); padding: var(--space-md) var(--space-lg);
-  background: var(--surface); border-inline-start: 3px solid var(--accent);
-  font-size: var(--fs-small); color: var(--text);
+  margin-top: var(--space-lg); padding-inline-start: var(--space-md);
+  border-inline-start: 3px solid var(--accent);
+  font-size: var(--fs-small); color: var(--text-muted);
 }
 
 /* --- המסמך --- */
-.doc {
-  background: var(--surface);
-  border: 1px solid #CFDBEA;
-  box-shadow: var(--shadow-lg);
-  padding: clamp(1.35rem, 1rem + 1.4vw, 2.25rem);
-  position: relative;
-}
-.doc::after {
-  /* לשון הדף בפינה — רומז על מסמך מודפס בלי לצייר אחד */
-  content: ''; position: absolute; inset-block-start: 0; inset-inline-start: 0;
-  width: 46px; height: 46px;
-  background: linear-gradient(to bottom left, var(--brand-soft) 50%, transparent 50%);
-  border-inline-start: 1px solid #CFDBEA;
-}
-.doc-head {
-  display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-md);
-  padding-block-end: var(--space-md);
-  border-block-end: 2px solid var(--ink);
-}
-.doc-title { font-family: var(--font-heading); font-size: var(--fs-h3); font-weight: 800; }
-.doc-tag {
-  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.12em;
-  color: var(--accent-strong);
-}
-.doc-rows { display: grid; margin: 0; }
-.doc-rows li {
+/* --- רשימת המרכיבים --- */
+.plan-rows { display: grid; margin: var(--space-lg) 0 0; border-block-start: 1px solid rgba(11, 27, 46, 0.14); }
+.plan-rows li {
   display: grid; grid-template-columns: auto 1fr; gap: var(--space-md);
-  align-items: baseline;
-  padding-block: 0.85rem;
-  border-block-end: 1px dotted #C4D2E3;
+  align-items: baseline; padding-block: 0.8rem;
+  border-block-end: 1px solid rgba(11, 27, 46, 0.14);
+  font-size: var(--fs-small); color: var(--text);
 }
-.doc-num {
+.plan-num {
   font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700;
   color: var(--accent-strong); font-variant-numeric: tabular-nums;
 }
-.doc-text { color: var(--text); font-size: var(--fs-small); }
 
-.doc-figure { margin: var(--space-lg) 0 0; }
-.doc-chart {
-  display: flex; align-items: flex-end; gap: 8px; height: 104px;
-  padding-block-end: var(--space-xs);
-  border-block-end: 1px solid var(--ink);
+/* --- התצלום ---
+   ה-PNG שקוף ונושא צל משלו, ולכן הוא יושב על הרקע ישירות: בלי קופסה
+   לבנה, בלי מסגרת ובלי צל נוסף. העיגול מאחוריו נותן עומק בלי משטח. */
+.plan-figure { position: relative; margin: 0; }
+.plan-figure::before {
+  content: ''; position: absolute; z-index: 0;
+  inset-block-start: 50%; inset-inline: 0;
+  margin-inline: auto; translate: 0 -50%;
+  width: min(380px, 76%); aspect-ratio: 1; border-radius: 50%;
+  background: rgba(190, 158, 95, 0.10);
 }
-.doc-bar { flex: 1; background: #D5DFEC; }
-.doc-bar.is-lit { background: linear-gradient(to top, var(--accent), var(--gold)); }
-.doc-figure figcaption {
-  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-xs);
-  margin-top: var(--space-sm);
-  font-size: var(--fs-micro); color: var(--text-muted);
+.plan-figure img { position: relative; z-index: 1; width: 100%; height: auto; display: block; }
+@media (min-width: 1000px) {
+  .plan-figure img { max-width: 640px; margin-inline-start: auto; }
 }
-.doc-figure-note { color: var(--accent-strong); font-weight: 600; }
+@media (max-width: 999px) {
+  /* רוחב מעט מעל המיכל, כדי שהתצלום ירגיש נוכח ולא ממוזער. */
+  .plan-figure { width: 110%; margin-inline-start: -5%; }
+  .plan-inner { display: flex; flex-direction: column; }
+  .plan-figure { order: 1; }
+  .plan-copy { order: 2; }
+}
 
 /* ====================== הפער השקט ====================== */
 .problem { background: var(--bg-alt); }
@@ -324,8 +312,6 @@
   border-radius: var(--radius-sm);
   font-size: var(--fs-small); color: var(--text);
 }
-.problem-media { margin-top: var(--space-lg); border-radius: var(--radius); overflow: hidden; }
-.problem-media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .finding-list { display: grid; margin: 0; border-block-start: var(--hairline); }
 .finding {
   display: grid; grid-template-columns: auto 1fr; gap: var(--space-md) var(--space-lg);
@@ -385,6 +371,15 @@
   width: min(620px, 70%); aspect-ratio: 1; pointer-events: none;
   background: radial-gradient(circle, rgba(216, 180, 90, 0.14), transparent 65%);
 }
+/* פס התצלום מעל השלבים. לא נהפך אופקית: סדר האובייקטים בתצלום
+   כבר מותאם לקריאה מימין לשמאל. */
+.process-strip { margin: 0 0 clamp(2rem, 1.2rem + 2.5vw, 3.5rem); }
+.process-strip img {
+  width: 100%; height: clamp(210px, 14vw + 120px, 320px);
+  object-fit: cover; object-position: center;
+  border-radius: 5px; display: block;
+}
+
 .process-track { position: relative; }
 .process-steps { display: grid; gap: var(--space-xl); margin: 0; position: relative; z-index: 1; }
 .step { position: relative; }
@@ -432,6 +427,10 @@
 /* ====================== אודות ====================== */
 .about-inner { display: grid; gap: clamp(2.5rem, 1.5rem + 4vw, 4.5rem); align-items: center; }
 @media (min-width: 1000px) { .about-inner { grid-template-columns: 0.88fr 1.12fr; } }
+/* בלי עמודת תמונה: עמודה אחת, ברוחב קריאה ולא לרוחב המיכל כולו. */
+.about-inner-solo { grid-template-columns: 1fr; }
+@media (min-width: 1000px) { .about-inner-solo { grid-template-columns: 1fr; } }
+.about-inner-solo .about-text { max-width: 78ch; }
 .about-media { position: relative; }
 /* מסגרת זהב מוסטת — מנייר מכתבים של פירמה, לא מסטארט-אפ. */
 .about-media::before {
@@ -465,28 +464,42 @@
 
 /* ====================== רגע מותג ====================== */
 .brand-band {
-  position: relative; isolation: isolate; overflow: hidden;
-  display: grid; align-items: center;
-  background: var(--ink);
-  padding-block: clamp(3.5rem, 2rem + 5vw, 6rem);
-  /* גובה מינימלי: בלעדיו הפס נמוך מהתצלום, ו-cover חותך אותו לרצועה
-     שבה כבר לא מזהים מה מצולם. */
-  min-height: clamp(280px, 24vw, 380px);
+  position: relative; overflow: hidden;
+  display: grid; align-content: center;
+  min-height: clamp(300px, 22vw + 180px, 460px);
+  padding-block: var(--space-2xl);
 }
-.brand-band .bg-photo { z-index: -1; }
-.brand-band-inner { max-width: 46ch; }
+/* שכבת נייבי מעל התצלום — קריאוּת הטקסט לא תלויה בתצלום עצמו. */
+.brand-band .bg-photo { z-index: 0; }
+.brand-band > .container { position: relative; z-index: 1; }
+.brand-band-inner { max-width: 720px; }
 .brand-band-title {
-  font-family: var(--font-heading); font-weight: 700;
-  font-size: var(--fs-h3); line-height: 1.4; color: #fff;
+  font-family: var(--font-heading);
+  font-size: clamp(1.45rem, 1rem + 1.9vw, 2.3rem);
+  font-weight: 700; line-height: 1.35; color: #fff; text-wrap: balance;
 }
 
 /* ====================== מקרה מהשטח ====================== */
 .case { position: relative; overflow: hidden; }
-.case .bg-photo { z-index: 0; }
 .case > .container { position: relative; z-index: 1; }
 
+/* גריד 7/5: הפעימות מימין, תצלום התחקיר משמאל ובקו העליון שלהן. */
+.case-inner { display: grid; gap: clamp(1.75rem, 1rem + 2.5vw, 3rem); align-items: start; }
+@media (min-width: 1000px) { .case-inner { grid-template-columns: 7fr 5fr; } }
+.case-figure { margin: 0; }
+.case-figure img {
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: 5px; display: block;
+}
+@media (max-width: 999px) {
+  /* במובייל: התצלום אחרי פסקת הפתיחה ולפני שלוש הפעימות. */
+  .case-inner { display: flex; flex-direction: column; }
+  .case-figure { order: 1; }
+  .beats { order: 2; }
+}
+
 .beats { display: grid; gap: var(--space-lg); margin: 0; position: relative; }
-@media (min-width: 900px) {
+@media (min-width: 900px) and (max-width: 999px) {
   .beats { grid-template-columns: repeat(3, 1fr); gap: clamp(1.25rem, 0.5rem + 2vw, 2.25rem); }
   /* חוט הזהב שמחבר בין הפעימות — הרצף הוא המסר */
   .beats::before {
@@ -494,6 +507,16 @@
     height: 1px;
     background: linear-gradient(to left, transparent, rgba(216,180,90,.5) 14%, rgba(216,180,90,.5) 86%, transparent);
   }
+}
+@media (min-width: 1000px) {
+  /* עמודה צרה יותר: הפעימות בטור, המספר בשוליים והרצף נקרא מלמעלה למטה. */
+  .beats { gap: var(--space-md); }
+  .beat {
+    display: grid; grid-template-columns: auto 1fr;
+    align-items: start; column-gap: var(--space-lg);
+  }
+  .beat-num { grid-row: span 3; align-self: center; }
+  .beat-label, .beat-title, .beat-text { grid-column: 2; }
 }
 .beat {
   position: relative; z-index: 1;
@@ -536,7 +559,27 @@
 /* ====================== בתקשורת ====================== */
 .press { background: var(--bg-alt); }
 .press-inner { display: grid; gap: var(--space-lg); }
-@media (min-width: 1000px) { .press-inner { grid-template-columns: 7fr 5fr; align-items: stretch; } }
+@media (min-width: 1000px) {
+  /* תצלום 42% מימין לשמאל: פאנל גלובס, הפודקאסטים, ואז התצלום. */
+  .press-inner { grid-template-columns: 6fr 4.5fr 6fr; align-items: stretch; }
+}
+.press-figure { margin: 0; display: grid; }
+.press-figure img {
+  width: 100%; aspect-ratio: 3 / 2; object-fit: cover;
+  border-radius: 5px; display: block;
+}
+@media (min-width: 1000px) {
+  /* בגריד נמתח, יחס קבוע היה מקצר את התצלום מול הפאנל שלצדו.
+     כאן הוא ממלא את גובה השורה. */
+  .press-figure img { height: 100%; aspect-ratio: auto; min-height: 260px; }
+}
+@media (max-width: 999px) {
+  .press-inner { display: flex; flex-direction: column; }
+  .press-figure { order: 1; }
+  .press-figure img { height: 230px; min-height: 0; }
+  .press-feature { order: 2; }
+  .press-rows { order: 3; }
+}
 
 /* --- הפריט המוביל: פאנל כהה, הניגוד היחיד בסקשן בהיר --- */
 .press-feature {

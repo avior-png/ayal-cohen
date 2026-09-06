@@ -8,17 +8,22 @@ import { asset } from '@/lib/asset';
  * scrim הוא שכבת הכהיה מעל התצלום, שמבטיחה שהטקסט יישאר קריא.
  */
 export default function PhotoLayer({
-  src, className = '', scrim,
+  src, className = '', scrim, position,
 }: {
   src: string;
   className?: string;
   scrim?: string;
+  /** background-position של התצלום, למשל 'center 58%'. */
+  position?: string;
 }) {
   return (
     <div
       className={`bg-photo ${className}`.trim()}
       aria-hidden="true"
-      style={{ backgroundImage: `${scrim ? `${scrim}, ` : ''}url(${asset(src)})` }}
+      style={{
+        backgroundImage: `${scrim ? `${scrim}, ` : ''}url(${asset(src)})`,
+        ...(position ? { backgroundPosition: position } : {}),
+      }}
     />
   );
 }

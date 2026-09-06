@@ -24,11 +24,8 @@ export default async function AboutPage() {
 
       <main id="main">
         <section className="section">
-          <div className="container about-inner">
-            <div className="about-media">
-              <img src={asset(about.image.src)} alt={about.image.alt} width={800} height={1000} />
-            </div>
-
+          {/* בלי עמודת תמונה — ראה ההערה ב-content/site.ts תחת about. */}
+          <div className="container about-inner about-inner-solo">
             <div className="about-text">
               <h2 className="section-title">{about.title}</h2>
               {about.paragraphs.map((p, i) => <p key={i} className="about-paragraph">{p}</p>)}
@@ -65,8 +62,8 @@ export default async function AboutPage() {
               <p className="section-lead">{aboutPage.approach.lead}</p>
             </div>
             <div className="wide-media" style={{ marginBottom: 'var(--space-xl)' }}>
-              <img src={asset(aboutSeed.imageWide.src)} alt={aboutSeed.imageWide.alt}
-                   width={1400} height={933} loading="lazy" />
+              <img src={asset(aboutPage.approach.image.src)} alt={aboutPage.approach.image.alt}
+                   width={1600} height={1001} loading="lazy" />
             </div>
             <ul className="card-grid card-grid-2 reveal-stagger">
               {aboutPage.approach.items.map((item) => (

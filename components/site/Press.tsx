@@ -1,4 +1,5 @@
 import Icon from '@/components/site/Icon';
+import { asset } from '@/lib/asset';
 import { press } from '@/content/site';
 
 /**
@@ -22,6 +23,16 @@ export default function Press() {
         </div>
 
         <div className="press-inner">
+          <figure className="press-figure">
+            <img
+              src={asset(press.image.src)}
+              alt={press.image.alt}
+              width={1200}
+              height={800}
+              loading="lazy"
+            />
+          </figure>
+
           <a className="press-feature" href={f.href} target="_blank" rel="noopener noreferrer">
             <span className="press-feature-top">
               <span className="press-mark" aria-hidden="true"><Icon name={f.icon} size={22} /></span>

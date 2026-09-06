@@ -6,11 +6,10 @@ import type { SiteContent } from '@/lib/site-content';
 export default function About({ about }: { about: SiteContent['about'] }) {
   return (
     <section id="about" className="section section-alt" aria-labelledby="about-title">
-      <div className="container about-inner">
-        <div className="about-media">
-          <img src={asset(about.image.src)} alt={about.image.alt} width={800} height={1000} loading="lazy" />
-        </div>
-
+      {/* אין כאן עמודת תמונה: ראה ההערה ב-content/site.ts תחת about.
+          כשיתקבל תצלום אמיתי של איל — להחזיר .about-media לפני .about-text
+          ולהחליף את about-inner-solo ב-about-inner. */}
+      <div className="container about-inner about-inner-solo">
         <div className="about-text">
           <p className="eyebrow">{about.eyebrow}</p>
           <h2 id="about-title" className="section-title">{about.title}</h2>

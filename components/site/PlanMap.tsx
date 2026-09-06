@@ -1,14 +1,13 @@
+import { asset } from '@/lib/asset';
 import { planMap } from '@/content/site';
-
-/** גבהי העמודות באיור. עולה, אך לא ליניארי — כדי שייראה כמו נתון. */
-const BARS = [28, 36, 34, 46, 56, 68, 80, 94];
 
 /**
  * התוצר — מפת התכנון.
  *
- * מוצג כמסמך: כותרת, תוכן עניינים ממוספר, ואיור עם כיתוב. זו לא
- * החלטה דקורטיבית — הלקוח קונה מסמך, ולכן הסקשן שמסביר את הערך
- * צריך להיראות כמוהו.
+ * כאן היה כרטיס מסמך שנבנה ב-CSS. הוא הסביר את המבנה, אבל תצלום של
+ * התיק עצמו אומר את זה מיד ובלי לקרוא. הרקע החם (--paper) מקשר את
+ * האזור לצבע הדפים בתצלום, והתצלום שקוף ולכן יושב על הרקע ישירות —
+ * בלי קופסה לבנה ובלי צל נוסף, הצל כבר בקובץ.
  */
 export default function PlanMap() {
   return (
@@ -18,40 +17,28 @@ export default function PlanMap() {
           <p className="eyebrow">{planMap.eyebrow}</p>
           <h2 id="plan-title" className="section-title">{planMap.title}</h2>
           <p className="section-lead">{planMap.lead}</p>
-          <p className="plan-note">{planMap.note}</p>
-        </div>
 
-        <div className="doc">
-          <div className="doc-head">
-            <span className="doc-title">{planMap.docTitle}</span>
-            <span className="doc-tag">{planMap.docTag}</span>
-          </div>
-
-          <ol className="doc-rows">
+          <ol className="plan-rows">
             {planMap.rows.map((row, i) => (
               <li key={row}>
-                <span className="doc-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                <span className="doc-text">{row}</span>
+                <span className="plan-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span>{row}</span>
               </li>
             ))}
           </ol>
 
-          <figure className="doc-figure">
-            <div className="doc-chart" aria-hidden="true">
-              {BARS.map((h, i) => (
-                <span
-                  key={i}
-                  className={`doc-bar${i >= BARS.length - 3 ? ' is-lit' : ''}`}
-                  style={{ height: `${h}%` }}
-                />
-              ))}
-            </div>
-            <figcaption>
-              <span>{planMap.figureCaption}</span>
-              <span className="doc-figure-note">{planMap.figureNote}</span>
-            </figcaption>
-          </figure>
+          <p className="plan-note">{planMap.note}</p>
         </div>
+
+        <figure className="plan-figure">
+          <img
+            src={asset(planMap.image.src)}
+            alt={planMap.image.alt}
+            width={1400}
+            height={933}
+            loading="lazy"
+          />
+        </figure>
       </div>
     </section>
   );

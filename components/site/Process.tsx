@@ -25,6 +25,16 @@ export default function Process() {
           <p className="section-lead">{process.lead}</p>
         </div>
 
+        <figure className="process-strip">
+          <img
+            src={asset(process.image.src)}
+            alt={process.image.alt}
+            width={1774}
+            height={887}
+            loading="lazy"
+          />
+        </figure>
+
         <div className="process-track">
           <svg
             className="process-wave"

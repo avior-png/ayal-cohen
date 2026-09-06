@@ -1,25 +1,16 @@
-import PhotoLayer from '@/components/site/PhotoLayer';
+import { asset } from '@/lib/asset';
 import { caseStudy } from '@/content/site';
 
 /**
  * מקרה מהשטח.
  *
- * הגרסה הקודמת הייתה פסקה ארוכה בתוך כרטיס לבן — והמסר נבלע בה.
- * המסר הוא לא "היה מקרה מעניין" אלא "תחקיר עמוק מוצא מה ששאלון
- * מפספס", וזה מסר עם מבנה: מה הגיע → מה עלה → מה זה שינה.
- * שלוש הפעימות נותנות לו את המבנה הזה, והמשפט בסוף נושא את הפואנטה.
- *
- * על משטח כהה, ולא על התצלום הבהיר — כדי שלא ייצמד לפס המותג הבהיר
- * שמעליו ויאבד את ההפרדה ביניהם.
+ * המסר הוא "תחקיר עמוק מוצא מה ששאלון מפספס", ולכן יש לו מבנה:
+ * מה הגיע → מה עלה בתחקיר → מה זה שינה. התצלום מראה בדיוק את הרגע
+ * הזה — יד שעוברת על מסמך — ולכן הוא יושב לצד הפעימות ולא מעליהן.
  */
 export default function CaseStudy() {
   return (
     <section className="section on-dark case" aria-labelledby="case-title">
-      <PhotoLayer
-        src={caseStudy.image.src}
-        scrim="linear-gradient(to left, rgba(7,24,44,.96) 0%, rgba(7,24,44,.9) 55%, rgba(7,24,44,.82) 100%)"
-      />
-
       <div className="container">
         <div className="section-head">
           <p className="eyebrow">{caseStudy.eyebrow}</p>
@@ -27,16 +18,28 @@ export default function CaseStudy() {
           <p className="section-lead">{caseStudy.lead}</p>
         </div>
 
-        <ol className="beats">
-          {caseStudy.beats.map((beat, i) => (
-            <li key={beat.label} className="beat">
-              <span className="beat-label">{beat.label}</span>
-              <span className="beat-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <h3 className="beat-title">{beat.title}</h3>
-              <p className="beat-text">{beat.text}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="case-inner">
+          <ol className="beats">
+            {caseStudy.beats.map((beat, i) => (
+              <li key={beat.label} className="beat">
+                <span className="beat-label">{beat.label}</span>
+                <span className="beat-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="beat-title">{beat.title}</h3>
+                <p className="beat-text">{beat.text}</p>
+              </li>
+            ))}
+          </ol>
+
+          <figure className="case-figure">
+            <img
+              src={asset(caseStudy.image.src)}
+              alt={caseStudy.image.alt}
+              width={1200}
+              height={900}
+              loading="lazy"
+            />
+          </figure>
+        </div>
 
         <p className="case-punch">{caseStudy.punch}</p>
         <p className="case-disclaimer">{caseStudy.disclaimer}</p>

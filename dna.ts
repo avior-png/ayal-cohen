@@ -87,6 +87,9 @@ export const dna: Dna = {
 
       bg: '#ffffff',
       bgAlt: '#F6F8FB',
+      // רקע נייר חם — אזור התוצר. מפריד אותו מהאפור-כחלחל של bgAlt
+      // ומקשר אותו לצבע הדפים במוקאפ של מפת התכנון.
+      paper: '#F5F2EB',
       surface: '#ffffff',
       border: '#DFE6EF',
 

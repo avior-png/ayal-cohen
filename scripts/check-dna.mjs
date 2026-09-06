@@ -66,6 +66,9 @@ const checks = [
   ['זהב־טקסט על זהב חיוור',        c.accentStrong, c.accentSoft, 4.5],
   ['טקסט על זהב חיוור',            c.text,        c.accentSoft, 4.5],
   ['טקסט מעומעם על זהב חיוור',     c.textMuted,   c.accentSoft, 4.5],
+  ['טקסט על רקע נייר',             c.text,        c.paper,     4.5],
+  ['טקסט מעומעם על רקע נייר',      c.textMuted,   c.paper,     4.5],
+  ['זהב־טקסט על רקע נייר',         c.accentStrong, c.paper,    4.5],
   // רכיבי ממשק וגבולות — סף 3:1
   ['צבע המותג על הרקע (רכיב)',     c.brand,       c.bg,        3],
   ['חיווי פוקוס על הרקע',          c.focus,       c.bg,        3],
@@ -78,6 +81,7 @@ const checks = [
   ['פוקוס בהיר על משטח כהה',       c.focusOnDark, c.ink,         3],
   ['פוקוס בהיר על כהה משני',       c.focusOnDark, c.inkAlt,      3],
   ['פוקוס על זהב חיוור',           c.focus,       c.accentSoft,  3],
+  ['פוקוס על רקע נייר',            c.focus,       c.paper,       3],
 ];
 
 let failed = 0;
