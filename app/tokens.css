@@ -7,20 +7,29 @@
        לשינוי מיתוג: עורכים את dna.ts, לא את הקובץ הזה.
    ===================================================================== */
 :root {
-  /* --- סקאלת טיפוגרפיה --- */
-  --fs-display: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
-  --fs-h1:      clamp(1.95rem, 1.3rem + 2.6vw, 3rem);
-  --fs-h2:      clamp(1.6rem, 1.2rem + 1.7vw, 2.35rem);
-  --fs-h3:      clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
-  --fs-lead:    clamp(1.05rem, 1rem + 0.4vw, 1.25rem);
-  --fs-body:    1rem;
+  /* --- סקאלת טיפוגרפיה ---
+     הכותרות בסריף ולכן נושאות יותר משקל ויזואלי בגודל נתון;
+     הסקאלה נפתחת רחב יותר מברירת המחדל כדי לתת לדיספליי נוכחות. */
+  --fs-display: clamp(2.5rem, 1.35rem + 4.6vw, 4.5rem);
+  --fs-h1:      clamp(2.1rem, 1.4rem + 2.9vw, 3.4rem);
+  --fs-h2:      clamp(1.75rem, 1.25rem + 2vw, 2.6rem);
+  --fs-h3:      clamp(1.25rem, 1.08rem + 0.7vw, 1.6rem);
+  --fs-h4:      clamp(1.1rem, 1.02rem + 0.35vw, 1.25rem);
+  --fs-lead:    clamp(1.08rem, 1rem + 0.45vw, 1.3rem);
+  --fs-body:    1.0625rem;
   --fs-small:   0.9375rem;
+  --fs-micro:   0.8125rem;
 
-  --lh-tight: 1.15;
-  --lh-head:  1.25;
-  --lh-body:  1.7;
+  --lh-tight: 1.08;
+  --lh-head:  1.22;
+  --lh-body:  1.75;
+
+  /* עין הכותרת: מרווח אותיות שלילי קל מהדק סריף עברי בגדלים גדולים. */
+  --ls-display: -0.015em;
+  --ls-eyebrow: 0.16em;
 
   /* --- קצב ומרווחים --- */
+  --space-3xs: 0.125rem;
   --space-2xs: 0.25rem;
   --space-xs:  0.5rem;
   --space-sm:  0.75rem;
@@ -28,13 +37,24 @@
   --space-lg:  1.5rem;
   --space-xl:  2.5rem;
   --space-2xl: 4rem;
-  --section-y: clamp(3.5rem, 2rem + 6vw, 6.5rem);
-  --gutter: clamp(1rem, 0.5rem + 2vw, 2rem);
+  --space-3xl: 6rem;
+  --section-y: clamp(4rem, 2rem + 7vw, 7.5rem);
+  --gutter: clamp(1.15rem, 0.5rem + 2.2vw, 2.25rem);
 
-  /* --- צללים ומעברים --- */
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.08);
-  --shadow:    0 4px 12px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+  /* --- צללים ---
+     מחוממים לכיוון הנייבי במקום אפור ניטרלי, כך שהם יושבים על הפלטה. */
+  --shadow-sm: 0 1px 2px rgba(7, 24, 44, 0.05), 0 1px 3px rgba(7, 24, 44, 0.06);
+  --shadow:    0 6px 18px rgba(7, 24, 44, 0.07), 0 2px 5px rgba(7, 24, 44, 0.05);
+  --shadow-lg: 0 22px 48px rgba(7, 24, 44, 0.13), 0 6px 14px rgba(7, 24, 44, 0.07);
+  --shadow-gold: 0 12px 30px rgba(176, 128, 31, 0.22);
 
-  --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* --- מעברים --- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: 200ms var(--ease);
+  --transition-slow: 420ms var(--ease-out);
+
+  /* --- קווי מסגרת --- */
+  --hairline: 1px solid var(--border);
+  --hairline-dark: 1px solid rgba(255, 255, 255, 0.13);
 }

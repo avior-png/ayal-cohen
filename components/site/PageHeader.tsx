@@ -7,12 +7,15 @@ import { asset } from '@/lib/asset';
  * ידע איפה המשתמש נמצא בהיררכיה.
  */
 export default function PageHeader({
-  title, lead, eyebrow, crumbs = [],
+  title, lead, eyebrow, crumbs = [], crumbLabel,
 }: {
   title: string;
   lead?: string;
   eyebrow?: string;
   crumbs?: { label: string; href: string }[];
+  /** שם קצר לפירור האחרון. בלעדיו הפירור מקבל את הכותרת המלאה,
+   *  ובעמוד שכותרתו משפט שלם זה יוצא פירור באורך שורה. */
+  crumbLabel?: string;
 }) {
   return (
     <header className="page-header">
@@ -23,7 +26,7 @@ export default function PageHeader({
             {crumbs.map((c) => (
               <li key={c.href}><Link href={asset(c.href)}>{c.label}</Link></li>
             ))}
-            <li aria-current="page">{title}</li>
+            <li aria-current="page">{crumbLabel ?? title}</li>
           </ol>
         </nav>
         {eyebrow && <span className="section-eyebrow">{eyebrow}</span>}

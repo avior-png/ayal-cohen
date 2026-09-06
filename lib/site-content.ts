@@ -62,10 +62,9 @@ export async function getSiteContent() {
       ? {
           ...seed.services,
           items: services.map((s) => ({
-            icon: s.icon ?? '◆',
+            icon: s.icon ?? 'map',
             title: s.title,
             text: s.summary,
-            href: s.ctaHref ?? '#contact',
           })),
         }
       : seed.services,

@@ -15,7 +15,7 @@ export default function NotFound() {
         <div className="section">
           <div className="container container-narrow prose">
             <p>אפשר לחזור לעמוד הבית, או לפנות אלינו ונעזור למצוא את מה שחיפשתם.</p>
-            <p className="hero-actions">
+            <p className="btn-row">
               <Link className="btn btn-primary" href={asset('/')}>לעמוד הבית</Link>
               <Link className="btn btn-secondary" href={asset('/contact')}>צרו קשר</Link>
             </p>

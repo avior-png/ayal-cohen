@@ -1,20 +1,24 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { db } from '@/lib/db';
+import { getSiteContent } from '@/lib/site-content';
 import { requireSection } from '@/lib/page-guard';
 import { asset } from '@/lib/asset';
 import PageHeader from '@/components/site/PageHeader';
+import ContactCta from '@/components/site/ContactCta';
 import { posts as seed } from '@/content/site';
 
 export const metadata: Metadata = {
   title: 'מאמרים',
-  description: 'תכנים מקצועיים שנכתבים על ידי הצוות.',
+  description: 'קיבוע זכויות, תיקון 190, מסלולי השקעה והעברת קופות — המושגים שחוזרים בכל שיחה על פרישה, מוסברים בפשטות.',
 };
 
 const fmt = (d: Date) => new Intl.DateTimeFormat('he-IL', { dateStyle: 'long' }).format(d);
 
 export default async function BlogPage() {
   requireSection('posts');
+  const { site, contact } = await getSiteContent();
+
   const rows = await db.post
     .findMany({ where: { status: 'PUBLISHED' }, orderBy: { publishedAt: 'desc' }, include: { image: true } })
     .catch(() => []);
@@ -30,22 +34,25 @@ export default async function BlogPage() {
         dateLabel: fmt(p.publishedAt ?? p.createdAt),
         image: { src: p.image?.path ?? '/images/post-1.svg', alt: p.image?.alt ?? p.title },
       }))
-    : seed.items.map((p) => ({ ...p, key: p.title, href: '#' }));
+    : seed.items.map((p) => ({ ...p, key: p.title }));
 
   return (
     <>
-      <PageHeader title={seed.title} eyebrow={seed.eyebrow} lead={seed.lead} />
+      <PageHeader title={seed.title} eyebrow={seed.eyebrow} lead={seed.lead} crumbLabel="מאמרים" />
+
       <main id="main">
         <section className="section">
           <div className="container">
             {items.length === 0 ? (
               <p className="section-lead">עדיין לא פורסמו מאמרים.</p>
             ) : (
-              <ul className="card-grid card-grid-3">
+              <ul className="card-grid card-grid-3 reveal-stagger">
                 {items.map((post) => (
                   <li key={post.key} className="post-card">
-                    <img src={asset(post.image.src)} alt={post.image.alt}
-                         width={800} height={500} loading="lazy" />
+                    <div className="post-media">
+                      <img src={asset(post.image.src)} alt={post.image.alt}
+                           width={1200} height={750} loading="lazy" />
+                    </div>
                     <div className="post-body">
                       <p className="post-meta">
                         {post.category && <><span className="post-category">{post.category}</span>{' · '}</>}
@@ -55,6 +62,7 @@ export default async function BlogPage() {
                         <Link href={asset(post.href)}>{post.title}</Link>
                       </h2>
                       <p className="post-excerpt">{post.excerpt}</p>
+                      <p className="post-more"><span className="arrow-link" aria-hidden="true">לקריאה</span></p>
                     </div>
                   </li>
                 ))}
@@ -62,6 +70,8 @@ export default async function BlogPage() {
             )}
           </div>
         </section>
+
+        <ContactCta site={site} contact={contact} />
       </main>
     </>
   );

@@ -52,6 +52,20 @@ const checks = [
   ['מותג כהה על מותג בהיר',        c.brandStrong, c.brandSoft, 4.5],
   ['הודעת שגיאה על משטח',          c.error,       c.surface,   4.5],
   ['הודעת הצלחה על משטח',          c.success,     c.surface,   4.5],
+  // משטחים כהים — היררו, התהליך, ה-CTA והפוטר
+  ['טקסט על משטח כהה',             c.onInk,       c.ink,       4.5],
+  ['טקסט על משטח כהה משני',        c.onInk,       c.inkAlt,    4.5],
+  ['טקסט מעומעם על משטח כהה',      c.onInkMuted,  c.ink,       4.5],
+  ['טקסט מעומעם על כהה משני',      c.onInkMuted,  c.inkAlt,    4.5],
+  // הזהב — שלוש עוצמות, כל אחת והמשטח שלה
+  ['זהב על משטח כהה',              c.gold,        c.ink,       4.5],
+  ['זהב על משטח כהה משני',         c.gold,        c.inkAlt,    4.5],
+  ['זהב על מותג כהה',              c.gold,        c.brandStrong, 4.5],
+  ['כהה על כפתור זהב',             c.ink,         c.gold,      4.5],
+  ['זהב־טקסט על הרקע',             c.accentStrong, c.bg,       4.5],
+  ['זהב־טקסט על זהב חיוור',        c.accentStrong, c.accentSoft, 4.5],
+  ['טקסט על זהב חיוור',            c.text,        c.accentSoft, 4.5],
+  ['טקסט מעומעם על זהב חיוור',     c.textMuted,   c.accentSoft, 4.5],
   // רכיבי ממשק וגבולות — סף 3:1
   ['צבע המותג על הרקע (רכיב)',     c.brand,       c.bg,        3],
   ['חיווי פוקוס על הרקע',          c.focus,       c.bg,        3],
@@ -59,6 +73,11 @@ const checks = [
   ['פוקוס בהיר על מותג כהה',       c.focusOnDark, c.brandStrong, 3],
   ['פוקוס בהיר על הפוטר',          c.focusOnDark, c.text,        3],
   ['פוקוס רגיל בתוך הטופס',        c.focus,       c.surface,     3],
+  ['זהב קישוטי על הרקע (רכיב)',    c.accent,      c.bg,          3],
+  ['זהב קישוטי על רקע משני',       c.accent,      c.bgAlt,       3],
+  ['פוקוס בהיר על משטח כהה',       c.focusOnDark, c.ink,         3],
+  ['פוקוס בהיר על כהה משני',       c.focusOnDark, c.inkAlt,      3],
+  ['פוקוס על זהב חיוור',           c.focus,       c.accentSoft,  3],
 ];
 
 let failed = 0;

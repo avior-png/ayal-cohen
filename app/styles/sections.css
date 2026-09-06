@@ -1,0 +1,610 @@
+/* =====================================================================
+   שכבת הסקשנים: כותרת האתר, היררו, סקשני עמוד הבית, ראשי עמודים, פוטר.
+   ===================================================================== */
+
+/* ====================== מעטפת הכותרת ====================== */
+.header-stack {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg);
+  border-block-end: 1px solid var(--border);
+  transition: background var(--transition-slow), border-color var(--transition-slow),
+              box-shadow var(--transition-slow);
+}
+/* בראש כל עמוד הכותרת כהה ומתמזגת עם הבאנר שמתחתיה;
+   בגלילה היא הופכת לבנה ומקבלת צל. */
+.header-stack.is-dark {
+  background: var(--ink);
+  border-block-end-color: rgba(255, 255, 255, 0.1);
+}
+.header-stack.is-solid { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(12px); box-shadow: var(--shadow-sm); }
+
+/* --- הפס העליון --- */
+.topbar { display: none; background: rgba(255, 255, 255, 0.04); border-block-end: 1px solid rgba(255, 255, 255, 0.07); }
+.is-solid .topbar { background: var(--brand-strong); border-block-end-color: transparent; }
+.topbar-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg);
+  min-height: 40px;
+  font-size: var(--fs-micro); color: rgba(255, 255, 255, 0.82);
+}
+.topbar-inner a { color: #fff; text-decoration: none; font-weight: 700; }
+.topbar-inner a:hover { color: var(--gold); }
+.topbar-note { display: inline-flex; align-items: center; gap: 0.5em; }
+.topbar-note::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+.topbar-links { display: flex; gap: var(--space-lg); margin: 0; }
+@media (min-width: 901px) { .topbar { display: block; } }
+
+/* --- שורת הכותרת --- */
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg);
+  min-height: 78px;
+}
+.site-logo { display: inline-flex; align-items: center; gap: 0.65rem; text-decoration: none; }
+/* המגן צבוע במפורש: currentColor היה יורש את צבע הטקסט, ועל הכותרת
+   הכהה זה נותן נייבי על נייבי — כלומר לוגו שלא רואים. */
+.logo-mark { flex: none; color: var(--brand); }
+.is-dark .logo-mark, .site-footer .logo-mark { color: #1B4C7E; }
+.site-logo-img { height: 42px; width: auto; }
+.is-dark .site-logo-img { filter: brightness(0) invert(1); }
+.site-logo-mark {
+  display: grid; place-items: center; width: 42px; height: 42px;
+  border-radius: var(--radius-sm); background: var(--brand); color: #fff;
+  font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem;
+}
+.site-logo-text { display: grid; line-height: 1.1; }
+.site-logo-name { font-family: var(--font-heading); font-size: 1.32rem; font-weight: 700; color: var(--text); }
+.site-logo-sub { font-size: 0.7rem; letter-spacing: 0.13em; color: var(--text-muted); font-weight: 600; }
+.is-dark .site-logo-name { color: #fff; }
+.is-dark .site-logo-sub { color: var(--gold); }
+
+.main-nav-list { display: flex; align-items: center; gap: clamp(1rem, 0.4rem + 1.3vw, 2rem); margin: 0; }
+.main-nav-link {
+  position: relative; display: inline-block;
+  color: var(--text); text-decoration: none; font-weight: 600; font-size: var(--fs-small);
+  padding-block: 0.4rem;
+}
+.main-nav-link::after {
+  content: ''; position: absolute; inset-block-end: 0; inset-inline: 0;
+  height: 2px; background: var(--accent);
+  transform: scaleX(0); transform-origin: inline-end;
+  transition: transform var(--transition);
+}
+.main-nav-link:hover::after, .main-nav-link[aria-current='page']::after { transform: scaleX(1); transform-origin: inline-start; }
+.main-nav-link[aria-current='page'] { color: var(--brand); }
+.is-dark .main-nav-link { color: rgba(255, 255, 255, 0.88); }
+.is-dark .main-nav-link:hover, .is-dark .main-nav-link[aria-current='page'] { color: #fff; }
+.is-dark .main-nav-link::after { background: var(--gold); }
+
+.header-actions { display: none; align-items: center; gap: var(--space-md); }
+.header-phone {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  font-weight: 700; font-size: var(--fs-small); color: var(--text); text-decoration: none;
+}
+.header-phone:hover { color: var(--brand); }
+.is-dark .header-phone { color: #fff; }
+.is-dark .header-phone:hover { color: var(--gold); }
+.is-dark .header-cta { background: var(--gold); color: var(--ink); }
+.is-dark .header-cta:hover { background: #E7C879; }
+
+.nav-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; background: transparent;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer;
+}
+.is-dark .nav-toggle { border-color: rgba(255, 255, 255, 0.28); }
+.nav-toggle-bars { display: block; position: relative; width: 22px; height: 2px; background: var(--text); transition: background var(--transition); }
+.nav-toggle-bars::before, .nav-toggle-bars::after { content: ''; position: absolute; inset-inline: 0; height: 2px; background: inherit; transition: transform var(--transition), top var(--transition); }
+.nav-toggle-bars::before { top: -7px; }
+.nav-toggle-bars::after { top: 7px; }
+.is-dark .nav-toggle-bars { background: #fff; }
+.nav-toggle[aria-expanded='true'] .nav-toggle-bars { background: transparent; }
+.nav-toggle[aria-expanded='true'] .nav-toggle-bars::before { top: 0; transform: rotate(45deg); background: var(--text); }
+.nav-toggle[aria-expanded='true'] .nav-toggle-bars::after { top: 0; transform: rotate(-45deg); background: var(--text); }
+
+@media (max-width: 900px) {
+  .main-nav {
+    position: absolute; inset-inline: 0; top: 100%;
+    background: var(--surface); border-block-end: 1px solid var(--border);
+    padding: var(--space-md) var(--gutter) var(--space-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  .main-nav[hidden] { display: none; }
+  .main-nav-list { flex-direction: column; align-items: stretch; gap: 0; }
+  .main-nav-link { display: block; padding: var(--space-md) 0; border-block-end: 1px solid var(--border); color: var(--text); font-size: 1.05rem; }
+  .main-nav-link::after { display: none; }
+  .main-nav-cta { display: grid; gap: var(--space-sm); margin-top: var(--space-lg); }
+  /* בתפריט פתוח הכותרת חייבת להיות אטומה — לוח כהה על רקע שקוף לא קריא. */
+  .header-stack.is-open { background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(12px); }
+  .header-stack.is-open .site-logo-name { color: var(--text); }
+  .header-stack.is-open .site-logo-sub { color: var(--text-muted); }
+  .header-stack.is-open .site-logo-img { filter: none; }
+  .header-stack.is-open .nav-toggle { border-color: var(--border); }
+  .header-stack.is-open .nav-toggle-bars { background: transparent; }
+}
+@media (min-width: 901px) {
+  .nav-toggle { display: none; }
+  .header-actions { display: flex; }
+  .main-nav[hidden] { display: block; }
+  .main-nav-cta { display: none; }
+}
+
+/* ====================== היררו ====================== */
+.hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: var(--ink); color: var(--on-ink);
+  padding-block: clamp(3.5rem, 1.8rem + 6.5vw, 6.5rem) clamp(6rem, 3.5rem + 9vw, 10rem);
+}
+/* זוהר זהב רך מאחורי הכותרת. */
+.hero::before {
+  content: ''; position: absolute; z-index: -2;
+  inset-block-start: -22%; inset-inline-end: -12%;
+  width: min(760px, 85%); aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(176, 128, 31, 0.30), rgba(176, 128, 31, 0) 62%);
+  pointer-events: none;
+}
+/* רשת עדינה — נותנת מרקם בלי לגנוב תשומת לב. */
+.hero::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    linear-gradient(to left, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 120% 90% at 70% 10%, #000 20%, transparent 78%);
+}
+.hero-inner { display: grid; gap: clamp(2.5rem, 1.5rem + 4vw, 4.5rem); align-items: center; }
+@media (min-width: 1000px) { .hero-inner { grid-template-columns: 1.04fr 0.96fr; } }
+
+.hero-title {
+  font-size: var(--fs-display); line-height: var(--lh-tight);
+  margin-bottom: var(--space-lg); color: #fff;
+}
+.hero-title .accent {
+  display: inline-block; margin-top: 0.18em;
+  font-size: 0.74em; color: var(--gold); font-style: normal;
+}
+.hero-lead {
+  font-size: var(--fs-lead); color: var(--on-ink-muted);
+  max-width: 54ch; margin-bottom: var(--space-xl);
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-bottom: var(--space-xl); }
+.hero-proof {
+  display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-lg); margin: 0;
+  padding-block-start: var(--space-lg);
+  border-block-start: 1px solid rgba(255, 255, 255, 0.13);
+}
+.hero-proof li {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-size: var(--fs-small); color: var(--on-ink-muted);
+}
+.hero-proof li::before {
+  content: ''; width: 7px; height: 7px; rotate: 45deg; flex: none;
+  background: var(--gold);
+}
+
+/* --- כרטיס "מפת התכנון" --- */
+.hero-panel { position: relative; }
+.plan-card {
+  background: linear-gradient(158deg, #143B63 0%, #0A2748 55%, #081F3A 100%);
+  border: 1px solid rgba(216, 180, 90, 0.26);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(1.35rem, 1rem + 1.2vw, 2rem);
+}
+.plan-head {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-md);
+  padding-block-end: var(--space-md);
+  border-block-end: 1px solid rgba(255, 255, 255, 0.12);
+}
+.plan-head-title {
+  display: inline-flex; align-items: center; gap: 0.6em;
+  font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #fff;
+}
+.plan-head-title::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--gold); flex: none; }
+.plan-head-tag { font-size: 0.72rem; letter-spacing: 0.1em; color: var(--gold); font-weight: 700; }
+.plan-rows { display: grid; margin: var(--space-md) 0 0; }
+.plan-row {
+  display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--space-sm);
+  padding-block: 0.72rem;
+  border-block-end: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: var(--fs-small); color: rgba(255, 255, 255, 0.9);
+}
+.plan-row:last-child { border-block-end: 0; }
+.plan-row-num {
+  font-family: var(--font-heading); font-size: 0.82rem; font-weight: 700;
+  color: var(--gold); opacity: 0.85; min-width: 1.6em;
+  font-variant-numeric: tabular-nums;
+}
+.plan-chart {
+  display: flex; align-items: flex-end; gap: 7px; height: 92px;
+  margin-top: var(--space-lg); padding-top: var(--space-md);
+  border-block-start: 1px solid rgba(255, 255, 255, 0.12);
+}
+.plan-bar { flex: 1; border-radius: 2px 2px 0 0; background: rgba(255, 255, 255, 0.16); }
+.plan-bar-lit { background: linear-gradient(to top, rgba(216, 180, 90, 0.35), var(--gold)); }
+.plan-foot {
+  display: flex; justify-content: space-between; gap: var(--space-md);
+  margin-top: var(--space-sm);
+  font-size: 0.72rem; color: rgba(255, 255, 255, 0.55);
+}
+/* תג צף — מוסיף עומק לכרטיס. במסך צר הוא נכנס לזרימה כדי לא לגלוש. */
+.hero-badge {
+  display: flex; align-items: center; gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: #fff; color: var(--text);
+  border-radius: var(--radius); box-shadow: var(--shadow-lg);
+}
+.hero-badge-num { font-family: var(--font-heading); font-size: 1.9rem; font-weight: 700; color: var(--brand); line-height: 1; }
+.hero-badge-text { font-size: var(--fs-micro); color: var(--text-muted); line-height: 1.35; text-wrap: balance; }
+@media (min-width: 1000px) {
+  .hero-panel { padding-block-end: 34px; }
+  /* התג תלוי מתחת לכרטיס אך בתוך טווח הרוחב שלו — הסטה החוצה הייתה
+     נחתכת ב-overflow:hidden של ההיררו במסכים צרים יותר. */
+  .hero-badge {
+    position: absolute; inset-block-end: 0; inset-inline-start: 26px;
+    margin-top: 0; max-width: 280px;
+  }
+}
+
+/* ====================== רצועת האוטוריטה ====================== */
+.trust-bar { padding-block: 0 var(--section-y); background: var(--bg); }
+.trust-panel {
+  position: relative; z-index: 2;
+  margin-block-start: clamp(-4.5rem, -2.5rem - 3vw, -2.5rem);
+  padding: clamp(1.5rem, 1rem + 1.6vw, 2.5rem);
+  background: var(--surface); border: var(--hairline);
+  border-block-start: 3px solid var(--accent);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+}
+.trust-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); margin: 0; }
+.trust-item { text-align: center; }
+.trust-value {
+  display: block; font-family: var(--font-heading); font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.7rem);
+  font-weight: 700; color: var(--brand-strong); line-height: 1.05;
+  font-variant-numeric: lining-nums;
+}
+.trust-label {
+  display: block; margin-top: 0.35rem;
+  font-size: var(--fs-micro); color: var(--text-muted); font-weight: 600;
+}
+@media (min-width: 720px) {
+  .trust-list { grid-template-columns: repeat(4, 1fr); }
+  .trust-item + .trust-item { border-inline-start: 1px solid var(--border); }
+}
+
+/* ====================== הפער השקט ====================== */
+.problem { background: var(--bg-alt); }
+.problem-inner { display: grid; gap: clamp(2rem, 1.2rem + 3vw, 4rem); align-items: start; }
+@media (min-width: 1000px) {
+  .problem-inner { grid-template-columns: 0.82fr 1.18fr; }
+  .problem-aside { position: sticky; top: 140px; }
+}
+.problem-aside .section-head { margin-bottom: var(--space-lg); }
+.problem-note {
+  padding: var(--space-md) var(--space-lg);
+  background: var(--accent-soft); border-inline-start: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small); color: var(--text);
+}
+.finding-list { display: grid; margin: 0; border-block-start: var(--hairline); }
+.finding {
+  display: grid; grid-template-columns: auto 1fr; gap: var(--space-md) var(--space-lg);
+  padding-block: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+  border-block-end: var(--hairline);
+  transition: background var(--transition);
+}
+.finding:hover { background: rgba(255, 255, 255, 0.65); }
+.finding-num {
+  font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700;
+  color: var(--accent-strong); font-variant-numeric: tabular-nums; padding-top: 0.2em;
+}
+.finding-title { font-size: var(--fs-h4); margin-bottom: 0.3rem; }
+.finding-text { color: var(--text-muted); font-size: var(--fs-small); }
+
+/* ====================== שירותים ====================== */
+.service-card .card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-md); margin-bottom: var(--space-xs);
+}
+.service-card .card-icon { margin-bottom: 0; }
+.service-card .card-title { margin-top: var(--space-2xs); }
+
+/* ====================== התהליך ====================== */
+.process { background: var(--ink-alt); position: relative; overflow: hidden; }
+.process::before {
+  content: ''; position: absolute; inset-block-start: -30%; inset-inline-start: -10%;
+  width: min(620px, 70%); aspect-ratio: 1; pointer-events: none;
+  background: radial-gradient(circle, rgba(216, 180, 90, 0.14), transparent 65%);
+}
+.process-steps { display: grid; gap: var(--space-xl); margin: 0; position: relative; }
+.step { position: relative; }
+.step-num {
+  display: grid; place-items: center;
+  width: 54px; height: 54px; margin-bottom: var(--space-md);
+  border-radius: 50%; border: 1px solid rgba(216, 180, 90, 0.5);
+  background: var(--ink);
+  font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: var(--gold);
+  position: relative; z-index: 1;
+}
+.step-title { font-size: var(--fs-h4); margin-bottom: var(--space-xs); color: #fff; }
+.step-text { color: var(--on-ink-muted); font-size: var(--fs-small); }
+.step-meta {
+  display: inline-block; margin-top: var(--space-sm);
+  font-size: var(--fs-micro); font-weight: 700; color: var(--gold);
+  letter-spacing: 0.05em;
+}
+@media (min-width: 1000px) {
+  .process-steps { grid-template-columns: repeat(4, 1fr); gap: var(--space-xl); }
+  /* קו הזהב שמחבר בין השלבים. */
+  .process-steps::before {
+    content: ''; position: absolute; inset-block-start: 27px; inset-inline: 10%;
+    height: 1px;
+    background: linear-gradient(to left, transparent, rgba(216, 180, 90, 0.45) 12%, rgba(216, 180, 90, 0.45) 88%, transparent);
+  }
+}
+@media (max-width: 999px) {
+  .process-steps { gap: 0; }
+  .step { display: grid; grid-template-columns: 54px 1fr; gap: var(--space-lg); padding-block-end: var(--space-xl); }
+  .step:not(:last-child)::before {
+    content: ''; position: absolute; inset-block: 62px 0;
+    inset-inline-start: 27px; width: 1px; background: rgba(216, 180, 90, 0.35);
+  }
+  .step-num { margin-bottom: 0; }
+}
+
+/* ====================== אודות ====================== */
+.about-inner { display: grid; gap: clamp(2.5rem, 1.5rem + 4vw, 4.5rem); align-items: center; }
+@media (min-width: 1000px) { .about-inner { grid-template-columns: 0.88fr 1.12fr; } }
+.about-media { position: relative; }
+/* מסגרת זהב מוסטת — מנייר מכתבים של פירמה, לא מסטארט-אפ. */
+.about-media::before {
+  content: ''; position: absolute; z-index: 0;
+  inset-block: 22px -22px; inset-inline: -22px 22px;
+  border: 1px solid var(--accent); border-radius: var(--radius-lg);
+}
+.about-media img {
+  position: relative; z-index: 1;
+  width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+}
+.about-text > * + * { margin-top: var(--space-md); }
+.about-paragraph { color: var(--text-muted); }
+.about-quote {
+  margin-block: var(--space-lg);
+  padding: var(--space-lg); padding-inline-start: calc(var(--space-lg) + 3px);
+  background: var(--brand-soft); border-inline-start: 3px solid var(--brand);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading); font-size: var(--fs-h4); line-height: 1.5; color: var(--text);
+}
+.credentials { display: grid; gap: 0; margin: 0; border-block-start: var(--hairline); }
+.credential {
+  display: grid; grid-template-columns: auto 1fr; gap: var(--space-md);
+  align-items: baseline; padding-block: var(--space-sm);
+  border-block-end: var(--hairline); font-size: var(--fs-small);
+}
+.credential-year { font-family: var(--font-heading); font-weight: 700; color: var(--accent-strong); min-width: 4.5rem; }
+.credential-text { color: var(--text-muted); }
+@media (min-width: 700px) { .credentials-2col { grid-template-columns: 1fr 1fr; column-gap: var(--space-xl); } }
+
+/* ====================== מקרה מהשטח ====================== */
+.case { background: var(--accent-soft); }
+.case-panel {
+  display: grid; gap: clamp(2rem, 1.2rem + 3vw, 3.5rem);
+  padding: clamp(1.75rem, 1.1rem + 2.4vw, 3.25rem);
+  background: var(--surface); border: 1px solid rgba(176, 128, 31, 0.24);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow);
+}
+@media (min-width: 1000px) { .case-panel { grid-template-columns: 1.25fr 0.75fr; } }
+.case-quote { position: relative; }
+.case-quote::before {
+  content: ''; position: absolute; inset-block-start: 0; inset-inline-start: 0;
+  width: 46px; height: 36px; opacity: 0.34;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 36' fill='%23B0801F'%3E%3Cpath d='M0 36V21C0 9.4 6.4 1.9 18 0l2 5.4C13.2 7.3 9.6 11 9.2 16.4H18V36H0Zm26 0V21C26 9.4 32.4 1.9 44 0l2 5.4c-6.8 1.9-10.4 5.6-10.8 11H44V36H26Z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+.case-quote { padding-block-start: calc(var(--space-xl) + 0.5rem); }
+.case-quote p { font-family: var(--font-heading); font-size: var(--fs-h3); line-height: 1.5; color: var(--text); }
+.case-quote p + p { margin-top: var(--space-md); font-size: var(--fs-body); font-family: var(--font-body); color: var(--text-muted); line-height: var(--lh-body); }
+.case-outcomes { display: grid; gap: var(--space-md); margin: 0; align-content: start; }
+.case-outcome {
+  padding: var(--space-md); background: var(--bg-alt);
+  border-radius: var(--radius-sm); border-inline-start: 3px solid var(--accent);
+}
+.case-outcome-title { display: block; font-family: var(--font-heading); font-size: var(--fs-body); font-weight: 700; margin-bottom: 0.2rem; }
+.case-outcome-text { display: block; font-size: var(--fs-micro); color: var(--text-muted); line-height: 1.55; }
+.case-disclaimer {
+  margin-top: var(--space-lg); padding-top: var(--space-md);
+  border-block-start: var(--hairline);
+  font-size: var(--fs-micro); color: var(--text-muted); line-height: 1.6;
+}
+
+/* ====================== בתקשורת ====================== */
+.press-grid { display: grid; gap: var(--space-lg); margin: 0; }
+@media (min-width: 780px) { .press-grid { grid-template-columns: repeat(3, 1fr); } }
+.press-card {
+  display: flex; flex-direction: column; gap: var(--space-sm); height: 100%;
+  padding: clamp(1.35rem, 1rem + 1vw, 1.9rem);
+  background: var(--surface); border: var(--hairline); border-radius: var(--radius);
+  text-decoration: none; color: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.press-card:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-3px); }
+.press-source {
+  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.13em;
+  color: var(--accent-strong);
+}
+.press-title { font-size: var(--fs-h4); }
+.press-kind { margin-top: auto; padding-top: var(--space-sm); font-size: var(--fs-micro); color: var(--text-muted); }
+.press-card .arrow-link { margin-top: var(--space-xs); }
+
+/* ====================== שאלות נפוצות ====================== */
+.faq-inner { display: grid; gap: clamp(2rem, 1.2rem + 3vw, 3.5rem); align-items: start; }
+@media (min-width: 1000px) {
+  .faq-inner { grid-template-columns: 0.72fr 1.28fr; }
+  .faq-aside { position: sticky; top: 140px; }
+}
+
+/* ====================== מאמרים ====================== */
+.post-card {
+  display: flex; flex-direction: column; height: 100%;
+  background: var(--surface); border: var(--hairline); border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.post-card:hover { border-color: #C9D6E6; box-shadow: var(--shadow); transform: translateY(-4px); }
+.post-media { overflow: hidden; background: var(--bg-alt); }
+.post-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform var(--transition-slow); }
+.post-card:hover img { transform: scale(1.04); }
+.post-body { display: flex; flex-direction: column; gap: var(--space-xs); flex: 1; padding: var(--space-lg); }
+.post-meta { font-size: var(--fs-micro); color: var(--text-muted); letter-spacing: 0.03em; }
+.post-category { color: var(--accent-strong); font-weight: 700; }
+.post-title { font-size: var(--fs-h4); }
+.post-title a { color: inherit; text-decoration: none; }
+.post-title a:hover { color: var(--brand); }
+.post-excerpt { color: var(--text-muted); font-size: var(--fs-small); }
+.post-more { margin-top: auto; padding-top: var(--space-md); }
+
+/* ====================== CTA + טופס ====================== */
+.cta-section { position: relative; overflow: hidden; }
+.cta-section::before {
+  content: ''; position: absolute; inset-block-end: -35%; inset-inline-start: -8%;
+  width: min(680px, 80%); aspect-ratio: 1; pointer-events: none;
+  background: radial-gradient(circle, rgba(176, 128, 31, 0.26), transparent 64%);
+}
+.cta-inner { position: relative; display: grid; gap: clamp(2.5rem, 1.5rem + 4vw, 4rem); align-items: start; }
+@media (min-width: 980px) { .cta-inner { grid-template-columns: 1fr 1fr; } }
+.cta-title { font-size: var(--fs-h2); margin-bottom: var(--space-md); color: #fff; }
+.cta-lead { color: var(--on-ink-muted); font-size: var(--fs-lead); max-width: 46ch; }
+.cta-contact-list { display: grid; gap: 0; margin-top: var(--space-xl); border-block-start: 1px solid rgba(255, 255, 255, 0.14); }
+.cta-contact-list li {
+  display: grid; grid-template-columns: 7.5rem 1fr; gap: var(--space-md);
+  padding-block: var(--space-sm);
+  border-block-end: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: var(--fs-small);
+}
+.cta-contact-label { color: var(--gold); font-weight: 700; font-size: var(--fs-micro); letter-spacing: 0.08em; align-self: center; }
+.cta-contact-list a { color: #fff; font-weight: 600; text-decoration: none; }
+.cta-contact-list a:hover { color: var(--gold); text-decoration: underline; }
+.cta-contact-value { color: var(--on-ink-muted); }
+
+/* ====================== ראש עמוד פנימי ====================== */
+.page-header {
+  position: relative; overflow: hidden;
+  background: var(--ink); color: var(--on-ink);
+  padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) clamp(3rem, 1.8rem + 4.5vw, 5rem);
+}
+.page-header::before {
+  content: ''; position: absolute; inset-block-start: -40%; inset-inline-end: -10%;
+  width: min(560px, 70%); aspect-ratio: 1; pointer-events: none;
+  background: radial-gradient(circle, rgba(176, 128, 31, 0.26), transparent 62%);
+}
+.page-header > .container { position: relative; }
+.page-title { font-size: var(--fs-h1); margin-bottom: var(--space-md); color: #fff; }
+.page-lead { font-size: var(--fs-lead); color: var(--on-ink-muted); max-width: 62ch; }
+
+.breadcrumbs { margin-bottom: var(--space-lg); font-size: var(--fs-micro); }
+.breadcrumbs ol { display: flex; flex-wrap: wrap; gap: var(--space-xs); list-style: none; margin: 0; padding: 0; }
+.breadcrumbs li { color: var(--on-ink-muted); }
+.breadcrumbs li + li::before { content: '‹'; margin-inline-end: var(--space-xs); color: rgba(255, 255, 255, 0.35); }
+.breadcrumbs a { color: var(--on-ink-muted); text-decoration: none; }
+.breadcrumbs a:hover { color: var(--gold); text-decoration: underline; }
+.breadcrumbs [aria-current='page'] { color: #fff; font-weight: 600; }
+
+/* ====================== פוטר ====================== */
+.site-footer { background: var(--ink); color: var(--on-ink-muted); padding-block: var(--space-2xl) var(--space-xl); }
+.footer-grid { display: grid; gap: var(--space-xl); }
+@media (min-width: 760px) { .footer-grid { grid-template-columns: 1.6fr 1fr 1.2fr; } }
+@media (min-width: 1060px) { .footer-grid { grid-template-columns: 1.7fr 0.9fr 1.1fr 1.1fr; } }
+.footer-brand-logo { height: 46px; width: auto; filter: brightness(0) invert(1); margin-bottom: var(--space-md); }
+.footer-about-text { max-width: 40ch; font-size: var(--fs-small); }
+.footer-title {
+  color: var(--gold); font-family: var(--font-body);
+  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.14em;
+  margin-bottom: var(--space-md);
+}
+.footer-list { display: grid; gap: var(--space-sm); margin: 0; font-size: var(--fs-small); }
+.footer-list a, .site-footer a { color: var(--on-ink-muted); text-decoration: none; }
+.footer-list a:hover, .site-footer a:hover { color: #fff; text-decoration: underline; }
+.footer-social { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-lg); }
+.footer-disclaimer {
+  margin-top: var(--space-xl); padding-top: var(--space-lg);
+  border-block-start: 1px solid rgba(255, 255, 255, 0.13);
+  font-size: var(--fs-micro); color: rgba(255, 255, 255, 0.55); max-width: 92ch;
+}
+.footer-bottom {
+  display: flex; flex-wrap: wrap; gap: var(--space-md); justify-content: space-between;
+  margin-top: var(--space-lg); padding-top: var(--space-lg);
+  border-block-start: 1px solid rgba(255, 255, 255, 0.13);
+  font-size: var(--fs-micro);
+}
+.footer-legal { display: flex; flex-wrap: wrap; gap: var(--space-md); margin: 0; }
+
+/* ====================== עמוד תחומי העיסוק ====================== */
+.service-rows { display: grid; margin: 0; border-block-start: var(--hairline); }
+.service-row {
+  display: grid; grid-template-columns: auto 1fr; align-items: start;
+  gap: var(--space-md) var(--space-lg);
+  padding-block: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
+  border-block-end: var(--hairline);
+}
+.service-row-index {
+  font-family: var(--font-heading); font-weight: 700; font-size: 1.05rem;
+  color: var(--accent-strong); font-variant-numeric: tabular-nums; padding-top: 0.9rem;
+}
+.service-row-icon {
+  display: grid; place-items: center; width: 60px; height: 60px;
+  border-radius: var(--radius-sm); background: var(--brand-soft); color: var(--brand);
+  border: 1px solid rgba(18, 64, 110, 0.1);
+}
+.service-row-body > * + * { margin-top: var(--space-sm); }
+.service-row-title { font-size: var(--fs-h3); }
+.service-row-text { color: var(--text-muted); max-width: 74ch; }
+@media (min-width: 780px) {
+  .service-row { grid-template-columns: auto auto 1fr; }
+  .service-row-index { padding-top: 1.1rem; }
+}
+
+.page-disclaimer {
+  margin-top: var(--space-xl); padding: var(--space-lg);
+  background: var(--bg-alt); border-radius: var(--radius);
+  border-inline-start: 3px solid var(--border);
+  font-size: var(--fs-micro); color: var(--text-muted); line-height: 1.7;
+}
+
+/* ====================== עמוד יצירת קשר ====================== */
+.contact-cards { display: grid; gap: var(--space-md); margin: 0; }
+@media (min-width: 620px) { .contact-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .contact-cards { grid-template-columns: repeat(4, 1fr); } }
+.contact-card {
+  display: grid; gap: 0.2rem;
+  padding: var(--space-lg);
+  background: var(--surface); border: var(--hairline); border-radius: var(--radius);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.contact-card:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
+.contact-card-icon {
+  display: grid; place-items: center; width: 42px; height: 42px;
+  margin-bottom: var(--space-xs);
+  border-radius: var(--radius-sm); background: var(--accent-soft); color: var(--accent-strong);
+}
+.contact-card-label {
+  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.1em; color: var(--text-muted);
+}
+.contact-card-value { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; color: var(--text); text-decoration: none; }
+a.contact-card-value:hover { color: var(--brand); text-decoration: underline; }
+
+/* שורת כפתורים מחוץ להיררו (עמוד 404, עמודי תוכן) */
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--space-md); }
+
+/* ====================== התאמות למסך צר ====================== */
+@media (max-width: 560px) {
+  /* שני כפתורים ברוחב שונה על מסך צר נראים כתקלה ולא כהיררכיה. */
+  .hero-actions { display: grid; }
+  .hero-actions .btn { width: 100%; }
+}
+@media (max-width: 700px) {
+  /* מסגרת הזהב המוסטת נוגעת בקצה המסך ברוחב מלא — כאן היא מתקרבת. */
+  .about-media::before { inset-block: 14px -14px; inset-inline: -12px 12px; }
+}
+
+/* ריחוף על שורת שירות — משוב עדין בלי להזיז את הפריסה */
+.service-row { transition: background var(--transition); }
+.service-row:hover { background: var(--bg-alt); }

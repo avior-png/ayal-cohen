@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d4ed8"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><text x="50%" y="50%" font-family="Arial,sans-serif" font-size="30" fill="rgba(255,255,255,.85)" text-anchor="middle" dominant-baseline="middle">מאמר 1</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="איור מאמר">
+  <defs>
+    <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F3559"/><stop offset="1" stop-color="#07182C"/></linearGradient>
+    <linearGradient id="g1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B0801F" stop-opacity="0.35"/><stop offset="1" stop-color="#E7C879"/></linearGradient>
+    <pattern id="p1" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0V60M0 60H60" fill="none" stroke="#fff" stroke-opacity="0.05"/></pattern>
+  </defs>
+  <rect width="1200" height="750" fill="url(#b1)"/><rect width="1200" height="750" fill="url(#p1)"/>
+  <g transform="translate(160 170)">
+    <rect x="0" y="250" width="96" height="180" rx="4" fill="#ffffff" fill-opacity="0.16"/>
+    <rect x="128" y="196" width="96" height="234" rx="4" fill="#ffffff" fill-opacity="0.2"/>
+    <rect x="256" y="140" width="96" height="290" rx="4" fill="#ffffff" fill-opacity="0.24"/>
+    <rect x="384" y="86" width="96" height="344" rx="4" fill="url(#g1)"/>
+    <rect x="512" y="30" width="96" height="400" rx="4" fill="url(#g1)"/>
+    <path d="M48 268 176 214 304 158 432 104 560 48" fill="none" stroke="#E7C879" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 14"/>
+    <circle cx="560" cy="48" r="10" fill="#E7C879"/>
+    <path d="M-40 430H700" stroke="#fff" stroke-opacity="0.2"/>
+  </g>
+</svg>

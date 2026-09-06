@@ -24,36 +24,38 @@ import type { Dna } from '@/lib/dna';
 export const dna: Dna = {
   // ─── מטא ────────────────────────────────────────────────────────────
   meta: {
-    client: 'אתר דוגמה',
-    project: 'תשתית אתר תבנית',
+    client: 'איל כהן — אל ההון',
+    project: 'אתר מותג אישי · תכנון פרישה ופיננסים',
     version: '1.0.0',
-    updated: '2026-09-01',
+    updated: '2026-09-06',
   },
 
   // ─── מותג ───────────────────────────────────────────────────────────
   brand: {
-    name: 'שם העסק',
-    shortName: 'העסק',
-    tagline: 'פתרונות מקצועיים לעסקים',
-    // אות/סמל ללוגו טקסטואלי. להחלפה בקובץ: logoSrc: '/images/logo.svg'
-    logoMark: 'ש',
-    logoSrc: null,
+    name: 'אל ההון',
+    shortName: 'אל ההון',
+    // ⚠️ רגולציה: לא "יועץ פנסיוני". הכינויים המותרים הם
+    //    "מתכנן פרישה" ו-"סוכן פנסיוני" בלבד. ראה docs/BRAND.md.
+    tagline: 'תכנון פרישה שרואה את כל התמונה',
+    logoMark: 'א',
+    logoSrc: '/images/logo.svg',
   },
 
   // ─── ישות וקשר ──────────────────────────────────────────────────────
+  // ⚠️ להשלים מול הלקוח: ח.פ., טלפון, אימייל, כתובת וקישורי הרשתות.
   identity: {
-    legalName: 'שם העסק בע"מ',
+    legalName: 'איל כהן — תכנון פרישה ופיננסים',
     companyId: '000000000',
-    phone: '03-0000000',
+    phone: '03-000-0000',
     phoneHref: 'tel:+97230000000',
-    whatsapp: null,
-    email: 'info@example.co.il',
-    address: 'רחוב הדוגמה 1, תל אביב',
-    hours: "ימים א'–ה', 09:00–18:00",
+    whatsapp: 'https://wa.me/972500000000',
+    email: 'office@el-hahon.co.il',
+    address: 'ישראל — פגישות פרונטליות ובזום בכל הארץ',
+    hours: "ימים א׳–ה׳, 09:00–18:00",
     social: [
-      { label: 'פייסבוק', href: '#' },
-      { label: 'אינסטגרם', href: '#' },
       { label: 'לינקדאין', href: '#' },
+      { label: 'פייסבוק', href: '#' },
+      { label: 'יוטיוב', href: '#' },
     ],
   },
 
@@ -62,85 +64,102 @@ export const dna: Dna = {
     level: 'AA',
     standard: 'ת"י 5568 / WCAG 2.1',
     coordinator: {
-      name: 'שם רכז הנגישות',
-      email: 'access@example.co.il',
-      phone: '03-0000000',
+      name: 'איל כהן',
+      email: 'access@el-hahon.co.il',
+      phone: '03-000-0000',
     },
-    statementUpdated: '2026-09-01',
+    statementUpdated: '2026-09-06',
   },
 
   // ─── עיצוב — כל מה שמשתנה בין מותג למותג ────────────────────────────
   design: {
     colors: {
-      brand: '#1d4ed8',
-      brandStrong: '#1e3a8a',
-      brandSoft: '#eff6ff',
-      accent: '#f59e0b',
+      // כחול נייבי + זהב — הזהות הוויזואלית מהמצגות של איל.
+      brand: '#12406E',
+      brandStrong: '#0A2748',
+      brandSoft: '#EDF2F8',
+
+      // זהב בשלוש עוצמות: קישוט על בהיר, טקסט על בהיר, וזהב על כהה.
+      accent: '#B0801F',
+      accentStrong: '#8A5F12',
+      accentSoft: '#FBF3E2',
+      gold: '#D8B45A',
 
       bg: '#ffffff',
-      bgAlt: '#f8fafc',
+      bgAlt: '#F6F8FB',
       surface: '#ffffff',
-      border: '#e2e8f0',
+      border: '#DFE6EF',
 
-      text: '#0f172a',
-      textMuted: '#475569',
+      // משטחים כהים — היררו, סקשן התהליך, ה-CTA והפוטר.
+      ink: '#07182C',
+      inkAlt: '#0D2440',
+      onInk: '#ffffff',
+      onInkMuted: '#B7C6D8',
+
+      text: '#0B1B2E',
+      textMuted: '#4A5B70',
       textOnBrand: '#ffffff',
 
-      focus: '#b45309',
-      // חיווי הפוקוס על משטחים כהים (סקשן CTA, פוטר) —
-      // הכתום הכהה נותן שם 2.06:1 בלבד ולכן נדרש צבע בהיר.
-      focusOnDark: '#fde68a',
-      error: '#b91c1c',
-      success: '#15803d',
+      focus: '#A34E00',
+      // חיווי הפוקוס על משטחים כהים — נדרש צבע בהיר.
+      focusOnDark: '#FBD26A',
+      error: '#B4231C',
+      success: '#137A45',
     },
 
     fonts: {
-      heading: { family: 'Heebo', weights: [700, 800] },
-      body: { family: 'Assistant', weights: [400, 600, 700] },
+      // סריף עברי לכותרות — נותן את הרושם העיתונאי־סמכותי שהמותג צריך,
+      // במקום עוד סאנס גנרי. סאנס נקי לגוף הטקסט לקריאוּת ארוכה.
+      heading: { family: 'Frank Ruhl Libre', weights: [500, 700, 800] },
+      body: { family: 'Assistant', weights: [400, 500, 600, 700] },
       fallback: "system-ui, -apple-system, 'Segoe UI', Arial, sans-serif",
     },
 
     shape: {
-      radiusSm: '6px',
-      radius: '12px',
-      radiusLg: '20px',
+      radiusSm: '4px',
+      radius: '8px',
+      radiusLg: '16px',
       radiusPill: '999px',
     },
 
     layout: {
-      container: '1200px',
-      containerNarrow: '760px',
+      container: '1220px',
+      containerNarrow: '720px',
     },
   },
 
   // ─── SEO ────────────────────────────────────────────────────────────
   seo: {
-    // כתובת האתר בפרודקשן. נדרשת כדי שתמונות ה-Open Graph יקבלו
-    // כתובת מלאה — רשתות חברתיות לא מבינות נתיב יחסי.
-    siteUrl: 'https://example.co.il',
-    titleTemplate: '%s | שם העסק',
+    siteUrl: 'https://el-hahon.co.il',
+    titleTemplate: '%s | אל ההון — איל כהן',
     description:
-      'תשתית אתר תבנית: נגישה בתקן AA, רספונסיבית, עם מערכת ניהול תוכן ואזור אישי ללקוחות.',
+      'איל כהן, מתכנן פרישה וסוכן פנסיוני עם 18 שנות ניסיון, מפקח מקצועי על 250 סוכנים. תכנון פרישה, קיבוע זכויות, תיקון 190 והתאמת תיק פנסיוני — תמונה פיננסית אחת, ברורה.',
     locale: 'he_IL',
-    ogImage: '/images/hero.svg',
+    ogImage: '/images/og.png',
     analytics: { ga4: null, metaPixel: null },
   },
 
   // ─── אילו סקשנים מוצגים בעמוד הבית ──────────────────────────────────
+  // gallery ו-testimonials כבויים: אין תיק עבודות ויזואלי, ובשלב ההשקה
+  // אין עדיין עדויות מתועדות (ראה הבריף). הכיבוי מסיר גם את העמודים
+  // וגם את הקישורים בתפריט — ומשאיר אתר של חמישה עמודים.
   sections: {
     hero: true,
     trust: true,
+    problem: true,
     services: true,
+    process: true,
     about: true,
-    gallery: true,
-    testimonials: true,
+    caseStudy: true,
+    press: true,
+    faq: true,
+    gallery: false,
+    testimonials: false,
     posts: true,
     contact: true,
   },
 
   // ─── תפריט ──────────────────────────────────────────────────────────
-  // הניווט מצביע לעמודים מלאים; עמוד הבית מציג תקציר של כל אחד מהם.
-  // section מקשר כל פריט לסקשן שלו — כיבוי סקשן מסיר גם את העמוד וגם את הקישור.
   nav: [
     { label: 'אודות', href: '/about', section: 'about' },
     { label: 'שירותים', href: '/services', section: 'services' },

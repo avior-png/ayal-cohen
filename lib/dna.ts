@@ -1,7 +1,8 @@
 /** הטיפוסים של קובץ ה-DNA, והגזירה ממנו ל-CSS ולגופנים. */
 
 export type SectionKey =
-  | 'hero' | 'trust' | 'services' | 'about'
+  | 'hero' | 'trust' | 'problem' | 'services' | 'process' | 'about'
+  | 'caseStudy' | 'press' | 'faq'
   | 'gallery' | 'testimonials' | 'posts' | 'contact';
 
 export interface NavItem {
@@ -12,8 +13,18 @@ export interface NavItem {
 }
 
 export interface DnaColors {
-  brand: string; brandStrong: string; brandSoft: string; accent: string;
+  brand: string; brandStrong: string; brandSoft: string;
+  /** זהב קישוטי על משטח בהיר — קווים, אייקונים, מסגרות. סף 3:1. */
+  accent: string;
+  /** זהב לטקסט על משטח בהיר. סף 4.5:1. */
+  accentStrong: string;
+  /** זהב חיוור לרקעים. */
+  accentSoft: string;
+  /** זהב על משטח כהה — טקסט, מספרים, כפתור ראשי בסקשן כהה. */
+  gold: string;
   bg: string; bgAlt: string; surface: string; border: string;
+  /** משטחים כהים: היררו, סקשן התהליך, ה-CTA והפוטר. */
+  ink: string; inkAlt: string; onInk: string; onInkMuted: string;
   text: string; textMuted: string; textOnBrand: string;
   focus: string; focusOnDark: string; error: string; success: string;
 }
