@@ -62,7 +62,7 @@ export default function Hero({
       </div>
 
       {showStats && (
-        <div className="container">
+        <div className="container hero-stats-wrap">
           <ul className="hero-stats" aria-label="נתונים בקצרה">
             {trust.map((item) => (
               <li key={item.label}>

@@ -4,13 +4,17 @@ import Icon from '@/components/site/Icon';
 import type { SiteContent } from '@/lib/site-content';
 
 /**
- * תחומי העיסוק — רשימה מסורגלת בשתי עמודות, לא רשת כרטיסים.
+ * תחומי העיסוק.
  *
- * שש קופסאות זהות בשלוש עמודות הן החתימה של כל תבנית; קווי סרגל
- * ומספור נותנים את אותו מידע במבנה שקורא כמו מסמך ולא כמו קטלוג —
- * וזו גם אותה שפה של עמוד תחומי העיסוק, בצפיפות אחרת.
+ * הרשימה המסורגלת שהייתה כאן נשאה את המידע אבל לא את המשקל — אזור
+ * שירותים צריך להיראות כמו מה שקונים בו. כאן: הפריט הראשון הוא פאנל
+ * כהה שתופס שתי עמודות (תכנון הפרישה המלא הוא המוצר, השאר נגזרות
+ * ממנו), והחמישה האחרים כרטיסים עם ספרת רפאים גדולה ברקע, אייקון
+ * וקו זהב שנמשך בריחוף.
  */
 export default function Services({ services }: { services: SiteContent['services'] }) {
+  const [lead, ...rest] = services.items;
+
   return (
     <section id="services" className="section" aria-labelledby="services-title">
       <div className="container">
@@ -20,16 +24,27 @@ export default function Services({ services }: { services: SiteContent['services
           <p className="section-lead">{services.lead}</p>
         </div>
 
-        <ol className="svc-list">
-          {services.items.map((item, i) => (
-            <li key={item.title} className="svc">
-              <span className="svc-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <span className="svc-icon" aria-hidden="true"><Icon name={item.icon} size={22} /></span>
-              <h3 className="svc-title">{item.title}</h3>
-              <p className="svc-text">{item.text}</p>
+        <ul className="svc-grid">
+          <li className="svc-card svc-card-lead">
+            <span className="svc-ghost" aria-hidden="true">01</span>
+            <span className="svc-mark"><Icon name={lead.icon} size={30} /></span>
+            <h3 className="svc-card-title">{lead.title}</h3>
+            <p className="svc-card-text">{lead.text}</p>
+            <Link className="arrow-link" href={asset('/services')}>
+              לפירוט התהליך
+              <span className="visually-hidden"> — {lead.title}</span>
+            </Link>
+          </li>
+
+          {rest.map((item, i) => (
+            <li key={item.title} className="svc-card">
+              <span className="svc-ghost" aria-hidden="true">{String(i + 2).padStart(2, '0')}</span>
+              <span className="svc-mark"><Icon name={item.icon} size={24} /></span>
+              <h3 className="svc-card-title">{item.title}</h3>
+              <p className="svc-card-text">{item.text}</p>
             </li>
           ))}
-        </ol>
+        </ul>
 
         <p className="section-more">
           <Link className="btn btn-secondary" href={asset('/services')}>

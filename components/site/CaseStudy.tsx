@@ -4,44 +4,47 @@ import { caseStudy } from '@/content/site';
 /**
  * מקרה מהשטח.
  *
- * המסר הוא "תחקיר עמוק מוצא מה ששאלון מפספס", ולכן יש לו מבנה:
- * מה הגיע → מה עלה בתחקיר → מה זה שינה. התצלום מראה בדיוק את הרגע
- * הזה — יד שעוברת על מסמך — ולכן הוא יושב לצד הפעימות ולא מעליהן.
+ * שלוש הפעימות היו שלושה כרטיסים, ושלושה כרטיסים נראים כמו רשימה —
+ * לא כמו סיפור. כאן הן יורדות על מסילת זהב אנכית: כל פעימה היא תחנה,
+ * הקו שביניהן הוא הרצף, והמעבר מ"מה הגיע" ל"מה זה שינה" נקרא כתנועה.
+ * התצלום יורד עד שולי הסקשן ומחזיק את הצד השני של המסך.
  */
 export default function CaseStudy() {
   return (
     <section className="section on-dark case" aria-labelledby="case-title">
-      <div className="container">
+      <div className="case-photo">
+        <img
+          src={asset(caseStudy.image.src)}
+          alt={caseStudy.image.alt}
+          width={1200}
+          height={900}
+          loading="lazy"
+        />
+      </div>
+
+      <div className="container case-inner">
         <div className="section-head">
           <p className="eyebrow">{caseStudy.eyebrow}</p>
           <h2 id="case-title" className="section-title">{caseStudy.title}</h2>
           <p className="section-lead">{caseStudy.lead}</p>
         </div>
 
-        <div className="case-inner">
-          <ol className="beats">
-            {caseStudy.beats.map((beat, i) => (
-              <li key={beat.label} className="beat">
-                <span className="beat-label">{beat.label}</span>
-                <span className="beat-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="beat-title">{beat.title}</h3>
-                <p className="beat-text">{beat.text}</p>
-              </li>
-            ))}
-          </ol>
+        <ol className="rail">
+          {caseStudy.beats.map((beat, i) => (
+            <li key={beat.label} className="rail-step">
+              <span className="rail-marker" aria-hidden="true">
+                <span className="rail-num">{String(i + 1).padStart(2, '0')}</span>
+              </span>
+              <div className="rail-body">
+                <span className="rail-label">{beat.label}</span>
+                <h3 className="rail-title">{beat.title}</h3>
+                <p className="rail-text">{beat.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
 
-          <figure className="case-figure">
-            <img
-              src={asset(caseStudy.image.src)}
-              alt={caseStudy.image.alt}
-              width={1200}
-              height={900}
-              loading="lazy"
-            />
-          </figure>
-        </div>
-
-        <p className="case-punch">{caseStudy.punch}</p>
+        <blockquote className="case-punch">{caseStudy.punch}</blockquote>
         <p className="case-disclaimer">{caseStudy.disclaimer}</p>
       </div>
     </section>

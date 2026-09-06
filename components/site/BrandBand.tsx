@@ -3,28 +3,34 @@ import { band } from '@/content/site';
 
 /**
  * רגע מותג — פס תצלום ברוחב מלא בין שני סקשנים בהירים.
- * אין בו קריאה לפעולה: תפקידו לתת נשימה ולקבע את שפת המותג,
- * לא להוסיף עוד כפתור.
+ *
+ * אין כאן eyebrow ואין כפתור: זה פס נשימה, ותווית מעל המשפט רק גוזלת
+ * ממנו את הבמה. המילים "את כל התמונה" בזהב, כי הן הטיעון עצמו.
  */
 export default function BrandBand({
-  eyebrow = band.eyebrow,
   title = band.title,
+  titleAccent = band.titleAccent,
+  titleRest = band.titleRest,
   image = band.image,
 }: {
-  eyebrow?: string;
   title?: string;
+  titleAccent?: string;
+  titleRest?: string;
   image?: { src: string; alt: string };
 }) {
   return (
-    <section className="brand-band on-dark" aria-label={title}>
+    <section className="brand-band on-dark" aria-label={`${title} ${titleAccent} ${titleRest}`}>
       <PhotoLayer
         src={image.src}
         scrim="linear-gradient(rgba(5,22,35,.56), rgba(5,22,35,.56))"
         position="center 58%"
       />
-      <div className="container brand-band-inner">
-        <p className="eyebrow">{eyebrow}</p>
-        <p className="brand-band-title">{title}</p>
+      <div className="container">
+        <p className="brand-band-title">
+          {title}{' '}
+          <em className="accent">{titleAccent}</em>{' '}
+          {titleRest}
+        </p>
       </div>
     </section>
   );

@@ -23,6 +23,40 @@ export default function Press() {
         </div>
 
         <div className="press-inner">
+          <div className="press-list">
+            <a className="press-feature" href={f.href} target="_blank" rel="noopener noreferrer">
+              <span className="press-feature-top">
+                <span className="press-mark" aria-hidden="true"><Icon name={f.icon} size={22} /></span>
+                <span className="press-kind">{f.kind}</span>
+              </span>
+              <span className="press-source-lg">{f.source}</span>
+              <span className="press-feature-title">{f.title}</span>
+              <span className="press-feature-note">{f.note}</span>
+              <span className="press-feature-cta">
+                {f.cta}
+                <span className="btn-arrow" aria-hidden="true">←</span>
+              </span>
+              <span className="visually-hidden">(נפתח בחלון חדש)</span>
+            </a>
+
+            <ul className="press-rows">
+              {press.items.map((item) => (
+                <li key={item.href}>
+                  <a className="press-row" href={item.href} target="_blank" rel="noopener noreferrer">
+                    <span className="press-mark" aria-hidden="true"><Icon name={item.icon} size={20} /></span>
+                    <span className="press-row-body">
+                      <span className="press-source">{item.source}</span>
+                      <span className="press-row-title">{item.title}</span>
+                      <span className="press-kind">{item.kind}</span>
+                    </span>
+                    <span className="press-row-go" aria-hidden="true">←</span>
+                    <span className="visually-hidden">(נפתח בחלון חדש)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <figure className="press-figure">
             <img
               src={asset(press.image.src)}
@@ -32,38 +66,6 @@ export default function Press() {
               loading="lazy"
             />
           </figure>
-
-          <a className="press-feature" href={f.href} target="_blank" rel="noopener noreferrer">
-            <span className="press-feature-top">
-              <span className="press-mark" aria-hidden="true"><Icon name={f.icon} size={22} /></span>
-              <span className="press-kind">{f.kind}</span>
-            </span>
-            <span className="press-source-lg">{f.source}</span>
-            <span className="press-feature-title">{f.title}</span>
-            <span className="press-feature-note">{f.note}</span>
-            <span className="press-feature-cta">
-              {f.cta}
-              <span className="btn-arrow" aria-hidden="true">←</span>
-            </span>
-            <span className="visually-hidden">(נפתח בחלון חדש)</span>
-          </a>
-
-          <ul className="press-rows">
-            {press.items.map((item) => (
-              <li key={item.href}>
-                <a className="press-row" href={item.href} target="_blank" rel="noopener noreferrer">
-                  <span className="press-mark" aria-hidden="true"><Icon name={item.icon} size={20} /></span>
-                  <span className="press-row-body">
-                    <span className="press-source">{item.source}</span>
-                    <span className="press-row-title">{item.title}</span>
-                    <span className="press-kind">{item.kind}</span>
-                  </span>
-                  <span className="press-row-go" aria-hidden="true">←</span>
-                  <span className="visually-hidden">(נפתח בחלון חדש)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>

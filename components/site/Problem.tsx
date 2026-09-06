@@ -1,8 +1,13 @@
 import { problem } from '@/content/site';
 
 /**
- * "הפער השקט" — הסקשן שמטלטל את השאננות.
- * הקהל אינו מרגיש בעיה, ולכן הסקשן לא מציע פתרון אלא חושף פערים.
+ * "הפער השקט".
+ *
+ * הגרסה הקודמת הייתה רשימה מסורגלת — נכונה בתוכן, אבל היא נקראה
+ * כטקסט ולא כממצא. הקהל כאן שאנן, ולכן האזור צריך להיראות כמו מה
+ * שהוא באמת: דוח בדיקה. כותרת דוח, שורות ממוספרות, ולכל שורה תווית
+ * מצב בזהב שאומרת מה נמצא — "לא הותאם", "רדום", "לא נוצל".
+ * התווית היא מה שהופך רשימה להתראה.
  */
 export default function Problem() {
   return (
@@ -17,17 +22,25 @@ export default function Problem() {
           <p className="problem-note">{problem.note}</p>
         </div>
 
-        <ul className="finding-list reveal-stagger">
-          {problem.findings.map((f, i) => (
-            <li key={f.title} className="finding">
-              <span className="finding-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <div>
-                <h3 className="finding-title">{f.title}</h3>
-                <p className="finding-text">{f.text}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <div className="report">
+          <div className="report-head">
+            <span className="report-title">{problem.panelTitle}</span>
+            <span className="report-tag">{problem.panelTag}</span>
+          </div>
+
+          <ol className="report-rows">
+            {problem.findings.map((f, i) => (
+              <li key={f.title} className="report-row">
+                <span className="report-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <div className="report-body">
+                  <h3 className="report-row-title">{f.title}</h3>
+                  <p className="report-row-text">{f.text}</p>
+                </div>
+                <span className="report-flag">{f.flag}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

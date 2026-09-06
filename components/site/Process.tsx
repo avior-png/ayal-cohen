@@ -1,4 +1,5 @@
 import { asset } from '@/lib/asset';
+import PhotoLayer from '@/components/site/PhotoLayer';
 import { process } from '@/content/site';
 
 /**
@@ -18,22 +19,18 @@ const WAVE =
 export default function Process() {
   return (
     <section id="process" className="section on-dark process" aria-labelledby="process-title">
+      {/* התצלום כרקע: ארבע התחנות שבו עומדות מאחורי ארבעת השלבים,
+          והכהיה חזקה מספיק כדי שהקריאוּת לא תלויה בו. */}
+      <PhotoLayer
+        src={process.image.src}
+        scrim="linear-gradient(rgba(7,24,44,.82), rgba(7,24,44,.9))"
+      />
       <div className="container">
         <div className="section-head section-head-center">
           <p className="eyebrow">{process.eyebrow}</p>
           <h2 id="process-title" className="section-title">{process.title}</h2>
           <p className="section-lead">{process.lead}</p>
         </div>
-
-        <figure className="process-strip">
-          <img
-            src={asset(process.image.src)}
-            alt={process.image.alt}
-            width={1774}
-            height={887}
-            loading="lazy"
-          />
-        </figure>
 
         <div className="process-track">
           <svg
