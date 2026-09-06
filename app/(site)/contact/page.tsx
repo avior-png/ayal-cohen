@@ -5,7 +5,8 @@ import PageHeader from '@/components/site/PageHeader';
 import Icon from '@/components/site/Icon';
 import Faq from '@/components/site/Faq';
 import ContactCta from '@/components/site/ContactCta';
-import { process as processContent } from '@/content/site';
+import { asset } from '@/lib/asset';
+import { contactImage, process as processContent } from '@/content/site';
 
 export const metadata: Metadata = {
   title: 'יצירת קשר',
@@ -64,6 +65,10 @@ export default async function ContactPage() {
             <div className="section-head section-head-center">
               <p className="eyebrow">{processContent.eyebrow}</p>
               <h2 id="next-title" className="section-title">מכאן ממשיכים כך</h2>
+            </div>
+            <div className="wide-media" style={{ marginBottom: 'var(--space-xl)' }}>
+              <img src={asset(contactImage.src)} alt={contactImage.alt}
+                   width={1200} height={900} loading="lazy" />
             </div>
             <ol className="card-grid card-grid-4">
               {processContent.steps.map((step, i) => (

@@ -4,9 +4,10 @@ import { db } from '@/lib/db';
 import { getSiteContent } from '@/lib/site-content';
 import { requireSection } from '@/lib/page-guard';
 import { asset } from '@/lib/asset';
-import { disclaimer } from '@/content/site';
+import { disclaimer, servicesBand } from '@/content/site';
 import PageHeader from '@/components/site/PageHeader';
 import Icon from '@/components/site/Icon';
+import BrandBand from '@/components/site/BrandBand';
 import Process from '@/components/site/Process';
 import ContactCta from '@/components/site/ContactCta';
 
@@ -56,6 +57,8 @@ export default async function ServicesPage() {
             <p className="page-disclaimer">{disclaimer}</p>
           </div>
         </section>
+
+        <BrandBand {...servicesBand} />
 
         <Process />
 

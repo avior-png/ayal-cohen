@@ -5,6 +5,11 @@ import { process } from '@/content/site';
 export default function Process() {
   return (
     <section id="process" className="section on-dark process" aria-labelledby="process-title">
+      <div
+        className="process-art"
+        aria-hidden="true"
+        style={{ backgroundImage: `url(${asset('/images/bg-lines.webp')})` }}
+      />
       <div className="container">
         <div className="section-head section-head-center">
           <p className="eyebrow">{process.eyebrow}</p>

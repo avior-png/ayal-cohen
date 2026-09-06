@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react';
 import { submitEnquiry, type EnquiryState } from '@/lib/enquiry';
+import PhotoLayer from '@/components/site/PhotoLayer';
 import { contact as contactContent } from '@/content/site';
 import type { SiteContent } from '@/lib/site-content';
 
@@ -23,6 +24,10 @@ export default function ContactCta({
 
   return (
     <section id="contact" className="section on-dark cta-section" aria-labelledby="contact-title">
+      <PhotoLayer
+        src="/images/bg-ink.webp"
+        scrim="linear-gradient(to left, rgba(7,24,44,.90) 0%, rgba(7,24,44,.78) 100%)"
+      />
       <div className="container cta-inner">
         <div className="cta-text">
           {contact.eyebrow && <p className="eyebrow">{contact.eyebrow}</p>}

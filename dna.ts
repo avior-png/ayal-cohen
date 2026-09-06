@@ -108,9 +108,10 @@ export const dna: Dna = {
     },
 
     fonts: {
-      // סריף עברי לכותרות — נותן את הרושם העיתונאי־סמכותי שהמותג צריך,
-      // במקום עוד סאנס גנרי. סאנס נקי לגוף הטקסט לקריאוּת ארוכה.
-      heading: { family: 'Frank Ruhl Libre', weights: [500, 700, 800] },
+      // Heebo לכותרות — סאנס עברי נקי ורציני, קריא מאוד בגדלים גדולים
+      // ובמסכים של קהל 40+. Assistant לגוף, לקריאוּת בפסקאות ארוכות.
+      // להחלפה: מספיק לשנות את family כאן, כל השאר נגזר.
+      heading: { family: 'Heebo', weights: [600, 700, 800] },
       body: { family: 'Assistant', weights: [400, 500, 600, 700] },
       fallback: "system-ui, -apple-system, 'Segoe UI', Arial, sans-serif",
     },

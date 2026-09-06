@@ -1,3 +1,5 @@
+import { asset } from '@/lib/asset';
+import PhotoLayer from '@/components/site/PhotoLayer';
 import { caseStudy } from '@/content/site';
 
 /**
@@ -8,6 +10,7 @@ import { caseStudy } from '@/content/site';
 export default function CaseStudy() {
   return (
     <section className="section case" aria-labelledby="case-title">
+      <PhotoLayer src="/images/paper.webp" />
       <div className="container">
         <div className="section-head">
           <p className="eyebrow">{caseStudy.eyebrow}</p>
@@ -21,14 +24,20 @@ export default function CaseStudy() {
             <p className="case-disclaimer">{caseStudy.disclaimer}</p>
           </div>
 
-          <ul className="case-outcomes">
-            {caseStudy.outcomes.map((o) => (
-              <li key={o.title} className="case-outcome">
-                <span className="case-outcome-title">{o.title}</span>
-                <span className="case-outcome-text">{o.text}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="case-aside">
+            <div className="case-media">
+              <img src={asset(caseStudy.image.src)} alt={caseStudy.image.alt}
+                   width={1000} height={750} loading="lazy" />
+            </div>
+            <ul className="case-outcomes">
+              {caseStudy.outcomes.map((o) => (
+                <li key={o.title} className="case-outcome">
+                  <span className="case-outcome-title">{o.title}</span>
+                  <span className="case-outcome-text">{o.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

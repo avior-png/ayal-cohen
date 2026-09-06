@@ -127,12 +127,28 @@
   .main-nav-cta { display: none; }
 }
 
+/* ====================== שכבת תצלום ======================
+   רקע דקורטיבי מאחורי תוכן. התמונה עצמה מוזרקת ב-inline style
+   (ראה components/site/PhotoLayer.tsx), כאן רק המיקום וההתנהגות. */
+.bg-photo {
+  position: absolute; inset: 0; z-index: 0;
+  background-position: center; background-size: cover; background-repeat: no-repeat;
+  pointer-events: none;
+}
+/* כל תוכן שיושב מעל שכבת תצלום חייב הקשר ערימה משלו. */
+.brand-band-inner,
+.hero-inner,
+.process > .container,
+.cta-inner,
+.page-header > .container { position: relative; z-index: 1; }
+
 /* ====================== היררו ====================== */
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
   background: var(--ink); color: var(--on-ink);
   padding-block: clamp(3.5rem, 1.8rem + 6.5vw, 6.5rem) clamp(6rem, 3.5rem + 9vw, 10rem);
 }
+.hero .bg-photo { z-index: -3; }
 /* זוהר זהב רך מאחורי הכותרת. */
 .hero::before {
   content: ''; position: absolute; z-index: -2;
@@ -285,6 +301,8 @@
   border-radius: var(--radius-sm);
   font-size: var(--fs-small); color: var(--text);
 }
+.problem-media { margin-top: var(--space-lg); border-radius: var(--radius); overflow: hidden; }
+.problem-media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .finding-list { display: grid; margin: 0; border-block-start: var(--hairline); }
 .finding {
   display: grid; grid-template-columns: auto 1fr; gap: var(--space-md) var(--space-lg);
@@ -310,6 +328,15 @@
 
 /* ====================== התהליך ====================== */
 .process { background: var(--ink-alt); position: relative; overflow: hidden; }
+/* החץ הזהוב העולה — רמז ויזואלי להתקדמות בין השלבים, לא קישוט אקראי. */
+.process-art {
+  position: absolute; z-index: 0; pointer-events: none;
+  inset-block-end: -10%; inset-inline: -6%;
+  height: 46%; opacity: 0.2;
+  background: bottom center / contain no-repeat;
+  transform: scaleX(-1);
+}
+@media (max-width: 999px) { .process-art { display: none; } }
 .process::before {
   content: ''; position: absolute; inset-block-start: -30%; inset-inline-start: -10%;
   width: min(620px, 70%); aspect-ratio: 1; pointer-events: none;
@@ -363,7 +390,7 @@
 }
 .about-media img {
   position: relative; z-index: 1;
-  width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
   border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
 }
 .about-text > * + * { margin-top: var(--space-md); }
@@ -385,15 +412,37 @@
 .credential-text { color: var(--text-muted); }
 @media (min-width: 700px) { .credentials-2col { grid-template-columns: 1fr 1fr; column-gap: var(--space-xl); } }
 
+/* ====================== רגע מותג ====================== */
+.brand-band {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; align-items: center;
+  background: var(--ink);
+  padding-block: clamp(3.5rem, 2rem + 5vw, 6rem);
+  /* גובה מינימלי: בלעדיו הפס נמוך מהתצלום, ו-cover חותך אותו לרצועה
+     שבה כבר לא מזהים מה מצולם. */
+  min-height: clamp(280px, 24vw, 380px);
+}
+.brand-band .bg-photo { z-index: -1; }
+.brand-band-inner { max-width: 46ch; }
+.brand-band-title {
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: var(--fs-h3); line-height: 1.4; color: #fff;
+}
+
 /* ====================== מקרה מהשטח ====================== */
-.case { background: var(--accent-soft); }
+.case { background: var(--accent-soft); position: relative; overflow: hidden; }
+.case .bg-photo { opacity: 0.3; z-index: 0; }
+.case > .container { position: relative; z-index: 1; }
 .case-panel {
   display: grid; gap: clamp(2rem, 1.2rem + 3vw, 3.5rem);
   padding: clamp(1.75rem, 1.1rem + 2.4vw, 3.25rem);
   background: var(--surface); border: 1px solid rgba(176, 128, 31, 0.24);
   border-radius: var(--radius-lg); box-shadow: var(--shadow);
 }
-@media (min-width: 1000px) { .case-panel { grid-template-columns: 1.25fr 0.75fr; } }
+@media (min-width: 1000px) { .case-panel { grid-template-columns: 1.22fr 0.78fr; } }
+.case-aside { display: grid; gap: var(--space-lg); align-content: start; }
+.case-media { border-radius: var(--radius); overflow: hidden; }
+.case-media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .case-quote { position: relative; }
 .case-quote::before {
   content: ''; position: absolute; inset-block-start: 0; inset-inline-start: 0;
@@ -463,7 +512,8 @@
 .post-more { margin-top: auto; padding-top: var(--space-md); }
 
 /* ====================== CTA + טופס ====================== */
-.cta-section { position: relative; overflow: hidden; }
+.cta-section { position: relative; isolation: isolate; overflow: hidden; }
+.cta-section .bg-photo { z-index: -2; transform: scaleX(-1); }
 .cta-section::before {
   content: ''; position: absolute; inset-block-end: -35%; inset-inline-start: -8%;
   width: min(680px, 80%); aspect-ratio: 1; pointer-events: none;
@@ -487,7 +537,7 @@
 
 /* ====================== ראש עמוד פנימי ====================== */
 .page-header {
-  position: relative; overflow: hidden;
+  position: relative; isolation: isolate; overflow: hidden;
   background: var(--ink); color: var(--on-ink);
   padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) clamp(3rem, 1.8rem + 4.5vw, 5rem);
 }
@@ -496,7 +546,7 @@
   width: min(560px, 70%); aspect-ratio: 1; pointer-events: none;
   background: radial-gradient(circle, rgba(176, 128, 31, 0.26), transparent 62%);
 }
-.page-header > .container { position: relative; }
+.page-header .bg-photo { z-index: -2; }
 .page-title { font-size: var(--fs-h1); margin-bottom: var(--space-md); color: #fff; }
 .page-lead { font-size: var(--fs-lead); color: var(--on-ink-muted); max-width: 62ch; }
 
@@ -604,6 +654,11 @@ a.contact-card-value:hover { color: var(--brand); text-decoration: underline; }
   /* מסגרת הזהב המוסטת נוגעת בקצה המסך ברוחב מלא — כאן היא מתקרבת. */
   .about-media::before { inset-block: 14px -14px; inset-inline: -12px 12px; }
 }
+
+/* פס תצלום רחב בתוך עמוד תוכן */
+.wide-media { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
+.wide-media img { width: 100%; aspect-ratio: 3 / 1.35; object-fit: cover; }
+@media (max-width: 700px) { .wide-media img { aspect-ratio: 3 / 2; } }
 
 /* ריחוף על שורת שירות — משוב עדין בלי להזיז את הפריסה */
 .service-row { transition: background var(--transition); }

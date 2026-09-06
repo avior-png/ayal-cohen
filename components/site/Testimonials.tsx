@@ -7,7 +7,7 @@ export default function Testimonials({ testimonials }: { testimonials: SiteConte
     <section id="testimonials" className="section" aria-labelledby="testimonials-title">
       <div className="container">
         <div className="section-head">
-          <span className="section-eyebrow">{testimonials.eyebrow}</span>
+          <p className="eyebrow">{testimonials.eyebrow}</p>
           <h2 id="testimonials-title" className="section-title">{testimonials.title}</h2>
         </div>
         <ul className="testimonial-grid">

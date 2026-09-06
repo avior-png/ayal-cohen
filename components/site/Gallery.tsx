@@ -7,7 +7,7 @@ export default function Gallery({ gallery }: { gallery: SiteContent['gallery'] }
     <section id="gallery" className="section section-alt" aria-labelledby="gallery-title">
       <div className="container">
         <div className="section-head">
-          <span className="section-eyebrow">{gallery.eyebrow}</span>
+          <p className="eyebrow">{gallery.eyebrow}</p>
           <h2 id="gallery-title" className="section-title">{gallery.title}</h2>
           <p className="section-lead">{gallery.lead}</p>
         </div>

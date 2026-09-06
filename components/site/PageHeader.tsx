@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { asset } from '@/lib/asset';
+import PhotoLayer from '@/components/site/PhotoLayer';
 
 /**
  * ראש עמוד פנימי: פירורי לחם, כותרת ופסקת פתיחה.
@@ -19,6 +20,10 @@ export default function PageHeader({
 }) {
   return (
     <header className="page-header">
+      <PhotoLayer
+        src="/images/bg-ink.webp"
+        scrim="linear-gradient(to left, rgba(7,24,44,.90) 0%, rgba(7,24,44,.74) 100%)"
+      />
       <div className="container">
         <nav className="breadcrumbs" aria-label="מיקומך באתר">
           <ol>
@@ -29,7 +34,7 @@ export default function PageHeader({
             <li aria-current="page">{crumbLabel ?? title}</li>
           </ol>
         </nav>
-        {eyebrow && <span className="section-eyebrow">{eyebrow}</span>}
+        {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h1 className="page-title">{title}</h1>
         {lead && <p className="page-lead">{lead}</p>}
       </div>

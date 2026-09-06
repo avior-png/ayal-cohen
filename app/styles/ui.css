@@ -89,11 +89,12 @@
   border-color: rgba(176, 128, 31, 0.3);
 }
 
-/* מספר סידורי גדול בסריף — מסמן סדר בלי לצרוך שטח קריאה. */
+/* מספר סידורי — מסמן סדר בלי לצרוך שטח קריאה.
+   שקיפות נמוכה מדי הופכת את הזהב לבז' עכור; 0.45 שומר עליו כזהב. */
 .card-index {
   font-family: var(--font-heading); font-weight: 700;
-  font-size: 2.6rem; line-height: 1;
-  color: var(--accent); opacity: 0.32;
+  font-size: 1.9rem; line-height: 1;
+  color: var(--accent); opacity: 0.45;
   font-variant-numeric: lining-nums tabular-nums;
 }
 

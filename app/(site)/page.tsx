@@ -7,6 +7,7 @@ import Problem from '@/components/site/Problem';
 import Services from '@/components/site/Services';
 import Process from '@/components/site/Process';
 import About from '@/components/site/About';
+import BrandBand from '@/components/site/BrandBand';
 import CaseStudy from '@/components/site/CaseStudy';
 import Press from '@/components/site/Press';
 import Faq from '@/components/site/Faq';
@@ -69,6 +70,7 @@ export default async function HomePage() {
         {on.services && <Services services={c.services} />}
         {on.process && <Process />}
         {on.about && <About about={c.about} />}
+        {on.caseStudy && <BrandBand />}
         {on.caseStudy && <CaseStudy />}
         {on.press && <Press />}
         {on.faq && <Faq />}

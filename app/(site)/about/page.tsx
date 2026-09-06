@@ -64,6 +64,10 @@ export default async function AboutPage() {
               <h2 id="approach-title" className="section-title">{aboutPage.approach.title}</h2>
               <p className="section-lead">{aboutPage.approach.lead}</p>
             </div>
+            <div className="wide-media" style={{ marginBottom: 'var(--space-xl)' }}>
+              <img src={asset(aboutSeed.imageWide.src)} alt={aboutSeed.imageWide.alt}
+                   width={1400} height={933} loading="lazy" />
+            </div>
             <ul className="card-grid card-grid-2 reveal-stagger">
               {aboutPage.approach.items.map((item) => (
                 <li key={item.title} className="card">

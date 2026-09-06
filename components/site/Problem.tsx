@@ -1,3 +1,4 @@
+import { asset } from '@/lib/asset';
 import { problem } from '@/content/site';
 
 /**
@@ -15,6 +16,10 @@ export default function Problem() {
             <p className="section-lead">{problem.lead}</p>
           </div>
           <p className="problem-note">{problem.note}</p>
+          <div className="problem-media">
+            <img src={asset(problem.image.src)} alt={problem.image.alt}
+                 width={1000} height={750} loading="lazy" />
+          </div>
         </div>
 
         <ul className="finding-list reveal-stagger">

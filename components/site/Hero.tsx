@@ -1,4 +1,5 @@
 import { asset } from '@/lib/asset';
+import PhotoLayer from '@/components/site/PhotoLayer';
 import { hero as heroContent } from '@/content/site';
 import type { SiteContent } from '@/lib/site-content';
 
@@ -10,6 +11,11 @@ export default function Hero({ hero }: { hero: SiteContent['hero'] }) {
 
   return (
     <section className="hero" aria-labelledby="hero-title">
+      {/* הכהיה חזקה יותר בצד שבו יושב הטקסט, כדי שהניגודיות לא תלויה בתצלום */}
+      <PhotoLayer
+        src={hero.image.src}
+        scrim="linear-gradient(to left, rgba(7,24,44,.93) 0%, rgba(7,24,44,.72) 48%, rgba(7,24,44,.45) 100%)"
+      />
       <div className="container hero-inner">
         <div className="hero-text">
           <p className="eyebrow">{hero.eyebrow}</p>
