@@ -3,28 +3,33 @@ import { asset } from '@/lib/asset';
 import Icon from '@/components/site/Icon';
 import type { SiteContent } from '@/lib/site-content';
 
+/**
+ * תחומי העיסוק — רשימה מסורגלת בשתי עמודות, לא רשת כרטיסים.
+ *
+ * שש קופסאות זהות בשלוש עמודות הן החתימה של כל תבנית; קווי סרגל
+ * ומספור נותנים את אותו מידע במבנה שקורא כמו מסמך ולא כמו קטלוג —
+ * וזו גם אותה שפה של עמוד תחומי העיסוק, בצפיפות אחרת.
+ */
 export default function Services({ services }: { services: SiteContent['services'] }) {
   return (
     <section id="services" className="section" aria-labelledby="services-title">
       <div className="container">
-        <div className="section-head section-head-center">
+        <div className="section-head">
           <p className="eyebrow">{services.eyebrow}</p>
           <h2 id="services-title" className="section-title">{services.title}</h2>
           <p className="section-lead">{services.lead}</p>
         </div>
 
-        <ul className="card-grid card-grid-3 reveal-stagger">
+        <ol className="svc-list">
           {services.items.map((item, i) => (
-            <li key={item.title} className="card service-card">
-              <span className="card-head">
-                <span className="card-icon"><Icon name={item.icon} /></span>
-                <span className="card-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              </span>
-              <h3 className="card-title">{item.title}</h3>
-              <p className="card-text">{item.text}</p>
+            <li key={item.title} className="svc">
+              <span className="svc-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span className="svc-icon" aria-hidden="true"><Icon name={item.icon} size={22} /></span>
+              <h3 className="svc-title">{item.title}</h3>
+              <p className="svc-text">{item.text}</p>
             </li>
           ))}
-        </ul>
+        </ol>
 
         <p className="section-more">
           <Link className="btn btn-secondary" href={asset('/services')}>

@@ -2,9 +2,9 @@ import { dna } from '@/dna';
 import { getSiteContent } from '@/lib/site-content';
 import { faq, press } from '@/content/site';
 import Hero from '@/components/site/Hero';
-import TrustBar from '@/components/site/TrustBar';
 import Problem from '@/components/site/Problem';
 import Services from '@/components/site/Services';
+import PlanMap from '@/components/site/PlanMap';
 import Process from '@/components/site/Process';
 import About from '@/components/site/About';
 import BrandBand from '@/components/site/BrandBand';
@@ -64,14 +64,18 @@ export default async function HomePage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       )}
       <main id="main">
-        {on.hero && <Hero hero={c.hero} />}
-        {on.trust && <TrustBar />}
+        {/* הסדר הוא הטיעון: בעיה → הוכחה שהתחקיר מוצא אותה → התוצר →
+            מה נכלל → איך זה עובד → מי עושה את זה → הוכחה חיצונית.
+            הוא גם מה שקובע את קצב הרקעים: כהה, בהיר, כהה, בהיר — ופס
+            המותג הבהיר לא נוגע עוד במקרה מהשטח, שהיו נבלעים זה בזה. */}
+        {on.hero && <Hero hero={c.hero} showStats={on.trust} />}
         {on.problem && <Problem />}
+        {on.caseStudy && <CaseStudy />}
+        {on.planMap && <PlanMap />}
         {on.services && <Services services={c.services} />}
         {on.process && <Process />}
         {on.about && <About about={c.about} />}
-        {on.caseStudy && <BrandBand />}
-        {on.caseStudy && <CaseStudy />}
+        {on.band && <BrandBand />}
         {on.press && <Press />}
         {on.faq && <Faq />}
         {on.gallery && <Gallery gallery={c.gallery} />}

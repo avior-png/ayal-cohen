@@ -1,44 +1,45 @@
-import { asset } from '@/lib/asset';
 import PhotoLayer from '@/components/site/PhotoLayer';
 import { caseStudy } from '@/content/site';
 
 /**
- * מקרה מהשטח. בשלב ההשקה אין עדיין עדויות מתועדות מלקוחות קצה,
- * ולכן ההוכחה כאן היא עומק מקצועי מסופר — לא ציטוט שאי אפשר לאמת.
- * הפרטים המזהים שונו, וההסתייגות מופיעה בגוף הסקשן ולא באותיות קטנות.
+ * מקרה מהשטח.
+ *
+ * הגרסה הקודמת הייתה פסקה ארוכה בתוך כרטיס לבן — והמסר נבלע בה.
+ * המסר הוא לא "היה מקרה מעניין" אלא "תחקיר עמוק מוצא מה ששאלון
+ * מפספס", וזה מסר עם מבנה: מה הגיע → מה עלה → מה זה שינה.
+ * שלוש הפעימות נותנות לו את המבנה הזה, והמשפט בסוף נושא את הפואנטה.
+ *
+ * על משטח כהה, ולא על התצלום הבהיר — כדי שלא ייצמד לפס המותג הבהיר
+ * שמעליו ויאבד את ההפרדה ביניהם.
  */
 export default function CaseStudy() {
   return (
-    <section className="section case" aria-labelledby="case-title">
-      <PhotoLayer src="/images/paper.webp" />
+    <section className="section on-dark case" aria-labelledby="case-title">
+      <PhotoLayer
+        src={caseStudy.image.src}
+        scrim="linear-gradient(to left, rgba(7,24,44,.96) 0%, rgba(7,24,44,.9) 55%, rgba(7,24,44,.82) 100%)"
+      />
+
       <div className="container">
         <div className="section-head">
           <p className="eyebrow">{caseStudy.eyebrow}</p>
           <h2 id="case-title" className="section-title">{caseStudy.title}</h2>
+          <p className="section-lead">{caseStudy.lead}</p>
         </div>
 
-        <div className="case-panel">
-          <div className="case-quote">
-            <p>{caseStudy.quote}</p>
-            <p>{caseStudy.body}</p>
-            <p className="case-disclaimer">{caseStudy.disclaimer}</p>
-          </div>
+        <ol className="beats">
+          {caseStudy.beats.map((beat, i) => (
+            <li key={beat.label} className="beat">
+              <span className="beat-label">{beat.label}</span>
+              <span className="beat-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="beat-title">{beat.title}</h3>
+              <p className="beat-text">{beat.text}</p>
+            </li>
+          ))}
+        </ol>
 
-          <div className="case-aside">
-            <div className="case-media">
-              <img src={asset(caseStudy.image.src)} alt={caseStudy.image.alt}
-                   width={1000} height={750} loading="lazy" />
-            </div>
-            <ul className="case-outcomes">
-              {caseStudy.outcomes.map((o) => (
-                <li key={o.title} className="case-outcome">
-                  <span className="case-outcome-title">{o.title}</span>
-                  <span className="case-outcome-text">{o.text}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <p className="case-punch">{caseStudy.punch}</p>
+        <p className="case-disclaimer">{caseStudy.disclaimer}</p>
       </div>
     </section>
   );

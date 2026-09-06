@@ -54,6 +54,13 @@
   --transition: 200ms var(--ease);
   --transition-slow: 420ms var(--ease-out);
 
+  /* --- שפת הצורה ---
+     החתך והסימנים נגזרים ממסמך: פינה חתוכה כמו דף שקופל,
+     וסימני פינה בזהב כמו סימני יישור בדפוס. */
+  --notch: 20px;
+  --bracket: 22px;
+  --bracket-w: 2px;
+
   /* --- קווי מסגרת --- */
   --hairline: 1px solid var(--border);
   --hairline-dark: 1px solid rgba(255, 255, 255, 0.13);

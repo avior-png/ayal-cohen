@@ -116,10 +116,13 @@ export const dna: Dna = {
       fallback: "system-ui, -apple-system, 'Segoe UI', Arial, sans-serif",
     },
 
+    // פינות כמעט חדות. עיגול של 8px על כל כרטיס הוא חתימת התבנית
+    // הגנרית; שפת הצורה כאן נגזרת ממסמך — פינה חתוכה וסימני פינה
+    // בזהב — ולכן המשטחים עצמם נשארים ישרים.
     shape: {
-      radiusSm: '4px',
-      radius: '8px',
-      radiusLg: '16px',
+      radiusSm: '2px',
+      radius: '3px',
+      radiusLg: '4px',
       radiusPill: '999px',
     },
 
@@ -147,12 +150,14 @@ export const dna: Dna = {
   // אתר של ארבעה עמודים. התוכן נשאר ב-content/site.ts להדלקה עתידית.
   sections: {
     hero: true,
-    trust: true,
+    trust: true,          // רצועת המספרים בתחתית ההיררו
     problem: true,
+    caseStudy: true,
+    planMap: true,
     services: true,
     process: true,
     about: true,
-    caseStudy: true,
+    band: true,           // פס התצלום שאחרי האודות
     press: true,
     faq: true,
     gallery: false,
