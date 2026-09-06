@@ -5,7 +5,8 @@
  */
 export type IconName =
   | 'map' | 'shield' | 'percent' | 'handover'
-  | 'sliders' | 'compass' | 'phone' | 'mail' | 'clock' | 'pin' | 'external';
+  | 'sliders' | 'compass' | 'phone' | 'mail' | 'clock' | 'pin' | 'external'
+  | 'play' | 'mic' | 'article';
 
 const PATHS: Record<IconName, React.ReactNode> = {
   // מפת תכנון
@@ -61,6 +62,11 @@ const PATHS: Record<IconName, React.ReactNode> = {
   clock: (<><circle cx="12" cy="12" r="9" /><path d="M12 7v5.3l3.4 2" /></>),
   pin: (<><path d="M12 21c4.2-4.6 6.4-8 6.4-10.6A6.4 6.4 0 0 0 5.6 10.4C5.6 13 7.8 16.4 12 21Z" /><circle cx="12" cy="10.3" r="2.4" /></>),
   external: (<><path d="M14 4h6v6" /><path d="M20 4 11 13" /><path d="M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10" /></>),
+  // פודקאסט
+  play: (<><circle cx="12" cy="12" r="9" /><path d="M10 8.6v6.8l5.4-3.4-5.4-3.4Z" /></>),
+  mic: (<><path d="M12 3.5a2.7 2.7 0 0 1 2.7 2.7v5a2.7 2.7 0 0 1-5.4 0v-5A2.7 2.7 0 0 1 12 3.5Z" /><path d="M5.8 11a6.2 6.2 0 0 0 12.4 0M12 17.2V20.5M8.6 20.5h6.8" /></>),
+  // כתבה
+  article: (<><rect x="3.5" y="4.5" width="17" height="15" rx="1.5" /><path d="M7 8.5h6M7 12h10M7 15.5h10" /></>),
 };
 
 /**

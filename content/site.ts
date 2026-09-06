@@ -353,24 +353,32 @@ export const caseStudy = {
 export const press = {
   eyebrow: 'בתקשורת',
   title: 'איפה שומעים את איל',
-  lead: 'כתבות ופודקאסטים מקצועיים שבהם התארח והציג את הגישה שלו לתכנון פרישה.',
+  lead:
+    'כשעיתונות כלכלית ופודקאסטים מקצועיים מחפשים מי שיסביר תכנון פרישה — ' +
+    'זה מי שהם מזמינים.',
+  /** הפריט המוביל מקבל פאנל משלו: עיתונות כלכלית ראשית היא הנכס החזק. */
+  feature: {
+    source: 'גלובס',
+    kind: 'עיתונות כלכלית',
+    icon: 'article' as IconName,
+    title: 'כתבה בנושא תכנון פרישה ומיסוי',
+    note: 'הופעה בעיתון הכלכלי המרכזי בישראל — הוכחת האוטוריטה החזקה שיש למותג בשלב הזה.',
+    href: 'https://share.google/ZtttCS0uf6e36PmXU',
+    cta: 'לכתבה',
+  },
   items: [
     {
-      source: 'גלובס',
-      title: 'כתבה בנושא תכנון פרישה ומיסוי',
-      kind: 'כתבה בעיתונות כלכלית',
-      href: 'https://share.google/ZtttCS0uf6e36PmXU',
-    },
-    {
       source: 'FSFP',
-      title: 'סוגרים את שנת 2025 חכם',
       kind: 'פודקאסט · אירוח',
+      icon: 'play' as IconName,
+      title: 'סוגרים את שנת 2025 חכם',
       href: 'https://www.fsfp.co.il/%D7%A1%D7%95%D7%92%D7%A8%D7%99%D7%9D-%D7%90%D7%AA-%D7%A9%D7%A0%D7%AA-2025-%D7%97%D7%9B%D7%9D/',
     },
     {
       source: 'נטו פיננסים',
-      title: 'פרק 7 — תכנון פרישה בגובה העיניים',
       kind: 'פודקאסט · אירוח',
+      icon: 'mic' as IconName,
+      title: 'פרק 7 — תכנון פרישה בגובה העיניים',
       href: 'https://neto-finance.co.il/podcasts/%D7%A4%D7%A8%D7%A7-7',
     },
   ],

@@ -394,7 +394,8 @@
   width: min(620px, 70%); aspect-ratio: 1; pointer-events: none;
   background: radial-gradient(circle, rgba(216, 180, 90, 0.14), transparent 65%);
 }
-.process-steps { display: grid; gap: var(--space-xl); margin: 0; position: relative; }
+.process-track { position: relative; }
+.process-steps { display: grid; gap: var(--space-xl); margin: 0; position: relative; z-index: 1; }
 .step { position: relative; }
 .step-num {
   display: grid; place-items: center;
@@ -412,13 +413,18 @@
   font-size: var(--fs-micro); font-weight: 700; color: var(--gold);
   letter-spacing: 0.05em;
 }
+
+/* --- חוט הזהב המתעקל --- */
+.process-wave { display: none; }
+.process-wave path { fill: none; stroke: rgba(216, 180, 90, 0.55); stroke-width: 1.5; stroke-linecap: round; }
+
 @media (min-width: 1000px) {
-  .process-steps { grid-template-columns: repeat(4, 1fr); gap: var(--space-xl); }
-  /* קו הזהב שמחבר בין השלבים. */
-  .process-steps::before {
-    content: ''; position: absolute; inset-block-start: 27px; inset-inline: 10%;
-    height: 1px;
-    background: linear-gradient(to left, transparent, rgba(216, 180, 90, 0.45) 12%, rgba(216, 180, 90, 0.45) 88%, transparent);
+  /* מרווח קבוע ולא clamp: מרכזי המספרים חייבים ליפול על צמתי הגל. */
+  .process-steps { grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
+  .process-wave {
+    display: block; position: absolute; z-index: 0;
+    inset-block-start: -18px; inset-inline: 0;
+    width: 100%; height: 90px;
   }
 }
 @media (max-width: 999px) {
@@ -426,7 +432,8 @@
   .step { display: grid; grid-template-columns: 54px 1fr; gap: var(--space-lg); padding-block-end: var(--space-xl); }
   .step:not(:last-child)::before {
     content: ''; position: absolute; inset-block: 62px 0;
-    inset-inline-start: 27px; width: 1px; background: rgba(216, 180, 90, 0.35);
+    inset-inline-start: 27px; width: 0;
+    border-inline-start: 1px dashed rgba(216, 180, 90, 0.4);
   }
   .step-num { margin-bottom: 0; }
 }
@@ -536,23 +543,69 @@
 }
 
 /* ====================== בתקשורת ====================== */
-.press-grid { display: grid; gap: var(--space-lg); margin: 0; }
-@media (min-width: 780px) { .press-grid { grid-template-columns: repeat(3, 1fr); } }
-.press-card {
-  display: flex; flex-direction: column; gap: var(--space-sm); height: 100%;
-  padding: clamp(1.35rem, 1rem + 1vw, 1.9rem);
-  background: var(--surface); border: var(--hairline); border-radius: var(--radius);
+.press { background: var(--bg-alt); }
+.press-inner { display: grid; gap: var(--space-lg); }
+@media (min-width: 1000px) { .press-inner { grid-template-columns: 7fr 5fr; align-items: stretch; } }
+
+/* --- הפריט המוביל: פאנל כהה, הניגוד היחיד בסקשן בהיר --- */
+.press-feature {
+  position: relative; overflow: hidden;
+  display: grid; align-content: start; gap: var(--space-sm);
+  padding: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+  background: linear-gradient(158deg, #143B63 0%, #0A2748 60%, #07182C 100%);
+  color: var(--on-ink); text-decoration: none;
+  border-block-start: 2px solid var(--gold);
+  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.press-feature:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.press-feature-top { display: flex; align-items: center; gap: var(--space-sm); }
+.press-mark {
+  display: grid; place-items: center; flex: none;
+  width: 40px; height: 40px;
+  background: rgba(216, 180, 90, 0.14); color: var(--gold);
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
+}
+.press-source-lg {
+  font-family: var(--font-heading); font-size: clamp(2rem, 1.5rem + 1.8vw, 3rem);
+  font-weight: 800; line-height: 1; color: #fff; margin-top: var(--space-xs);
+}
+.press-feature-title { font-family: var(--font-heading); font-size: var(--fs-h4); font-weight: 700; color: var(--gold); }
+.press-feature-note { color: var(--on-ink-muted); font-size: var(--fs-small); max-width: 46ch; }
+.press-feature-cta {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  margin-top: var(--space-md); font-weight: 700; font-size: var(--fs-small); color: #fff;
+}
+.press-feature-cta .btn-arrow {
+  display: grid; place-items: center; width: 32px; height: 32px;
+  background: rgba(255, 255, 255, 0.14);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  transition: background var(--transition), transform var(--transition);
+}
+.press-feature:hover .press-feature-cta .btn-arrow { background: var(--gold); color: var(--ink); transform: translateX(-3px); }
+
+/* --- הפודקאסטים: שורות מסורגלות, כמו רשימת הופעות --- */
+/* שתי השורות מתחלקות בגובה הפאנל שלצדן, כדי שהעמודות ייגמרו יחד. */
+.press-rows { display: grid; grid-auto-rows: 1fr; gap: 0; margin: 0; }
+.press-rows li { display: grid; }
+.press-rows li + li { border-block-start: 1px solid var(--border); }
+.press-row {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center;
+  gap: var(--space-md); height: 100%;
+  padding: var(--space-lg) var(--space-md);
   text-decoration: none; color: inherit;
-  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  transition: background var(--transition), padding-inline var(--transition);
 }
-.press-card:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-3px); }
-.press-source {
-  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.13em;
-  color: var(--accent-strong);
-}
-.press-title { font-size: var(--fs-h4); }
-.press-kind { margin-top: auto; padding-top: var(--space-sm); font-size: var(--fs-micro); color: var(--text-muted); }
-.press-card .arrow-link { margin-top: var(--space-xs); }
+.press-row:hover { background: var(--surface); }
+.press-row .press-mark { background: var(--accent-soft); color: var(--accent-strong); }
+.press-row:hover .press-mark { background: var(--ink); color: var(--gold); }
+.press-row-body { display: grid; gap: 0.15rem; }
+.press-source { font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.13em; color: var(--accent-strong); }
+.press-row-title { font-family: var(--font-heading); font-size: var(--fs-h4); font-weight: 700; }
+.press-kind { font-size: var(--fs-micro); color: var(--text-muted); letter-spacing: 0.04em; }
+.press-feature .press-kind { color: var(--on-ink-muted); }
+.press-row-go { color: var(--accent-strong); font-size: 1.2rem; transition: transform var(--transition); }
+.press-row:hover .press-row-go { transform: translateX(-5px); }
 
 /* ====================== שאלות נפוצות ====================== */
 .faq-inner { display: grid; gap: clamp(2rem, 1.2rem + 3vw, 3.5rem); align-items: start; }

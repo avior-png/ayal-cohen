@@ -41,7 +41,7 @@ export default async function HomePage() {
       '@type': 'Person',
       name: 'איל כהן',
       jobTitle: 'מתכנן פרישה וסוכן פנסיוני',
-      sameAs: press.items.map((p) => p.href),
+      sameAs: [press.feature.href, ...press.items.map((p) => p.href)],
     },
   };
 

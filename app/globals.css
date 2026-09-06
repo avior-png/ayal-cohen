@@ -95,7 +95,10 @@ ul[class], ol[class] { list-style: none; padding: 0; }
   --surface: var(--ink-alt);
 }
 .on-dark h1, .on-dark h2, .on-dark h3, .on-dark h4 { color: var(--on-ink); }
-.on-dark a { color: var(--on-ink); }
+/* הכפתורים נושאים את הצבע של עצמם. בלי החרגה מפורשת הכלל הזה גובר
+   על .btn-gold (סלקטיביות 0,2,0 מול 0,1,0) והתווית יוצאת לבנה על זהב —
+   כלומר 1.9:1, מתחת לכל סף. */
+.on-dark a:not(.btn) { color: var(--on-ink); }
 
 .section-head { max-width: 64ch; margin-bottom: clamp(2rem, 1.2rem + 2.4vw, 3.5rem); }
 .section-head-center { margin-inline: auto; text-align: center; }
