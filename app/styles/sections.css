@@ -458,13 +458,9 @@
 }
 
 /* ====================== מה מתגלה בבדיקה ======================
-   התצלום כאן רך מאוד — כמעט מרקם — ולא תצלום שרואים. שכבות מסמכים
-   מאחורי האזור הן המסר עצמו, ותצלום שרואים אותו היה שובר את הקצב
-   בין הכהה שמעליו לבהיר שמתחתיו. */
-.problem { position: relative; overflow: hidden; }
-.problem-bg { z-index: 0; opacity: 0.9; }
-.problem > .container { position: relative; z-index: 1; }
-
+   בלי תצלום. היה כאן רקע מפוסל תחת הכהיה של 96% — תצלום שאיש לא
+   ראה. הרקע הבהיר האחיד הוא הקצב הנכון בין הכהה שמעליו לבהיר
+   שמתחתיו, והפאנל הקטום הוא הצורה היחידה שצריכה תשומת לב כאן. */
 .problem { background: var(--bg-alt); }
 /* הריפוד העליון הרגיל של הסקשן כבר מפנה מקום לחצי התחתון של התיבה. */
 .problem-inner { display: grid; gap: clamp(2rem, 1.2rem + 3vw, 3.5rem); align-items: start; }
@@ -619,9 +615,18 @@
    הגרסה הקודמת הייתה ארבעה בלוקי טקסט חופשיים עם גל זהב שריחף
    מעליהם ולא נגע בהם, ולכן היא נקראה כארבעה דברים ולא כתהליך.
    ---------------------------------------------------------------- */
-.process { position: relative; overflow: hidden; }
-.process .bg-photo { z-index: 0; }
-.process > .container { position: relative; z-index: 1; }
+/* ⚠️  היה כאן תצלום רקע תחת הכהיה של 90–95%: טקסט על תצלום, כלומר
+   תצלום שלא נראה ורעש שנשאר. עכשיו נייבי אחיד עם זוהר זהב רך,
+   והתצלום — בדף הבית בלבד — יושב *לצד* הכותרת. */
+.process.on-dark {
+  background:
+    radial-gradient(80% 130% at 78% 8%, rgba(176, 128, 31, 0.16), rgba(176, 128, 31, 0) 60%),
+    var(--ink);
+}
+/* ראש האזור: כותרת מימין, תצלום משמאל (‎.media-split‎ ב-ui.css).
+   רשימת השלבים נשארת מתחת ברוחב מלא — היא הצורה של האזור,
+   וצמצומה לחצי היה שובר אותה. */
+.process-head { margin-bottom: var(--space-xl); }
 .process-track { position: relative; }
 .process-steps { display: grid; margin: 0; position: relative; z-index: 1; }
 
@@ -785,39 +790,39 @@
 }
 .spec-value { margin: 0; font-size: var(--fs-small); color: var(--text-muted); }
 
-/* ====================== רגע מותג ====================== */
-.brand-band {
-  position: relative; overflow: hidden;
+/* ====================== רגע מותג ======================
+   פס בין שני סקשנים, ובו הטיעון שמצדיק פעולה עכשיו.
+
+   ⚠️  היה כאן תצלום רקע ברוחב מלא תחת הכהיה של 60%. תצלום שהטקסט
+       יושב עליו הוא תצלום שאיש לא רואה, וההכהיה שנדרשת כדי
+       שהטקסט ייקרא הורגת אותו ממילא. שתי הווריאציות שנשארו
+       מציגות את הוויזואל *לצד* הטקסט, בגודל שרואים. */
+.brand-band.on-dark {
   display: grid; align-content: center;
   min-height: clamp(360px, 24vw + 210px, 540px);
   padding-block: var(--space-2xl);
-  text-align: center;
-}
-/* שכבת נייבי מעל התצלום — קריאוּת הטקסט לא תלויה בתצלום עצמו. */
-.brand-band .bg-photo { z-index: 0; }
-.brand-band > .container { position: relative; z-index: 1; }
-/* קומפוזיציה ממורכזת: הקווים, השורות והכפתור חולקים ציר אחד. */
-.brand-band-inner {
-  display: grid; justify-items: center; gap: clamp(1rem, 0.8rem + 0.8vw, 1.6rem);
-  max-width: min(760px, 100%); margin-inline: auto; text-align: center;
+  /* נייבי אחיד עם זוהר זהב רך — בלי הזוהר הפס נראה כמו מלבן שטוח. */
+  background:
+    radial-gradient(90% 120% at 22% 52%, rgba(176, 128, 31, 0.2), rgba(176, 128, 31, 0) 62%),
+    var(--ink);
 }
 .band-rule { display: block; width: 44px; height: 2px; background: var(--gold); }
-/* וריאנט מיושר-התחלה: אותה היררכיה, בלי המרכוז. */
-.brand-band-start { text-align: start; }
-.brand-band-start .brand-band-inner { justify-items: start; margin-inline: 0; text-align: start; }
 
+.brand-band-inner {
+  display: grid; justify-items: start; gap: clamp(1rem, 0.8rem + 0.8vw, 1.6rem);
+  max-width: 52ch; text-align: start;
+}
 .brand-band-title {
   display: grid; gap: 0.12em;
   margin: 0; text-wrap: balance;
-  text-shadow: 0 2px 18px rgba(5, 22, 35, 0.55);
   font-family: var(--font-heading); font-weight: 800;
 }
 /* שתי הדרגות של הטיעון: הפתיחה בלבן, והנקודה עצמה בזהב ובאותו גודל
    — לא הקטנה, כי היא לא כותרת משנה אלא סוף המשפט. */
 .band-lead, .band-hero {
-  /* משתנה ולא ערך קבוע: בווריאנט האובייקט הטקסט יושב בטור צר יותר
-     וצריך גופן קטן יותר, אחרת הכותרת נשברת לארבע-חמש שורות. */
-  font-size: var(--band-display, clamp(1.7rem, 1.1rem + 2.1vw, 2.9rem));
+  /* משתנה ולא ערך קבוע: הטקסט יושב בטור צר וצריך גופן קטן יותר
+     מפס ברוחב מלא, אחרת הכותרת נשברת לארבע-חמש שורות. */
+  font-size: var(--band-display, clamp(1.45rem, 0.95rem + 1.5vw, 2.3rem));
   line-height: 1.1; letter-spacing: -0.02em;
 }
 .band-lead { color: #fff; }
@@ -827,45 +832,43 @@
   max-width: 52ch; margin: 0;
   font-size: var(--fs-lead); line-height: var(--lh-lead);
   color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 1px 12px rgba(5, 22, 35, 0.5);
 }
 .brand-band-inner .btn { margin-top: var(--space-xs); }
 
-/* --- וריאנט "אובייקט": הוויזואל בצד ולא ברקע ---
-   כרקע ברוחב מלא הטבעות היו נחתכות בשולי האזור ויושבות מתחת
-   לטקסט. כאובייקט חתוך הן נראות שלמות — וזה בדיוק הרעיון שלהן,
-   שלושה דברים שלובים זה בזה. */
-.brand-band-object {
-  /* בלי תצלום רקע: זוהר זהב רך מונע מהנייבי להיות שטוח. */
-  background:
-    radial-gradient(90% 120% at 22% 52%, rgba(176, 128, 31, 0.2), rgba(176, 128, 31, 0) 62%),
-    var(--ink);
-  text-align: start;
-  --band-display: clamp(1.45rem, 0.95rem + 1.5vw, 2.3rem);
-}
+/* הוויזואל בצד: `object` הוא חיתוך שקוף (הטבעות) שיושב על הנייבי
+   בלי מסגרת, ו-`split` הוא תצלום אמיתי בתוך מסגרת 4:3. */
+/* בפס עם תצלום יש יותר רוחב לטקסט מאשר בפס עם הטבעות (שם האובייקט
+   רחב יותר ביחס), ולכן הכותרת שם גדולה יותר. */
+.brand-band-split { --band-display: clamp(1.6rem, 1rem + 1.9vw, 2.6rem); }
 .band-split { display: grid; gap: var(--space-xl); align-items: center; }
-.band-split .brand-band-inner {
-  justify-items: start; margin-inline: 0; text-align: start; max-width: 46ch;
-}
-.band-object { margin: 0; display: grid; justify-items: center; }
-.band-object img {
+/* ‎display:block‎ ולא ‎grid‎ עם ‎justify-items:center‎: ברשת כזו פריט
+   עם ‎width:100%‎ בתוך תא ‎max-content‎ הוא הגדרה מעגלית, והתצלום
+   נמדד ברוחב 0 עד שהוא נטען — כלומר ‎loading="lazy"‎ על תמונה
+   בגודל אפס. המרכוז במסך צר נעשה ב-‎margin-inline: auto‎. */
+.band-object { margin: 0; display: block; }
+.brand-band-object .band-object img {
   width: 100%; height: auto;
   /* הצל מחזיר לאובייקט החתוך את הנפח שאבד עם הרקע. */
   filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.45));
 }
 
 @media (min-width: 900px) {
-  /* הטבעות בצד השמאלי הפיזי, הטקסט בצד ההתחלה — סדר ה-DOM הוא
+  /* הוויזואל בצד השמאלי הפיזי, הטקסט בצד ההתחלה — סדר ה-DOM הוא
      טקסט ואז תצלום, וב-RTL זה בדיוק הסדר הזה. */
-  .band-split { grid-template-columns: 1.12fr 0.88fr; gap: var(--space-2xl); }
-  .band-object img { max-width: 480px; }
+  .band-split { grid-template-columns: 1.12fr 0.88fr; gap: clamp(2.5rem, 1.5rem + 2.5vw, 4rem); }
+  /* בלי ‎justify-self‎: הערך ‎center‎ גורם לפריט הרשת להימדד לפי
+     התוכן, ותצלום ‎width:100%‎ בתוך תא ‎max-content‎ נמדד ברוחב 0
+     עד שהוא נטען — כלומר ‎lazy‎ על תמונה בגודל אפס, ואפס מקום
+     שמור לה בפריסה. ‎stretch‎ (ברירת המחדל) + ‎max-width‎ נותן
+     בדיוק 480px, ומקום שמור מהרגע הראשון. */
+  .band-object { max-width: 480px; }
 }
 @media (max-width: 899px) {
-  /* במסך צר התצלום יורד מתחת לטקסט ומוגבל בגובה, כדי שלא ידחוף
-     את הכפתור מחוץ למסך הראשון. */
-  .brand-band-object { text-align: center; }
-  .band-split .brand-band-inner { justify-items: center; text-align: center; margin-inline: auto; }
-  .band-object img { max-width: 340px; }
+  /* במסך צר הטקסט קודם והתצלום מתחתיו, מוגבל ברוחב כדי שלא ידחוף
+     את הכפתור מחוץ למסך. */
+  .brand-band { text-align: center; }
+  .brand-band-inner { justify-items: center; text-align: center; margin-inline: auto; }
+  .band-object { max-width: 340px; margin-inline: auto; }
 }
 
 /* ====================== מקרה מהשטח ====================== */
@@ -1040,8 +1043,7 @@
 }
 
 /* התצלום בעמודה הצדית סוגר את החלל שמתחת לכפתור. */
-.faq-media { margin: var(--space-lg) 0 0; }
-.faq-media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.faq-media { margin-top: var(--space-lg); max-width: 480px; }
 @media (max-width: 999px) { .faq-media { display: none; } }
 
 /* ====================== מאמרים ====================== */
@@ -1243,6 +1245,18 @@
   .service-row { grid-template-columns: auto auto 1fr; }
   .service-row-index { padding-top: 1.1rem; }
 }
+/* השורה היחידה שנושאת תצלום מקבלת עמודה רביעית. הטקסט מצטמצם
+   בהתאם — 74ch לצד תצלום היו נותנים שורה ארוכה מדי. */
+.service-row-figure { align-self: center; }
+@media (min-width: 1000px) {
+  .service-row-media { grid-template-columns: auto auto 1fr minmax(0, 320px); }
+  .service-row-media .service-row-text { max-width: 52ch; }
+  .service-row-figure { margin-inline-start: var(--space-lg); }
+}
+@media (max-width: 999px) {
+  /* במסך צר התצלום נופל לשורה שנייה ותופס את כל רוחב הכרטיס. */
+  .service-row-figure { grid-column: 1 / -1; max-width: 100%; margin-top: var(--space-sm); }
+}
 
 .page-disclaimer {
   margin-top: var(--space-xl); padding: var(--space-lg);
@@ -1388,6 +1402,9 @@
 .fit-next-text { color: var(--text-muted); margin: 0; max-width: 56ch; }
 
 /* ====================== עמוד יצירת קשר ====================== */
+/* ראש "מכאן ממשיכים כך": כותרת ותצלום זה לצד זה, ומתחתיהם
+   ארבעת השלבים. הרווח כאן הוא מה שהיה קודם על ה-wide-media. */
+.contact-next-head { margin-bottom: var(--space-xl); }
 .contact-cards { display: grid; gap: var(--space-md); margin: 0; }
 @media (min-width: 620px) { .contact-cards { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1000px) { .contact-cards { grid-template-columns: repeat(4, 1fr); } }

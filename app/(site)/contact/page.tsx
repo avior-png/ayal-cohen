@@ -62,13 +62,21 @@ export default async function ContactPage() {
 
         <section className="section" aria-labelledby="next-title">
           <div className="container">
-            <div className="section-head section-head-center">
-              <p className="eyebrow">{processContent.eyebrow}</p>
-              <h2 id="next-title" className="section-title">מכאן ממשיכים כך</h2>
-            </div>
-            <div className="wide-media" style={{ marginBottom: 'var(--space-xl)' }}>
-              <img src={asset(contactImage.src)} alt={contactImage.alt}
-                   width={1200} height={900} loading="lazy" />
+            {/* התצלום לצד הכותרת ולא מתחתיה: השלב השני ברשימה מדבר
+                על "פגישה בזום או פרונטלית", וזה מה שרואים. */}
+            <div className="media-split contact-next-head">
+              <div className="section-head">
+                <p className="eyebrow">{processContent.eyebrow}</p>
+                <h2 id="next-title" className="section-title">מכאן ממשיכים כך</h2>
+                <p className="section-lead">
+                  ארבעה שלבים. הראשון הוא כמה שאלות קצרות, והשני הוא שיחה —
+                  בזום או פנים אל פנים, מה שנוח לך.
+                </p>
+              </div>
+              <figure className="media-frame">
+                <img src={asset(contactImage.src)} alt={contactImage.alt}
+                     width={contactImage.width} height={contactImage.height} loading="lazy" />
+              </figure>
             </div>
             <ol className="card-grid card-grid-4">
               {processContent.steps.map((step, i) => (

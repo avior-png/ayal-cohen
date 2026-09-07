@@ -22,9 +22,12 @@ export default function Faq() {
             <span className="btn-arrow" aria-hidden="true">←</span>
           </a>
 
-          <figure className="faq-media">
+          {/* סוגר את החלל שנשאר מתחת לכפתור בעמודה הצדית. במסך צר
+              הוא מוסתר: שם העמודה הזו יושבת *מעל* השאלות, ותצלום
+              בין הכפתור לשאלה הראשונה רק דוחף את התוכן למטה. */}
+          <figure className="faq-media media-frame">
             <img src={asset(faq.image.src)} alt={faq.image.alt}
-                 width={1200} height={800} loading="lazy" />
+                 width={faq.image.width} height={faq.image.height} loading="lazy" />
           </figure>
         </div>
 

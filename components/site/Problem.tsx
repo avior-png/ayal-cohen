@@ -1,4 +1,3 @@
-import PhotoLayer from '@/components/site/PhotoLayer';
 import { problem } from '@/content/site';
 
 /**
@@ -12,18 +11,13 @@ import { problem } from '@/content/site';
  *     מה זה הלא מרוכז". במקומן כל שורה מציגה מיד את *המשמעות* —
  *     מה הממצא אומר עליך בפועל — והפירוט נפתח בלחיצה.
  *
- * התצלום ברקע רך מאוד ואינו תחת התוכן אלא מאחורי האזור כולו:
- * שכבות מסמכים זו מאחורי זו הן בדיוק המסר — כספים מפוזרים בין
- * גופים. קודם היה כאן תצלום מלא, והוא שבר את הקצב.
+ * אין כאן תצלום. היה רקע מפוסל של שכבות נייר וזכוכית תחת הכהיה
+ * של 96% — כלומר תצלום שאיש לא ראה ושכולם הורידו. הרקע הבהיר
+ * האחיד עושה את אותה עבודה, בלי 35KB ובלי מטאפורה.
  */
 export default function Problem() {
   return (
     <section id="problem" className="section problem" aria-labelledby="problem-title">
-      <PhotoLayer
-        className="problem-bg"
-        src={problem.image.src}
-        scrim="linear-gradient(rgba(246,248,251,.955), rgba(246,248,251,.985))"
-      />
       <div className="container problem-inner">
         <div className="problem-aside">
           <div className="section-head">

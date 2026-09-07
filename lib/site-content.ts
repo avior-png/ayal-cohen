@@ -2,6 +2,7 @@ import 'server-only';
 import { db } from '@/lib/db';
 import { dna } from '@/dna';
 import * as seed from '@/content/site';
+import type { ServiceItem } from '@/content/site';
 
 /**
  * התוכן שהאתר הציבורי מציג.
@@ -62,8 +63,10 @@ export async function getSiteContent() {
     services: services.length
       ? {
           ...seed.services,
-          items: services.map((s) => ({
-            icon: s.icon ?? 'map',
+          /* אותו טיפוס כמו הזרעים ב-content/site.ts: שורות מהמערכת
+             אינן נושאות תצלום, ו-`image` נשאר undefined. */
+          items: services.map((s): ServiceItem => ({
+            icon: (s.icon as ServiceItem['icon']) ?? 'map',
             title: s.title,
             text: s.summary,
           })),

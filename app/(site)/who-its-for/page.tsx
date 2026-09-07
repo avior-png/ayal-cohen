@@ -30,6 +30,28 @@ export default async function WhoItsForPage() {
       />
 
       <main id="main">
+        {/* פתיח: שתי עמודות שוות — טקסט קצר שנותן את כלל הקריאה של
+            העמוד, ולצדו תצלום. בלעדיו העמוד נפתח בשש קופסאות. */}
+        <section className="section-tight">
+          <div className="container">
+            <div className="media-split media-split-even fit-intro">
+              <div className="section-head">
+                <h2 className="section-title">{fit.intro.title}</h2>
+                <p className="section-lead">{fit.intro.text}</p>
+              </div>
+              <figure className="media-frame">
+                <img
+                  src={asset(fit.intro.image.src)}
+                  alt={fit.intro.image.alt}
+                  width={fit.intro.image.width}
+                  height={fit.intro.image.height}
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+          </div>
+        </section>
+
         <section className="section">
           <div className="container">
             {/* כל מצב הוא כרטיס דו-חלקי: מעליו התיאור, מתחתיו מה

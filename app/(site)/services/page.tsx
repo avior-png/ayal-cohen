@@ -37,8 +37,13 @@ export default async function ServicesPage() {
             <ol className="service-rows">
               {services.items.map((item, i) => {
                 const row = rows[i];
+                /* רוב התחומים הם החלטה אחת ונגמרו, ולכן הם טקסט בלבד.
+                   התצלום שמור לתחום היחיד שנמשך על פני שנים — הליווי
+                   השוטף — ושם הוא אומר משהו שהטקסט לא אומר. */
+                const image = item.image;
                 return (
-                  <li key={item.title} id={`svc-${i + 1}`} className="service-row">
+                  <li key={item.title} id={`svc-${i + 1}`}
+                      className={'service-row' + (image ? ' service-row-media' : '')}>
                     <span className="service-row-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                     <span className="service-row-icon" aria-hidden="true"><Icon name={item.icon} size={28} /></span>
                     <div className="service-row-body">
@@ -49,6 +54,12 @@ export default async function ServicesPage() {
                         <span className="visually-hidden"> — {item.title}</span>
                       </Link>
                     </div>
+                    {image && (
+                      <figure className="media-frame service-row-figure">
+                        <img src={asset(image.src)} alt={image.alt}
+                             width={image.width} height={image.height} loading="lazy" />
+                      </figure>
+                    )}
                   </li>
                 );
               })}

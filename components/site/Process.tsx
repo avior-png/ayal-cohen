@@ -1,6 +1,5 @@
 import type React from 'react';
 import { asset } from '@/lib/asset';
-import PhotoLayer from '@/components/site/PhotoLayer';
 import { process, caseStudy } from '@/content/site';
 
 /**
@@ -13,24 +12,39 @@ import { process, caseStudy } from '@/content/site';
  * הגרסה הקודמת הייתה ארבעה בלוקי טקסט חופשיים עם גל זהב שריחף
  * מעליהם ולא נגע בהם. היא נקראה כארבעה דברים, לא כתהליך אחד.
  *
+ * ⚠️  היה כאן תצלום רקע תחת הכהיה של 90–95%: כלומר טקסט על תצלום.
+ *     התצלום לא נראה, והרעש שנשאר ממנו רק הקשה על הקריאה. עכשיו
+ *     הרקע נייבי אחיד, והתצלום — בדף הבית בלבד — יושב *לצד*
+ *     הכותרת כתמונה שרואים. רשימת השלבים נשארת טקסט על נייבי.
+ *
  * `compact` — בדף הבית מוצגות רק הכותרת והמטא. התיאורים המלאים
  * מוצגים בעמודים הפנימיים, שאליהם מגיע מי שכבר רוצה לקרוא.
  */
 export default function Process({ compact = false }: { compact?: boolean }) {
   return (
     <section id="process" className="section on-dark process" aria-labelledby="process-title">
-      {/* התצלום כרקע: ארבע התחנות שבו עומדות מאחורי ארבעת השלבים.
-          ההכהיה חזקה במיוחד — אחרי שהאזור התקצר, ‎cover‎ מציג חלק
-          בהיר יותר של התצלום והפאנלים נבלעו בו. */}
-      <PhotoLayer
-        src={process.image.src}
-        scrim="linear-gradient(rgba(7,24,44,.9), rgba(7,24,44,.95))"
-      />
       <div className="container">
-        <div className="section-head section-head-center">
-          <p className="eyebrow">{process.eyebrow}</p>
-          <h2 id="process-title" className="section-title">{process.title}</h2>
-          <p className="section-lead">{process.lead}</p>
+        {/* בדף הבית: כותרת מימין, תצלום משמאל. בעמודים הפנימיים אין
+            תצלום — האזור מופיע שם בפעם השנייה, ואותה סצנה פעמיים
+            באותו ביקור היא חזרה, לא חיזוק. */}
+        <div className={'process-head' + (compact ? ' media-split' : '')}>
+          <div className={'section-head' + (compact ? '' : ' section-head-center')}>
+            <p className="eyebrow">{process.eyebrow}</p>
+            <h2 id="process-title" className="section-title">{process.title}</h2>
+            <p className="section-lead">{process.lead}</p>
+          </div>
+
+          {compact && (
+            <figure className="media-frame">
+              <img
+                src={asset(process.image.src)}
+                alt={process.image.alt}
+                width={process.image.width}
+                height={process.image.height}
+                loading="lazy"
+              />
+            </figure>
+          )}
         </div>
 
         <div className="process-track">

@@ -72,10 +72,9 @@ export default async function AboutPage() {
               <h2 id="approach-title" className="section-title">{aboutPage.approach.title}</h2>
               <p className="section-lead">{aboutPage.approach.lead}</p>
             </div>
-            <div className="wide-media" style={{ marginBottom: 'var(--space-xl)' }}>
-              <img src={asset(aboutPage.approach.image.src)} alt={aboutPage.approach.image.alt}
-                   width={1600} height={1001} loading="lazy" />
-            </div>
+            {/* היה כאן תצלום רחב של חדר עבודה עם עץ בחלון. הוא לא
+                הוסיף דבר לארבעת הכרטיסים, והעץ הוא בדיוק הוויזואל
+                הגנרי שהאתר הזה נגמל ממנו. */}
             <ul className="card-grid card-grid-2 reveal-stagger">
               {aboutPage.approach.items.map((item) => (
                 <li key={item.title} className="card">

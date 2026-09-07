@@ -234,6 +234,51 @@
 /* מסגרת מלאה: שלוש הצלעות הישרות ב-border, האלכסונית בגרדיאנט. */
 .notch-outline { border: var(--n-w) solid var(--n-line); }
 
+/* ====================== מסגרת תצלום ======================
+   הטיפול האחיד לכל תצלום שיושב *לצד* טקסט (להבדיל מתצלום מלא
+   ברוחב האזור, שהוא `.wide-media`). כלל אחד לכל האתר, כדי
+   שהתצלומים יקראו כסט ולא כשש החלטות נפרדות:
+
+   • יחס 4:3 קבוע, ‎cover‎ וממורכז — כל ששת התצלומים בסט הזה
+     צולמו/נוצרו ביחס הזה, ולכן החיתוך לא אוכל ראשים או ידיים.
+   • בלי מסגרת זהב ובלי שכבת נייבי מעל הפנים. הזהב באתר הזה הוא
+     לפרטים קטנים; מסגרת זהב סביב תצלום היא בדיוק ה"יוקרתי" הזול
+     שהמותג הזה נמנע ממנו.
+   • הפינות של המותג ולא 12px: כל משטח באתר חד או קטום, ותצלום
+     מעוגל היה הדבר היחיד שנראה שאול מאתר אחר.
+   • רוחב מרבי נקבע בהקשר (‎max-width‎ על ההורה), לא כאן. */
+.media-frame { margin: 0; overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); }
+.media-frame img {
+  display: block; width: 100%; height: auto;
+  aspect-ratio: 4 / 3; object-fit: cover; object-position: center;
+}
+/* על רקע כהה הצל הרגיל נעלם, וקו שיער מפריד את התצלום מהנייבי. */
+.on-dark .media-frame {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.42);
+  outline: 1px solid rgba(255, 255, 255, 0.09); outline-offset: -1px;
+}
+
+/* הפריסה שנלווית אליה: טקסט בצד ההתחלה, תצלום בצד השני. סדר
+   ה-DOM הוא תמיד טקסט ואז תצלום, ולכן במסך צר הטקסט מגיע ראשון
+   בלי ‎order‎ ובלי היפוך — וזה גם הסדר שקורא מסך שומע. */
+.media-split { display: grid; gap: var(--space-lg); }
+.media-split > .media-frame { max-width: 560px; }
+@media (min-width: 1000px) {
+  /* 40–64px בין הטקסט לתצלום, לפי רוחב המסך. */
+  .media-split {
+    grid-template-columns: 1fr minmax(0, 480px);
+    gap: clamp(2.5rem, 1.5rem + 2.5vw, 4rem);
+    align-items: center;
+  }
+  /* שתי עמודות שוות — לפתיח עמוד, שבו התצלום הוא חצי מהאמירה. */
+  .media-split-even { grid-template-columns: 1fr 1fr; }
+  .media-split > .section-head { margin-bottom: 0; }
+}
+@media (max-width: 999px) {
+  .media-split { gap: var(--space-md); }
+  .media-split > .media-frame { max-width: 100%; }
+}
+
 /* ============================ Divider ============================ */
 .rule-gold { width: 56px; height: 3px; background: var(--accent); border: 0; margin-block: var(--space-lg); }
 .on-dark .rule-gold { background: var(--gold); }
