@@ -35,10 +35,10 @@ export default async function WhoItsForPage() {
                 שהבדיקה בודקת — כדי שהמבקר יזהה את עצמו ואז יראה מה יקרה. */}
             <ul className="fit-grid reveal-stagger">
               {fit.cases.map((c, i) => (
-                <li key={c.title} className="fit-card">
+                <li key={c.title} className="fit-card notch notch-outline">
                   <div className="fit-card-top">
-                    <span className="fit-card-icon" aria-hidden="true"><Icon name={c.icon} size={26} /></span>
-                    <span className="fit-card-tag">{c.tag}</span>
+                    <span className="fit-card-icon notch" aria-hidden="true"><Icon name={c.icon} size={26} /></span>
+                    <span className="fit-card-tag notch">{c.tag}</span>
                     <span className="fit-card-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                   </div>
                   <h2 className="fit-card-title">{c.title}</h2>
@@ -78,7 +78,7 @@ export default async function WhoItsForPage() {
 
         <section className="section section-alt">
           <div className="container">
-            <div className="fit-next">
+            <div className="fit-next notch-start notch-outline">
               <div>
                 <h2 className="fit-next-title">זיהית את עצמך באחד מהמצבים?</h2>
                 <p className="fit-next-text">

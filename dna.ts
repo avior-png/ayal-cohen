@@ -154,6 +154,7 @@ export const dna: Dna = {
   sections: {
     hero: true,
     trust: true,          // רצועת המספרים בתחתית ההיררו
+    offer: true,          // "מה בעצם עושים כאן" — ההצעה בשפה פשוטה
     problem: true,
     caseStudy: true,
     planMap: true,

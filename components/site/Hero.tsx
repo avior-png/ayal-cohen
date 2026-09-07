@@ -75,7 +75,7 @@ export default function Hero({
           בדיוק בקו התפר. כאן היא שכן יכולה לשבת עליו. */}
       {showStats && (
         <div className="container hero-stats-wrap">
-          <ul className="hero-stats" aria-label="נתונים בקצרה">
+          <ul className="hero-stats notch notch-outline" aria-label="נתונים בקצרה">
             {trust.map((item) => (
               <li key={item.label}>
                 <span className="hero-stat-value">{item.value}</span>

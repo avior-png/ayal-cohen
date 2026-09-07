@@ -22,17 +22,24 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* ספרות בגובה אחיד: מספרים בתוך משפט עברי עם ספרות "מדלגות"
+     נראים כמו שגיאת פונט. */
+  font-variant-numeric: lining-nums;
   overflow-x: hidden;
 }
 img, picture, svg, video { display: block; max-width: 100%; height: auto; }
 input, button, textarea, select { font: inherit; color: inherit; }
+/* היררכיה היא לא רק גודל: כל דרגה מקבלת גם משקל, גם גובה שורה וגם
+   מרווח אותיות משלה. כותרת של 56px עם ה-leading וה-tracking של
+   כותרת 20px נראית רופפת, ולהיפך. */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
-  line-height: var(--lh-head);
-  font-weight: 700;
-  letter-spacing: var(--ls-display);
   text-wrap: balance;
 }
+h1 { font-weight: 800; line-height: 1.1;  letter-spacing: var(--ls-display); }
+h2 { font-weight: 800; line-height: 1.16; letter-spacing: var(--ls-h2); }
+h3 { font-weight: 700; line-height: 1.3;  letter-spacing: var(--ls-h3); }
+h4 { font-weight: 700; line-height: 1.4;  letter-spacing: var(--ls-h4); }
 p { text-wrap: pretty; }
 ul[class], ol[class] { list-style: none; padding: 0; }
 ::selection { background: var(--brand-strong); color: #fff; }
@@ -104,7 +111,12 @@ ul[class], ol[class] { list-style: none; padding: 0; }
 .section-head-center { margin-inline: auto; text-align: center; }
 .section-head-center .eyebrow { justify-content: center; }
 .section-title { font-size: var(--fs-h2); margin-bottom: var(--space-md); }
-.section-lead { font-size: var(--fs-lead); color: var(--text-muted); max-width: 58ch; }
+/* ‎--lh-body‎ (1.75) נכון לגוף הטקסט ורופף מדי לפסקה מובילה בגודל
+   1.3rem — היא צריכה שורות צמודות יותר ומידה קצרה יותר. */
+.section-lead {
+  font-size: var(--fs-lead); line-height: var(--lh-lead);
+  color: var(--text-muted); max-width: 56ch; text-wrap: pretty;
+}
 .section-head-center .section-lead { margin-inline: auto; }
 
 /* כותרת עם קו זהב — החתימה הוויזואלית של המותג. */

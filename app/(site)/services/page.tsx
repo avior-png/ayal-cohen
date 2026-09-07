@@ -40,7 +40,7 @@ export default async function ServicesPage() {
                 return (
                   <li key={item.title} className="service-row">
                     <span className="service-row-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="service-row-icon" aria-hidden="true"><Icon name={item.icon} size={28} /></span>
+                    <span className="service-row-icon notch" aria-hidden="true"><Icon name={item.icon} size={28} /></span>
                     <div className="service-row-body">
                       <h2 className="service-row-title">{item.title}</h2>
                       <p className="service-row-text">{item.text}</p>

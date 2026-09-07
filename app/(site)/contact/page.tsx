@@ -32,22 +32,22 @@ export default async function ContactPage() {
           <div className="container">
             <ul className="contact-cards">
               <li className="contact-card">
-                <span className="contact-card-icon"><Icon name="phone" /></span>
+                <span className="contact-card-icon notch notch-outline"><Icon name="phone" /></span>
                 <span className="contact-card-label">טלפון</span>
                 <a className="contact-card-value" href={site.phoneHref}>{site.phone}</a>
               </li>
               <li className="contact-card">
-                <span className="contact-card-icon"><Icon name="mail" /></span>
+                <span className="contact-card-icon notch notch-outline"><Icon name="mail" /></span>
                 <span className="contact-card-label">אימייל</span>
                 <a className="contact-card-value" href={`mailto:${site.email}`}>{site.email}</a>
               </li>
               <li className="contact-card">
-                <span className="contact-card-icon"><Icon name="clock" /></span>
+                <span className="contact-card-icon notch notch-outline"><Icon name="clock" /></span>
                 <span className="contact-card-label">זמינות</span>
                 <span className="contact-card-value">{site.hours}</span>
               </li>
               <li className="contact-card">
-                <span className="contact-card-icon"><Icon name="pin" /></span>
+                <span className="contact-card-icon notch notch-outline"><Icon name="pin" /></span>
                 <span className="contact-card-label">פגישות</span>
                 <span className="contact-card-value">{site.address}</span>
               </li>

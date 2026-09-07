@@ -27,7 +27,7 @@ export default function Services({ services }: { services: SiteContent['services
         <ul className="svc-grid">
           <li className="svc-card svc-card-lead">
             <span className="svc-ghost" aria-hidden="true">01</span>
-            <span className="svc-mark"><Icon name={lead.icon} size={30} /></span>
+            <span className="svc-mark notch"><Icon name={lead.icon} size={30} /></span>
             <h3 className="svc-card-title">{lead.title}</h3>
             <p className="svc-card-text">{lead.text}</p>
             <Link className="arrow-link" href={asset('/services')}>
@@ -39,7 +39,7 @@ export default function Services({ services }: { services: SiteContent['services
           {rest.map((item, i) => (
             <li key={item.title} className="svc-card">
               <span className="svc-ghost" aria-hidden="true">{String(i + 2).padStart(2, '0')}</span>
-              <span className="svc-mark"><Icon name={item.icon} size={24} /></span>
+              <span className="svc-mark notch"><Icon name={item.icon} size={24} /></span>
               <h3 className="svc-card-title">{item.title}</h3>
               <p className="svc-card-text">{item.text}</p>
             </li>

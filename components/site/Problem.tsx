@@ -1,17 +1,27 @@
+import PhotoLayer from '@/components/site/PhotoLayer';
 import { problem } from '@/content/site';
 
 /**
- * "הפער השקט".
+ * "מה בדרך כלל מתגלה".
  *
  * הגרסה הקודמת הייתה רשימה מסורגלת — נכונה בתוכן, אבל היא נקראה
  * כטקסט ולא כממצא. הקהל כאן שאנן, ולכן האזור צריך להיראות כמו מה
  * שהוא באמת: דוח בדיקה. כותרת דוח, שורות ממוספרות, ולכל שורה תווית
  * מצב בזהב שאומרת מה נמצא — "לא הותאם", "רדום", "לא נוצל".
  * התווית היא מה שהופך רשימה להתראה.
+ *
+ * התצלום ברקע רך מאוד ואינו תחת התוכן אלא מאחורי האזור כולו:
+ * שכבות מסמכים זו מאחורי זו הן בדיוק המסר — כספים מפוזרים בין
+ * גופים. קודם היה כאן תצלום מלא, והוא שבר את הקצב.
  */
 export default function Problem() {
   return (
     <section id="problem" className="section problem" aria-labelledby="problem-title">
+      <PhotoLayer
+        className="problem-bg"
+        src={problem.image.src}
+        scrim="linear-gradient(rgba(246,248,251,.955), rgba(246,248,251,.985))"
+      />
       <div className="container problem-inner">
         <div className="problem-aside">
           <div className="section-head">
@@ -45,7 +55,7 @@ export default function Problem() {
                   <p className="report-row-text">{f.text}</p>
                 </div>
                 <p className="report-meaning">{f.meaning}</p>
-                <span className="report-flag">{f.flag}</span>
+                <span className="report-flag notch notch-outline">{f.flag}</span>
               </li>
             ))}
           </ol>

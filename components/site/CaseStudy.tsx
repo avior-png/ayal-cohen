@@ -32,7 +32,7 @@ export default function CaseStudy() {
         <ol className="rail">
           {caseStudy.beats.map((beat, i) => (
             <li key={beat.label} className="rail-step">
-              <span className="rail-marker" aria-hidden="true">
+              <span className="rail-marker notch notch-outline" aria-hidden="true">
                 <span className="rail-num">{String(i + 1).padStart(2, '0')}</span>
               </span>
               <div className="rail-body">

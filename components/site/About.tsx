@@ -4,15 +4,20 @@ import { about as aboutContent } from '@/content/site';
 import type { SiteContent } from '@/lib/site-content';
 
 /**
- * אודות.
+ * אודות — בדף הבית זה תקציר, לא ביוגרפיה.
  *
- * העמודה הצדית היא שלישייה שנקראת מלמעלה למטה: מי זה (דיוקן), מה הוא
- * אומר (ציטוט), ומה מאחורי זה (הסמכות כטבלת מפרט). הדיוקן ראשון כי
- * אמון באזור כזה מתחיל בפנים, וכל השאר הוא אימות שלו.
- * הרקע החם מפריד את האזור מהלבן שמעליו ומתחתיו.
+ * קודם היו כאן שלוש פסקאות צפופות, ארבע נקודות וטבלת מפרט בת שש
+ * שורות, וכל זה לצד דיוקן וציטוט. זה נקרא כעמוד שלם שנדחס לתוך
+ * אזור, ולכן "מבולגן". עכשיו: פסקה אחת, שלוש הנקודות החזקות,
+ * וקישור לעמוד שבו הכל נפרס כמו שצריך.
+ *
+ * העמודה הצדית היא זוג: מי זה (דיוקן) ומה הוא אומר (ציטוט). טבלת
+ * ההסמכות ירדה מכאן — היא קיימת בעמוד האודות, ובדף הבית היא הייתה
+ * גוזלת תשומת לב מהדיוקן בלי להוסיף מסר.
  */
 export default function About({ about }: { about: SiteContent['about'] }) {
-  const [first, ...restParagraphs] = about.paragraphs;
+  const [first] = about.paragraphs;
+  const points = about.points.slice(0, 3);
 
   return (
     <section id="about" className="section about" aria-labelledby="about-title">
@@ -22,11 +27,15 @@ export default function About({ about }: { about: SiteContent['about'] }) {
           <h2 id="about-title" className="section-title about-title">{about.title}</h2>
 
           <p className="about-lead">{first}</p>
-          {restParagraphs.map((p, i) => <p key={i} className="about-paragraph">{p}</p>)}
 
           <ul className="check-list about-points">
-            {about.points.map((point) => <li key={point}>{point}</li>)}
+            {points.map((point) => <li key={point}>{point}</li>)}
           </ul>
+
+          <blockquote className="about-quote notch">
+            <span className="about-quote-mark" aria-hidden="true" />
+            {aboutContent.quote}
+          </blockquote>
 
           <p className="about-more">
             <Link className="arrow-link" href={asset('/about')}>הסיפור המלא והכשרות מקצועיות</Link>
@@ -43,20 +52,6 @@ export default function About({ about }: { about: SiteContent['about'] }) {
               loading="lazy"
             />
           </figure>
-
-          <blockquote className="about-quote">
-            <span className="about-quote-mark" aria-hidden="true" />
-            {aboutContent.quote}
-          </blockquote>
-
-          <dl className="spec">
-            {aboutContent.credentials.map((c) => (
-              <div key={c.text} className="spec-row">
-                <dt className="spec-label">{c.year}</dt>
-                <dd className="spec-value">{c.text}</dd>
-              </div>
-            ))}
-          </dl>
         </aside>
       </div>
     </section>

@@ -19,6 +19,11 @@ export default function Faq() {
             לשאלה שלא נמצאת כאן
             <span className="btn-arrow" aria-hidden="true">←</span>
           </a>
+
+          <figure className="faq-media notch">
+            <img src={asset(faq.image.src)} alt={faq.image.alt}
+                 width={1200} height={800} loading="lazy" />
+          </figure>
         </div>
 
         <div className="faq-list">

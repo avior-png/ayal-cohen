@@ -2,7 +2,7 @@
 
 export type SectionKey =
   | 'hero' | 'trust' | 'problem' | 'services' | 'process' | 'about'
-  | 'planMap' | 'caseStudy' | 'band' | 'press' | 'faq' | 'fit'
+  | 'planMap' | 'caseStudy' | 'band' | 'press' | 'faq' | 'fit' | 'offer'
   | 'gallery' | 'testimonials' | 'posts' | 'contact';
 
 export interface NavItem {

@@ -28,7 +28,7 @@ export default async function AboutPage() {
             <div className="about-text">
               <h2 className="section-title">{about.title}</h2>
               {about.paragraphs.map((p, i) => <p key={i} className="about-paragraph">{p}</p>)}
-              <blockquote className="about-quote">{aboutSeed.quote}</blockquote>
+              <blockquote className="about-quote notch">{aboutSeed.quote}</blockquote>
               <ul className="check-list">
                 {about.points.map((point) => <li key={point}>{point}</li>)}
               </ul>
@@ -56,8 +56,8 @@ export default async function AboutPage() {
             </div>
             <ul className="credentials credentials-2col">
               {aboutSeed.credentials.map((c) => (
-                <li key={c.text} className="credential">
-                  <span className="credential-year">{c.year}</span>
+                <li key={c.text} className="credential notch-start notch-outline">
+                  <span className="credential-year notch">{c.year}</span>
                   <span className="credential-text">{c.text}</span>
                 </li>
               ))}
@@ -79,7 +79,7 @@ export default async function AboutPage() {
             <ul className="card-grid card-grid-2 reveal-stagger">
               {aboutPage.approach.items.map((item) => (
                 <li key={item.title} className="card">
-                  <span className="card-icon"><Icon name={item.icon} /></span>
+                  <span className="card-icon notch notch-outline"><Icon name={item.icon} /></span>
                   <h3 className="card-title">{item.title}</h3>
                   <p className="card-text">{item.text}</p>
                 </li>

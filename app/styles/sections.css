@@ -254,9 +254,11 @@
   margin-block: calc(var(--stats-half) * -1);
 }
 .hero-stats {
+  /* אותה צורה: פס הזהב העליון ממשיך סביב הפינה הקטומה. */
+  --n: var(--notch); --n-w: 1px; --n-line: rgba(216, 180, 90, 0.28);
+  --n-dw: 2px; --n-dline: var(--gold);
   display: grid; grid-template-columns: repeat(2, 1fr); margin: 0;
-  background: var(--ink-alt);
-  border: 1px solid rgba(216, 180, 90, 0.28);
+  background-color: var(--ink-alt);
   border-block-start: 2px solid var(--gold);
   box-shadow: var(--shadow-lg);
 }
@@ -281,6 +283,44 @@
   .hero-stats li { border-block-end: 0; }
   .hero-stats li:nth-child(odd) { border-inline-end: 0; }
   .hero-stats li + li { border-inline-start: 1px solid rgba(255, 255, 255, 0.12); }
+}
+
+/* ====================== מה עושים כאן ====================== */
+.offer { background: var(--bg); }
+.offer-grid { display: grid; gap: var(--space-lg); margin: 0; }
+@media (min-width: 820px) { .offer-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.offer-card {
+  --n-line: var(--border);
+  /* הפס העליון ממשיך סביב הפינה הקטומה בעובי ובצבע שלו. */
+  --n-dw: 3px; --n-dline: var(--brand);
+  display: grid; align-content: start; gap: var(--space-sm);
+  padding: clamp(1.4rem, 1.1rem + 1vw, 2.1rem);
+  background-color: var(--surface);
+  border-block-start: 3px solid var(--brand);
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.offer-card:hover {
+  border-block-start-color: var(--accent);
+  box-shadow: var(--shadow-md); transform: translateY(-2px);
+}
+.offer-card-head { display: flex; align-items: center; gap: var(--space-sm); }
+.offer-icon {
+  --n: 12px; --n-line: rgba(18, 64, 110, 0.22);
+  display: grid; place-items: center; flex: none; width: 48px; height: 48px;
+  background-color: var(--brand-soft); color: var(--brand);
+}
+.offer-label {
+  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.12em;
+  color: var(--accent-strong);
+}
+.offer-card-title { font-size: var(--fs-h4); margin: 0; }
+.offer-card-text { color: var(--text-muted); }
+/* ההערה הקטנה היא הסרת החסם: מה *לא* נדרש ממך. */
+.offer-note {
+  margin-top: var(--space-sm); padding-top: var(--space-sm);
+  border-block-start: var(--hairline);
+  font-size: var(--fs-small); font-weight: 600; color: var(--brand);
 }
 
 /* ====================== מפת התכנון (התוצר) ====================== */
@@ -340,7 +380,14 @@
   .plan-copy { order: 2; }
 }
 
-/* ====================== הפער השקט ====================== */
+/* ====================== מה מתגלה בבדיקה ======================
+   התצלום כאן רך מאוד — כמעט מרקם — ולא תצלום שרואים. שכבות מסמכים
+   מאחורי האזור הן המסר עצמו, ותצלום שרואים אותו היה שובר את הקצב
+   בין הכהה שמעליו לבהיר שמתחתיו. */
+.problem { position: relative; overflow: hidden; }
+.problem-bg { z-index: 0; opacity: 0.9; }
+.problem > .container { position: relative; z-index: 1; }
+
 .problem { background: var(--bg-alt); }
 /* הריפוד העליון הרגיל של הסקשן כבר מפנה מקום לחצי התחתון של התיבה. */
 .problem-inner { display: grid; gap: clamp(2rem, 1.2rem + 3vw, 3.5rem); align-items: start; }
@@ -406,10 +453,9 @@
 .report-flag {
   grid-column: 2; justify-self: start; margin-top: 0.5rem;
   padding: 0.28rem 0.7rem;
-  background: var(--accent-soft); color: var(--accent-strong);
-  border: 1px solid rgba(176, 128, 31, 0.34);
+  --n: 7px; --n-line: rgba(176, 128, 31, 0.42);
+  background-color: var(--accent-soft); color: var(--accent-strong);
   font-size: var(--fs-micro); font-weight: 700; white-space: nowrap;
-  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
 }
 .report-foot {
   padding: var(--space-md) clamp(1rem, 0.7rem + 1vw, 1.6rem);
@@ -471,7 +517,7 @@
   position: relative; display: grid; place-items: center;
   width: 48px; height: 48px; margin-bottom: var(--space-xs);
   background: var(--brand-soft); color: var(--brand);
-  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 0 100%);
+  --n: 13px;
   transition: background var(--transition), color var(--transition);
 }
 .svc-card:hover .svc-mark { background: var(--ink); color: var(--gold); }
@@ -480,11 +526,25 @@
 .svc-card .arrow-link { position: relative; margin-top: auto; padding-top: var(--space-md); }
 
 /* --- הפריט המוביל: המוצר עצמו, ולכן פאנל כהה ורחב --- */
+/* הפאנל המוביל. הקו האלכסוני בזהב ובעובי הפס העליון, ולכן הוא
+   נקרא כהמשך שלו סביב הפינה ולא כמסגרת נפרדת. */
 .svc-card-lead {
-  background: linear-gradient(158deg, #143B63 0%, #0A2748 58%, #07182C 100%);
+  /* --n חייב להיות מוגדר: בלעדיו ‎background-size: var(--n) var(--n)‎
+     אינו תקף, הוא נופל ל-auto, והגרדיאנט מותח קו אלכסוני ענק על
+     כל הפאנל במקום פס קטן בפינה. */
+  --n: var(--notch); --n-w: 2px; --n-line: var(--gold);
+  background-color: #0A2748;
+  background-image:
+    linear-gradient(45deg,
+      transparent calc(50% - var(--n-w)), var(--n-line) calc(50% - var(--n-w)),
+      var(--n-line) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(158deg, #143B63 0%, #0A2748 58%, #07182C 100%);
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-position: top right, 0 0;
+  background-size: var(--n) var(--n), cover;
   border-color: rgba(216, 180, 90, 0.3);
-  border-block-start: 2px solid var(--gold);
-  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+  border-block-start: var(--n-w) solid var(--gold);
   padding: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
 }
 .svc-card-lead::after { display: none; }
@@ -502,58 +562,103 @@
 .svc-card-lead .svc-card-text { color: var(--on-ink-muted); font-size: var(--fs-body); max-width: 52ch; }
 .svc-card-lead .arrow-link { color: var(--gold); }
 
-/* ====================== התהליך ====================== */
+/* ====================== התהליך ======================
+   ציר התכנון: ארבעה פאנלים קטומים תלויים על מסילת זהב אחת, כשמספר
+   כל שלב הוא חרוז שיושב *על* המסילה ולא לידה. שלושת המרכיבים —
+   המסילה, החרוז והפאנל — הם מה שהופך ארבעה בלוקי טקסט לרצף אחד.
+
+   הגרסה הקודמת הייתה ארבעה בלוקי טקסט חופשיים עם גל זהב שריחף
+   מעליהם ולא נגע בהם, ולכן היא נקראה כארבעה דברים ולא כתהליך.
+   ---------------------------------------------------------------- */
 .process { position: relative; overflow: hidden; }
 .process .bg-photo { z-index: 0; }
 .process > .container { position: relative; z-index: 1; }
 .process-track { position: relative; }
-.process-steps { display: grid; gap: var(--space-xl); margin: 0; position: relative; z-index: 1; }
-.step { position: relative; }
+.process-steps { display: grid; margin: 0; position: relative; z-index: 1; }
+
+/* --- החרוז: מספר השלב על המסילה --- */
+.step-node { position: relative; display: grid; place-items: center; }
 .step-num {
+  --n: 13px; --n-w: 1px; --n-line: rgba(216, 180, 90, 0.62);
   display: grid; place-items: center;
-  width: 54px; height: 54px; margin-bottom: var(--space-md);
-  border: 1px solid rgba(216, 180, 90, 0.5);
-  background: var(--ink);
-  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 0 100%);
+  width: 54px; height: 54px;
+  background-color: var(--ink);
   font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: var(--gold);
-  position: relative; z-index: 1;
+  position: relative; z-index: 2;
 }
+/* גזע קצר מהחרוז אל שולי הפאנל — הוא מה שקושר ביניהם. */
+.step-node::after {
+  content: ''; position: absolute; z-index: 1;
+  width: 2px; background: rgba(216, 180, 90, 0.45);
+  /* פיזי בכוונה: קו של 2px ממורכז אינו תלוי בכיוון הכתיבה. */
+  left: 50%; margin-left: -1px;
+}
+
+/* --- הפאנל --- */
+.step-body {
+  --n-line: rgba(216, 180, 90, 0.24);
+  background-color: rgba(255, 255, 255, 0.045);
+  padding: var(--space-lg);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+.step-body:hover { background-color: rgba(255, 255, 255, 0.075); --n-line: rgba(216, 180, 90, 0.5); }
 .step-title { font-size: var(--fs-h4); margin-bottom: var(--space-xs); color: #fff; }
 .step-text { color: var(--on-ink-muted); font-size: var(--fs-small); }
+/* התווית התחתונה כשבב קטום — "כמה זמן" הוא נתון, ולכן הוא ממוסגר. */
 .step-meta {
-  display: inline-block; margin-top: var(--space-sm);
+  --n: 7px; --n-line: rgba(216, 180, 90, 0.4);
+  display: inline-block; margin-top: var(--space-md);
+  padding: 0.22rem 0.55rem;
+  background-color: rgba(216, 180, 90, 0.1);
   font-size: var(--fs-micro); font-weight: 700; color: var(--gold);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
-/* --- חוט הזהב המתעקל --- */
-.process-wave { display: none; }
-.process-wave path { fill: none; stroke: rgba(216, 180, 90, 0.55); stroke-width: 1.5; stroke-linecap: round; }
+/* --- מסילת הזהב --- */
+.process-rail { position: absolute; z-index: 0; background: rgba(216, 180, 90, 0.3); }
 
 @media (min-width: 1000px) {
-  /* מרווח קבוע ולא clamp: מרכזי המספרים חייבים ליפול על צמתי הגל. */
-  .process-steps { grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
-  .process-wave {
-    display: block; position: absolute; z-index: 0;
-    inset-block-start: -18px; inset-inline: 0;
-    width: 100%; height: 90px;
+  /* בלי align-items: start — כך כל הפאנלים נמתחים לגובה הגבוה
+     שביניהם, והשורה התחתונה של הציר יוצאת ישרה. */
+  .process-steps { grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .step { display: grid; grid-template-rows: 54px 1fr; }
+  /* המסילה חוצה את מרכזי החרוזים: 27px הוא חצי מגובה החרוז.
+     דהייה בשני הקצוות כדי שהיא לא תיגמר בחיתוך חד. */
+  .process-rail {
+    inset-block-start: 26px; inset-inline: 0; height: 2px;
+    background: linear-gradient(to left,
+      rgba(216, 180, 90, 0) 0%, rgba(216, 180, 90, 0.42) 12%,
+      rgba(216, 180, 90, 0.42) 88%, rgba(216, 180, 90, 0) 100%);
   }
+  .step-node::after { inset-block: 54px 0; height: var(--space-lg); }
+  .step-body { margin-block-start: var(--space-lg); }
 }
+
 @media (max-width: 999px) {
-  .process-steps { gap: 0; }
-  .step { display: grid; grid-template-columns: 54px 1fr; gap: var(--space-lg); padding-block-end: var(--space-xl); }
-  .step:not(:last-child)::before {
-    content: ''; position: absolute; inset-block: 62px 0;
-    inset-inline-start: 27px; width: 0;
-    border-inline-start: 1px dashed rgba(216, 180, 90, 0.4);
+  .process-steps { gap: var(--space-lg); }
+  /* במסך צר המסילה אנכית ויושבת בצד ההתחלה, והחרוזים עליה. */
+  .step { display: grid; grid-template-columns: 54px 1fr; gap: var(--space-lg); align-items: start; }
+  .process-rail {
+    inset-block: 26px 26px; inset-inline-start: 26px; width: 2px;
+    background: linear-gradient(to bottom,
+      rgba(216, 180, 90, 0) 0%, rgba(216, 180, 90, 0.42) 6%,
+      rgba(216, 180, 90, 0.42) 94%, rgba(216, 180, 90, 0) 100%);
   }
-  .step-num { margin-bottom: 0; }
+  .step-node { align-self: start; }
+  /* הגזע יוצא מהחרוז לכיוון הפאנל, כלומר לצד הסוף. */
+  .step-node::after {
+    inset-block-start: 26px; height: 2px;
+    inset-inline-start: 54px; width: var(--space-lg);
+    left: auto; margin-left: 0;
+  }
 }
 
 /* ====================== אודות ====================== */
 .about { background: var(--paper); }
 .about-inner { display: grid; gap: clamp(2.25rem, 1.4rem + 3vw, 4rem); align-items: start; }
-@media (min-width: 1000px) { .about-inner { grid-template-columns: 1.1fr 0.9fr; } }
+/* טור טקסט רחב וטור דיוקן צר: כשהצד החזיק גם דיוקן וגם ציטוט הוא
+   היה גבוה בכ-400px מהטקסט שלידו, והאזור נראה נטוי. */
+@media (min-width: 1000px) { .about-inner { grid-template-columns: 1.2fr 0.8fr; } }
 
 .about-title { max-width: 18ch; }
 /* הפסקה הראשונה בגודל מוביל — נותנת לאזור נקודת כניסה. */
@@ -563,6 +668,9 @@
 }
 .about-paragraph { margin-top: var(--space-md); color: var(--text-muted); }
 .about-points { margin-top: var(--space-xl); }
+/* אוויר אמיתי מעל הציטוט: הווי האחרון ברשימה נגע בפינה הקטומה
+   של הפאנל, וזה נקרא כהתנגשות. */
+.about-quote { margin-top: clamp(2.25rem, 1.5rem + 2vw, 3.25rem); }
 .about-more { margin-top: var(--space-lg); }
 
 .about-aside { display: grid; gap: var(--space-lg); align-content: start; }
@@ -589,9 +697,19 @@
 .about-quote {
   position: relative;
   margin: 0; padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
-  background: linear-gradient(158deg, #143B63 0%, #0A2748 60%, #07182C 100%);
-  border-block-start: 2px solid var(--gold);
-  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+  --n: var(--notch); --n-w: 2px; --n-line: var(--gold);
+  background-color: #0A2748;
+  background-image:
+    linear-gradient(45deg,
+      transparent calc(50% - var(--n-w)), var(--n-line) calc(50% - var(--n-w)),
+      var(--n-line) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(158deg, #143B63 0%, #0A2748 60%, #07182C 100%);
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-position: top right, 0 0;
+  background-size: var(--n) var(--n), cover;
+  clip-path: polygon(0 0, calc(100% - var(--n)) 0, 100% var(--n), 100% 100%, 0 100%);
+  border-block-start: var(--n-w) solid var(--gold);
   font-family: var(--font-heading);
   font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.4rem);
   font-weight: 700; line-height: 1.55; color: #fff;
@@ -707,8 +825,8 @@
 .rail-marker {
   display: grid; place-items: center;
   width: 56px; height: 56px;
-  background: var(--ink); border: 1px solid rgba(216, 180, 90, 0.55);
-  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 0 100%);
+  --n: 13px; --n-line: rgba(216, 180, 90, 0.62);
+  background-color: var(--ink);
 }
 .rail-num {
   font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: var(--gold);
@@ -758,10 +876,20 @@
   position: relative; overflow: hidden;
   display: grid; align-content: start; gap: var(--space-xs);
   padding: clamp(1.4rem, 1.05rem + 1.5vw, 2.25rem);
-  background: linear-gradient(158deg, #143B63 0%, #0A2748 60%, #07182C 100%);
+  --n: var(--notch); --n-w: 2px; --n-line: var(--gold);
+  background-color: #0A2748;
+  background-image:
+    linear-gradient(45deg,
+      transparent calc(50% - var(--n-w)), var(--n-line) calc(50% - var(--n-w)),
+      var(--n-line) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(158deg, #143B63 0%, #0A2748 60%, #07182C 100%);
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-position: top right, 0 0;
+  background-size: var(--n) var(--n), cover;
+  clip-path: polygon(0 0, calc(100% - var(--n)) 0, 100% var(--n), 100% 100%, 0 100%);
   color: var(--on-ink); text-decoration: none;
-  border-block-start: 2px solid var(--gold);
-  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+  border-block-start: var(--n-w) solid var(--gold);
   transition: transform var(--transition), box-shadow var(--transition);
 }
 .press-feature:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
@@ -770,7 +898,7 @@
   display: grid; place-items: center; flex: none;
   width: 40px; height: 40px;
   background: rgba(216, 180, 90, 0.14); color: var(--gold);
-  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
+  --n: 9px;
   transition: background var(--transition), color var(--transition);
 }
 .press-source-lg {
@@ -827,6 +955,11 @@
   .faq-inner { grid-template-columns: 0.72fr 1.28fr; }
   .faq-aside { position: sticky; top: 140px; }
 }
+
+/* התצלום בעמודה הצדית סוגר את החלל שמתחת לכפתור. */
+.faq-media { margin: var(--space-lg) 0 0; }
+.faq-media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+@media (max-width: 999px) { .faq-media { display: none; } }
 
 /* ====================== מאמרים ====================== */
 .post-card {
@@ -982,12 +1115,9 @@
   display: grid; grid-template-columns: auto 1fr; align-items: start;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  background: var(--surface);
-  border: var(--hairline);
+  --n-line: var(--border);
+  background-color: var(--surface);
   border-inline-start: var(--bracket-w) solid var(--accent);
-  /* החיתוך פיזי, לא לוגי: כאן הוא בפינה השמאלית-עליונה כדי שלא
-     יחתוך את פס הזהב שיושב בצד ההתחלה (מימין) של הכרטיס. */
-  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 .credential:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
@@ -999,7 +1129,7 @@
   font-size: var(--fs-micro); letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
   text-align: center;
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  --n: 8px;
 }
 .credential-text {
   font-family: var(--font-heading); font-weight: 600;
@@ -1021,7 +1151,7 @@
 .service-row-icon {
   display: grid; place-items: center; width: 60px; height: 60px;
   background: var(--brand-soft); color: var(--brand);
-  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  --n: 14px;
 }
 .service-row-body > * + * { margin-top: var(--space-sm); }
 .service-row-title { font-size: var(--fs-h3); }
@@ -1075,16 +1205,16 @@
   background: var(--ink); color: var(--gold);
   font-family: var(--font-heading); font-weight: 800; font-size: 1.05rem;
   font-variant-numeric: tabular-nums;
-  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 0 100%);
+  --n: 11px;
 }
 .qa-group-title { font-size: var(--fs-h3); margin: 0; }
 
 .qa-closing {
   display: grid; justify-items: start; gap: var(--space-sm);
   padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
-  background: var(--paper);
+  --n-line: rgba(11, 27, 46, 0.14);
+  background-color: var(--paper);
   border-inline-start: var(--bracket-w) solid var(--accent);
-  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
 }
 .qa-closing-title { font-size: var(--fs-h3); margin: 0; }
 .qa-closing-text { color: var(--text-muted); max-width: 58ch; }
@@ -1098,9 +1228,10 @@
 .fit-card {
   display: grid; align-content: start; gap: var(--space-sm);
   padding: clamp(1.25rem, 1rem + 0.8vw, 1.9rem);
-  background: var(--surface); border: var(--hairline);
+  --n-line: var(--border);
+  --n-dw: 3px; --n-dline: var(--brand);
+  background-color: var(--surface);
   border-block-start: 3px solid var(--brand);
-  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 .fit-card:hover {
@@ -1111,13 +1242,13 @@
 .fit-card-icon {
   display: grid; place-items: center; flex: none; width: 46px; height: 46px;
   background: var(--brand-soft); color: var(--brand);
-  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 0 100%);
+  --n: 11px;
 }
 .fit-card-tag {
   padding: 0.22rem 0.5rem;
   background: var(--accent-soft); color: var(--accent-strong);
   font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.05em;
-  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
+  --n: 7px;
 }
 /* המספר נדחק לקצה ומשמש עוגן ויזואלי, לא מידע. */
 .fit-card-num {
@@ -1169,9 +1300,9 @@
 .fit-next {
   display: grid; gap: var(--space-lg); align-items: center;
   padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
-  background: var(--surface); border: var(--hairline);
+  --n-line: var(--border);
+  background-color: var(--surface);
   border-inline-start: var(--bracket-w) solid var(--accent);
-  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
 }
 @media (min-width: 860px) { .fit-next { grid-template-columns: 1fr auto; gap: var(--space-2xl); } }
 .fit-next-title { font-size: var(--fs-h3); margin: 0 0 var(--space-xs); }
@@ -1192,7 +1323,7 @@
   display: grid; place-items: center; width: 42px; height: 42px;
   margin-bottom: var(--space-xs);
   background: var(--accent-soft); color: var(--accent-strong);
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  --n: 10px;
 }
 .contact-card-label {
   font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.1em; color: var(--text-muted);

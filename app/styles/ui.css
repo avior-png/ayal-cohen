@@ -115,10 +115,10 @@
 .card-icon {
   display: grid; place-items: center;
   width: 56px; height: 56px; margin-bottom: var(--space-sm);
-  background: var(--brand-soft); color: var(--brand);
-  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 0 100%);
-  border: 1px solid rgba(18, 64, 110, 0.1);
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  /* החיתוך והמסגרת מגיעים מ-.notch .notch-outline שב-HTML. */
+  --n: 13px; --n-line: rgba(18, 64, 110, 0.22);
+  background-color: var(--brand-soft); color: var(--brand);
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
 }
 .card-icon svg { width: 28px; height: 28px; }
 .card:hover .card-icon {
@@ -176,15 +176,72 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D8B45A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7'/%3E%3C/svg%3E");
 }
 
+/* ====================== הריבוע הקטום ======================
+   הצורה החוזרת של האתר: ריבוע שפינה אחת שלו קטומה, כמו פינה מקופלת
+   של מסמך. הוא חוזר בכפתורים, באייקונים, בכרטיסים ובפאנלים, והוא
+   מה שמחזיק את השפה הוויזואלית ביחד.
+
+   ⚠️  ‎clip-path‎ חותך את הצורה — וגם את ה-border שלה. לכן לצלע
+   האלכסונית לא היה קו, והריבוע נראה פתוח בפינה. כאן הקו האלכסוני
+   מצויר כפס בגרדיאנט בתוך ריבוע בגודל הקטימה, בזווית שמקבילה
+   לאלכסון, וה-clip-path משאיר ממנו בדיוק את החצי שנמצא בתוך
+   הצורה. התוצאה: מסגרת סגורה בארבע הצלעות, בלי אלמנט נוסף,
+   בלי SVG ובלי pseudo-element שיתנגש בקיימים.
+
+   ‎--n‎  גודל הקטימה (ברירת מחדל --notch)
+   ‎--n-w‎  עובי הקו
+   ‎--n-line‎  צבע הקו. ברירת המחדל שקופה, ולכן צורה בלי מסגרת
+              מקבלת רק את החיתוך.
+   ‎--n-dw‎, ‎--n-dline‎  עובי וצבע לקו האלכסוני בלבד. כרטיס שיש לו
+              פס עליון צבעוני ועבה צריך שהאלכסון יהיה ההמשך שלו
+              סביב הפינה, ולא קו דק בצבע אחר שנגמר לידו.
+   ---------------------------------------------------------------- */
+.notch, .notch-start {
+  --n: var(--notch);
+  --n-w: 1px;
+  --n-line: transparent;
+  --n-dw: var(--n-w);
+  --n-dline: var(--n-line);
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-size: var(--n) var(--n);
+}
+/* קטימה בפינה העליונה־ימנית הפיזית — הכיוון הראשי באתר. */
+.notch {
+  clip-path: polygon(0 0, calc(100% - var(--n)) 0, 100% var(--n), 100% 100%, 0 100%);
+  background-image: linear-gradient(45deg,
+    transparent calc(50% - var(--n-dw)),
+    var(--n-dline) calc(50% - var(--n-dw)),
+    var(--n-dline) calc(50% + 0.5px),
+    transparent calc(50% + 0.5px));
+  background-position: top right;
+}
+/* קטימה בפינה העליונה־שמאלית — לכרטיסים שיש להם פס בצד ההתחלה
+   (מימין ב-RTL), שהקטימה הרגילה הייתה חותכת אותו. */
+.notch-start {
+  clip-path: polygon(var(--n) 0, 100% 0, 100% 100%, 0 100%, 0 var(--n));
+  background-image: linear-gradient(135deg,
+    transparent calc(50% - 0.5px),
+    var(--n-dline) calc(50% - 0.5px),
+    var(--n-dline) calc(50% + var(--n-dw)),
+    transparent calc(50% + var(--n-dw)));
+  background-position: top left;
+}
+/* מסגרת מלאה: שלוש הצלעות הישרות ב-border, האלכסונית בגרדיאנט. */
+.notch-outline { border: var(--n-w) solid var(--n-line); }
+
 /* ============================ Divider ============================ */
 .rule-gold { width: 56px; height: 3px; background: var(--accent); border: 0; margin-block: var(--space-lg); }
 .on-dark .rule-gold { background: var(--gold); }
 
 /* ============================ Forms ============================ */
+/* הטופס מקבל את אותה צורה: הפס העליון בזהב־כתב ממשיך סביב הפינה
+   הקטומה. עד כאן הוא היה המלבן המעוגל היחיד באתר שפינותיו רכות. */
 .contact-form {
+  --n: var(--notch); --n-dw: 3px; --n-dline: var(--accent);
   display: grid; gap: var(--space-md);
   padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
-  background: var(--bg); border-radius: var(--radius-lg);
+  background-color: var(--bg);
   color: var(--text); box-shadow: var(--shadow-lg);
   border-top: 3px solid var(--accent);
 }

@@ -2,6 +2,7 @@ import { dna } from '@/dna';
 import { getSiteContent } from '@/lib/site-content';
 import { faq, press } from '@/content/site';
 import Hero from '@/components/site/Hero';
+import Offer from '@/components/site/Offer';
 import Problem from '@/components/site/Problem';
 import Services from '@/components/site/Services';
 import PlanMap from '@/components/site/PlanMap';
@@ -64,16 +65,24 @@ export default async function HomePage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       )}
       <main id="main">
-        {/* הסדר הוא הטיעון: בעיה → הוכחה שהתחקיר מוצא אותה → התוצר →
-            מה נכלל → איך זה עובד → מי עושה את זה → הוכחה חיצונית.
-            הוא גם מה שקובע את קצב הרקעים: כהה, בהיר, כהה, בהיר — ופס
-            המותג הבהיר לא נוגע עוד במקרה מהשטח, שהיו נבלעים זה בזה. */}
+        {/* הסדר הוא הטיעון, ומאז ביקורת "אני לא מבין מה עושים כאן"
+            הוא מתחיל בבהירות ולא בטיעון: מה עושים כאן → מה מתגלה
+            בבדיקה → מה מקבלים → מה נכלל → איך זה עובד → מקרה שמראה
+            למה זו שיחה → מי עושה את זה → הוכחה חיצונית.
+
+            מקרה מהשטח ירד מהמקום השלישי: הוא סיפור על זכאות רפואית,
+            ובתור המסך השלישי הוא גרם לאתר להיראות כאילו הוא עוסק
+            במקרי קצה. אחרי התהליך הוא עושה בדיוק את מה שהוא טוב בו —
+            מסביר למה התהליך הוא שיחה ולא טופס.
+
+            הסדר הוא גם מה שקובע את קצב הרקעים: כהה, בהיר, כהה, בהיר. */}
         {on.hero && <Hero hero={c.hero} showStats={on.trust} />}
+        {on.offer && <Offer />}
         {on.problem && <Problem />}
-        {on.caseStudy && <CaseStudy />}
         {on.planMap && <PlanMap />}
         {on.services && <Services services={c.services} />}
         {on.process && <Process />}
+        {on.caseStudy && <CaseStudy />}
         {on.about && <About about={c.about} />}
         {on.band && <BrandBand />}
         {on.press && <Press />}

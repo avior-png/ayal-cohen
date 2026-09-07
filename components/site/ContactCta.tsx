@@ -54,7 +54,7 @@ export default function ContactCta({
           </ul>
         </div>
 
-        <form className="contact-form" action={action} noValidate>
+        <form className="contact-form notch notch-outline" action={action} noValidate>
           <p className="form-title">{contactContent.formTitle}</p>
 
           {state.error && <p className="field-error" role="alert">{state.error}</p>}
