@@ -571,22 +571,52 @@
 .brand-band {
   position: relative; overflow: hidden;
   display: grid; align-content: center;
-  min-height: clamp(300px, 22vw + 180px, 460px);
+  min-height: clamp(340px, 24vw + 200px, 520px);
   padding-block: var(--space-2xl);
+  text-align: center;
 }
 /* שכבת נייבי מעל התצלום — קריאוּת הטקסט לא תלויה בתצלום עצמו. */
 .brand-band .bg-photo { z-index: 0; }
 .brand-band > .container { position: relative; z-index: 1; }
-.brand-band-inner { max-width: 720px; }
-.brand-band-title {
-  max-width: 720px;
-  font-family: var(--font-heading);
-  font-size: clamp(1.6rem, 1.05rem + 2.4vw, 2.9rem);
-  font-weight: 800; line-height: 1.28; color: #fff; text-wrap: balance;
-  text-shadow: 0 2px 18px rgba(5, 22, 35, 0.5);
+/* קומפוזיציה ממורכזת: הקווים והשורות חולקים ציר אחד. */
+.brand-band-inner {
+  display: grid; justify-items: center; gap: clamp(1.25rem, 0.9rem + 1.2vw, 2rem);
+  max-width: min(940px, 100%); margin-inline: auto; text-align: center;
 }
-/* <em> נבחר לסמנטיקה של ההדגשה, לא לנטייה. */
-.brand-band-title .accent { font-style: normal; color: var(--gold); }
+/* שני קווי זהב אסימטריים — הפתיחה קצרה, הסגירה רחבה ודקה. */
+.band-rule { display: block; width: 44px; height: 2px; background: var(--gold); }
+/* וריאנט מיושר-התחלה: אותה היררכיה, בלי המרכוז. */
+.brand-band-start { text-align: start; }
+.brand-band-start .brand-band-inner { justify-items: start; margin-inline: 0; text-align: start; }
+.band-rule-end { width: 128px; height: 2px; background: rgba(216, 180, 90, 0.55); }
+
+.brand-band-title {
+  display: grid; gap: clamp(0.35rem, 0.2rem + 0.5vw, 0.7rem);
+  margin: 0; text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(5, 22, 35, 0.55);
+}
+/* דרגה 1 — ההנחה: קטנה, מרוּוחת, בגופן הגוף. */
+.band-lead {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.2rem);
+  font-weight: 600; letter-spacing: 0.05em; line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 42ch;
+}
+/* דרגה 2 — הטיעון: הקול הראשי של הפס. */
+.band-hero {
+  font-family: var(--font-heading);
+  font-size: clamp(2.1rem, 1.25rem + 3.9vw, 4.4rem);
+  font-weight: 800; line-height: 1.02; letter-spacing: -0.02em;
+  color: var(--gold);
+}
+/* דרגה 3 — המסקנה: חוזרת ללבן, בכ-45% מגודל הטיעון. */
+.band-tail {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 0.9rem + 1.05vw, 1.95rem);
+  font-weight: 600; line-height: 1.32; color: #fff;
+  max-width: 24ch;
+}
 
 /* ====================== מקרה מהשטח ====================== */
 .case { position: relative; overflow: hidden; }
@@ -959,6 +989,145 @@
   border-inline-start: 3px solid var(--border);
   font-size: var(--fs-micro); color: var(--text-muted); line-height: 1.7;
 }
+
+/* ====================== עמוד שאלות ותשובות ====================== */
+.qa-page { display: grid; gap: var(--space-xl); align-items: start; }
+@media (min-width: 960px) {
+  /* תוכן העניינים דביק בעמודה צדית — בעמוד של ארבע-עשרה שאלות
+     צריך דרך לדלג, אחרת הגלילה היא כל החוויה. */
+  .qa-page { grid-template-columns: 232px 1fr; gap: var(--space-2xl); }
+  .qa-toc { position: sticky; top: 110px; }
+}
+.qa-toc { border-inline-start: var(--bracket-w) solid var(--accent); padding-inline-start: var(--space-md); }
+.qa-toc-title {
+  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.14em;
+  color: var(--text-muted); margin-bottom: var(--space-sm);
+}
+.qa-toc ol { display: grid; gap: 0.15rem; margin: 0; padding: 0; list-style: none; }
+.qa-toc a {
+  display: grid; grid-template-columns: 2.2rem 1fr; align-items: baseline;
+  padding-block: 0.4rem;
+  font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-small);
+  color: var(--text); text-decoration: none;
+  transition: color var(--transition);
+}
+.qa-toc a:hover { color: var(--brand); }
+.qa-toc-num { color: var(--accent-strong); font-variant-numeric: tabular-nums; }
+
+.qa-groups { display: grid; gap: var(--space-2xl); min-width: 0; }
+.qa-group { scroll-margin-top: 110px; }
+.qa-group-head {
+  display: grid; grid-template-columns: auto 1fr; align-items: center;
+  gap: var(--space-md);
+  padding-block-end: var(--space-md); margin-block-end: var(--space-sm);
+  border-block-end: 2px solid var(--ink);
+}
+.qa-group-num {
+  display: grid; place-items: center; width: 44px; height: 44px;
+  background: var(--ink); color: var(--gold);
+  font-family: var(--font-heading); font-weight: 800; font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 0 100%);
+}
+.qa-group-title { font-size: var(--fs-h3); margin: 0; }
+
+.qa-closing {
+  display: grid; justify-items: start; gap: var(--space-sm);
+  padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
+  background: var(--paper);
+  border-inline-start: var(--bracket-w) solid var(--accent);
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
+}
+.qa-closing-title { font-size: var(--fs-h3); margin: 0; }
+.qa-closing-text { color: var(--text-muted); max-width: 58ch; }
+.qa-closing .btn { margin-top: var(--space-sm); }
+
+/* ====================== עמוד "למי זה מתאים" ====================== */
+.fit-grid { display: grid; gap: var(--space-lg); margin: 0; }
+@media (min-width: 720px) { .fit-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1120px) { .fit-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.fit-card {
+  display: grid; align-content: start; gap: var(--space-sm);
+  padding: clamp(1.25rem, 1rem + 0.8vw, 1.9rem);
+  background: var(--surface); border: var(--hairline);
+  border-block-start: 3px solid var(--brand);
+  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.fit-card:hover {
+  border-block-start-color: var(--accent);
+  box-shadow: var(--shadow-md); transform: translateY(-2px);
+}
+.fit-card-top { display: flex; align-items: center; gap: var(--space-sm); }
+.fit-card-icon {
+  display: grid; place-items: center; flex: none; width: 46px; height: 46px;
+  background: var(--brand-soft); color: var(--brand);
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 0 100%);
+}
+.fit-card-tag {
+  padding: 0.22rem 0.5rem;
+  background: var(--accent-soft); color: var(--accent-strong);
+  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.05em;
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
+}
+/* המספר נדחק לקצה ומשמש עוגן ויזואלי, לא מידע. */
+.fit-card-num {
+  margin-inline-start: auto;
+  font-family: var(--font-heading); font-weight: 800; font-size: 1.5rem;
+  color: var(--border); font-variant-numeric: tabular-nums; line-height: 1;
+}
+.fit-card-title { font-size: var(--fs-h4); margin: 0; }
+.fit-card-text { color: var(--text-muted); }
+.fit-card-checks {
+  margin-top: var(--space-sm); padding-top: var(--space-md);
+  border-block-start: var(--hairline);
+}
+.fit-checks-title {
+  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.1em;
+  color: var(--text); margin-bottom: var(--space-sm);
+}
+.check-list-tight { gap: 0.55rem; font-size: var(--fs-small); }
+.check-list-tight li { grid-template-columns: 18px 1fr; }
+.check-list-tight li::before { width: 18px; height: 18px; background-size: 11px 11px; margin-top: 0.25em; }
+
+/* בלוק "מתי זה כנראה לא בשבילך" — כהה, כי הוא טיעון אמון ולא הערת שוליים. */
+.not-for { background: var(--ink); }
+.not-for-inner { display: grid; gap: var(--space-xl); align-items: start; }
+@media (min-width: 900px) { .not-for-inner { grid-template-columns: 1fr 1.15fr; gap: var(--space-2xl); } }
+.not-for-head .section-lead { color: var(--on-ink-muted); }
+.not-for-list { display: grid; gap: 0; margin: 0; }
+.not-for-list li {
+  display: grid; grid-template-columns: auto 1fr; align-items: start;
+  gap: var(--space-md);
+  padding-block: var(--space-md);
+  border-block-end: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--on-ink-muted);
+}
+.not-for-list li:first-child { border-block-start: 1px solid rgba(255, 255, 255, 0.12); }
+/* מקף בעיגול, ההיפוך המדויק של הווי ב-check-list: אותה צורה,
+   אותם צבעים, סימן הפוך. איקס או משולש אזהרה היו קוראים כמו שגיאה. */
+.not-for-mark {
+  width: 22px; height: 22px; margin-top: 0.28em; flex: none;
+  border-radius: 50%;
+  background-color: rgba(216, 180, 90, 0.14);
+  border: 1px solid rgba(216, 180, 90, 0.4);
+  background-image: linear-gradient(var(--gold), var(--gold));
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 11px 2px;
+}
+
+.fit-next {
+  display: grid; gap: var(--space-lg); align-items: center;
+  padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
+  background: var(--surface); border: var(--hairline);
+  border-inline-start: var(--bracket-w) solid var(--accent);
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
+}
+@media (min-width: 860px) { .fit-next { grid-template-columns: 1fr auto; gap: var(--space-2xl); } }
+.fit-next-title { font-size: var(--fs-h3); margin: 0 0 var(--space-xs); }
+.fit-next-text { color: var(--text-muted); margin: 0; max-width: 56ch; }
 
 /* ====================== עמוד יצירת קשר ====================== */
 .contact-cards { display: grid; gap: var(--space-md); margin: 0; }

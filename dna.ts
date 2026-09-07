@@ -163,6 +163,7 @@ export const dna: Dna = {
     band: true,           // פס התצלום שאחרי האודות
     press: true,
     faq: true,
+    fit: true,             // עמוד "למי זה מתאים"
     gallery: false,
     testimonials: false,
     posts: false,
@@ -173,6 +174,8 @@ export const dna: Dna = {
   nav: [
     { label: 'אודות', href: '/about', section: 'about' },
     { label: 'שירותים', href: '/services', section: 'services' },
+    { label: 'למי זה מתאים', href: '/who-its-for', section: 'fit' },
+    { label: 'שאלות נפוצות', href: '/faq', section: 'faq' },
     { label: 'גלריה', href: '/gallery', section: 'gallery' },
     { label: 'המלצות', href: '/testimonials', section: 'testimonials' },
     { label: 'מאמרים', href: '/blog', section: 'posts' },

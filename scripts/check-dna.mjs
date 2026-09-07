@@ -50,6 +50,7 @@ const checks = [
   ['טקסט על צבע המותג',            c.textOnBrand, c.brand,     4.5],
   ['טקסט על מותג כהה',             c.textOnBrand, c.brandStrong, 4.5],
   ['מותג כהה על מותג בהיר',        c.brandStrong, c.brandSoft, 4.5],
+  ['אייקון מותג על מותג בהיר',     c.brand,       c.brandSoft, 3.0],
   ['הודעת שגיאה על משטח',          c.error,       c.surface,   4.5],
   ['הודעת הצלחה על משטח',          c.success,     c.surface,   4.5],
   // משטחים כהים — היררו, התהליך, ה-CTA והפוטר

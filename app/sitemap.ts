@@ -23,6 +23,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   };
   maybe('about', '/about', 0.8);
   maybe('services', '/services', 0.9);
+  maybe('fit', '/who-its-for', 0.8);
+  maybe('faq', '/faq', 0.7);
   maybe('gallery', '/gallery', 0.6);
   maybe('testimonials', '/testimonials', 0.5);
   maybe('posts', '/blog', 0.7);

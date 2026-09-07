@@ -6,7 +6,8 @@
 export type IconName =
   | 'map' | 'shield' | 'percent' | 'handover'
   | 'sliders' | 'compass' | 'phone' | 'mail' | 'clock' | 'pin' | 'external'
-  | 'play' | 'mic' | 'article';
+  | 'play' | 'mic' | 'article'
+  | 'calendar' | 'file' | 'users';
 
 const PATHS: Record<IconName, React.ReactNode> = {
   // מפת תכנון
@@ -67,6 +68,29 @@ const PATHS: Record<IconName, React.ReactNode> = {
   mic: (<><path d="M12 3.5a2.7 2.7 0 0 1 2.7 2.7v5a2.7 2.7 0 0 1-5.4 0v-5A2.7 2.7 0 0 1 12 3.5Z" /><path d="M5.8 11a6.2 6.2 0 0 0 12.4 0M12 17.2V20.5M8.6 20.5h6.8" /></>),
   // כתבה
   article: (<><rect x="3.5" y="4.5" width="17" height="15" rx="1.5" /><path d="M7 8.5h6M7 12h10M7 15.5h10" /></>),
+  // חלון הזמן שלפני הפרישה
+  calendar: (
+    <>
+      <rect x="3.5" y="5.5" width="17" height="15" rx="1.8" />
+      <path d="M3.5 10h17M8 3.5v4M16 3.5v4" />
+      <path d="m9.4 14.6 1.8 1.8 3.6-3.8" />
+    </>
+  ),
+  // מכתב או טופס רשמי
+  file: (
+    <>
+      <path d="M13.6 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8.4L13.6 3.5Z" />
+      <path d="M13.4 3.6v4.9h5M8.8 13h6.4M8.8 16.4h4.4" />
+    </>
+  ),
+  // בן משפחה שמטפל בהורה
+  users: (
+    <>
+      <circle cx="9" cy="8.2" r="3.2" />
+      <path d="M3.6 20c0-3 2.4-5.4 5.4-5.4s5.4 2.4 5.4 5.4" />
+      <path d="M15.6 5.4a3.2 3.2 0 0 1 0 5.6M17 14.9c2.1.6 3.6 2.5 3.6 5.1" />
+    </>
+  ),
 };
 
 /**
