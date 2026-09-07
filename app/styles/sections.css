@@ -421,37 +421,54 @@
 .report-title { font-family: var(--font-heading); font-size: var(--fs-h4); font-weight: 700; }
 .report-tag { font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.12em; color: var(--gold); }
 
-.report-cols {
-  display: none;
-  padding: 0.6rem clamp(1rem, 0.7rem + 1vw, 1.6rem);
-  background: var(--bg-alt); border-block-end: 1px solid #D8E1EC;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.11em; color: var(--text-muted);
-}
 .report-rows { display: grid; margin: 0; }
-.report-row {
-  display: grid; align-items: start;
-  grid-template-columns: auto 1fr;
-  gap: 0.4rem var(--space-md);
-  padding: clamp(0.95rem, 0.8rem + 0.6vw, 1.3rem) clamp(1rem, 0.7rem + 1vw, 1.6rem);
-  border-block-end: 1px solid #E4EAF2;
+/* השורה היא ‎<details>‎: סגורה היא כותרת אחת שניתן לסרוק, פתוחה היא
+   הממצא במלואו. פרוסות, חמש השורות היו 311 מילים — חצי מהטקסט בדף
+   הבית — וכל מי שנכנס קיבל אותן בפנים. */
+.report-row { border-block-end: 1px solid #E4EAF2; }
+.report-row > summary {
+  display: grid; align-items: center;
+  grid-template-columns: auto 1fr auto auto;
+  gap: var(--space-md);
+  padding: clamp(0.9rem, 0.75rem + 0.5vw, 1.2rem) clamp(1rem, 0.7rem + 1vw, 1.6rem);
+  cursor: pointer; list-style: none;
   transition: background var(--transition);
 }
-.report-row:hover { background: var(--bg-alt); }
+.report-row > summary::-webkit-details-marker { display: none; }
+.report-row > summary:hover { background: var(--bg-alt); }
 .report-num {
   font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700;
-  color: var(--accent-strong); font-variant-numeric: tabular-nums; padding-top: 0.15em;
+  color: var(--accent-strong); font-variant-numeric: tabular-nums;
 }
-.report-row-title { font-size: var(--fs-h4); margin-bottom: 0.2rem; }
-.report-row-text { color: var(--text-muted); font-size: var(--fs-small); }
+.report-row-title { font-size: var(--fs-h4); margin: 0; }
+/* פלוס/מינוס בקווים, לא גליף — כדי שיסתובב בפתיחה בלי החלפת תו. */
+.report-toggle {
+  position: relative; flex: none; width: 22px; height: 22px;
+  transition: transform var(--transition);
+}
+.report-toggle::before, .report-toggle::after {
+  content: ''; position: absolute; inset-inline: 3px; top: 50%;
+  height: 2px; margin-top: -1px; background: var(--accent-strong);
+  transition: transform var(--transition), opacity var(--transition);
+}
+.report-toggle::after { rotate: 90deg; }
+.report-row[open] > summary { background: var(--bg-alt); }
+.report-row[open] .report-toggle::after { opacity: 0; }
+
+.report-body {
+  display: grid; gap: var(--space-sm);
+  padding: 0 clamp(1rem, 0.7rem + 1vw, 1.6rem) var(--space-lg);
+  background: var(--bg-alt);
+}
+.report-row-text { color: var(--text-muted); font-size: var(--fs-small); margin: 0; max-width: 74ch; }
 /* "מה זה אומר בפועל" — הוא שהופך ממצא טכני למשהו שאפשר להבין. */
 .report-meaning {
-  grid-column: 2; margin-top: 0.35rem;
-  padding-inline-start: var(--space-sm);
-  border-inline-start: 2px solid var(--accent-soft);
-  font-size: var(--fs-small); color: var(--text);
+  margin: 0; padding-inline-start: var(--space-md);
+  border-inline-start: 2px solid var(--accent);
+  font-size: var(--fs-small); font-weight: 600; color: var(--text); max-width: 74ch;
 }
 .report-flag {
-  grid-column: 2; justify-self: start; margin-top: 0.5rem;
+  justify-self: start;
   padding: 0.28rem 0.7rem;
   --n: 7px; --n-line: rgba(176, 128, 31, 0.42);
   background-color: var(--accent-soft); color: var(--accent-strong);
@@ -459,29 +476,14 @@
 }
 .report-foot {
   padding: var(--space-md) clamp(1rem, 0.7rem + 1vw, 1.6rem);
-  background: var(--bg-alt);
-  font-size: var(--fs-small); font-weight: 600; color: var(--text);
+  background: var(--ink-alt); color: var(--on-ink-muted);
+  font-size: var(--fs-small); font-weight: 600;
 }
-
-@media (min-width: 860px) {
-  /* שלושה טורים: הממצא, המשמעות, והסטטוס ברוחב קבוע כדי שהתוויות
-     ייפלו על קו אחד ויהיו ניתנות לסריקה מלמעלה למטה. */
-  .report-cols { display: grid; grid-template-columns: 1.05fr 1fr 5.6rem; gap: var(--space-md); }
-  .report-cols-status { text-align: start; }
-  .report-row {
-    grid-template-columns: auto 1.05fr 1fr 5.6rem;
-    gap: var(--space-md); align-items: start;
-  }
-  .report-finding { grid-column: 2; }
-  .report-meaning {
-    grid-column: 3; grid-row: 1; margin-top: 0;
-    padding-inline-start: var(--space-md); border-inline-start-color: #E4EAF2;
-  }
-  .report-flag { grid-column: 4; grid-row: 1; margin-top: 0.1rem; }
-}
-/* יישור כותרות העמודות מול תוכן השורות (הטור הראשון הוא המספר). */
-@media (min-width: 860px) {
-  .report-cols { padding-inline-start: calc(clamp(1rem, 0.7rem + 1vw, 1.6rem) + 1.8rem + var(--space-md)); }
+@media (max-width: 560px) {
+  /* במסך צר התווית יורדת שורה — ארבעה טורים באותה שורה דוחסים את
+     הכותרת לשתי מילים בשורה. */
+  .report-row > summary { grid-template-columns: auto 1fr auto; }
+  .report-flag { grid-column: 2; grid-row: 2; margin-top: 0.4rem; }
 }
 
 /* ====================== תחומי העיסוק ====================== */
@@ -562,6 +564,40 @@
 .svc-card-lead .svc-card-text { color: var(--on-ink-muted); font-size: var(--fs-body); max-width: 52ch; }
 .svc-card-lead .arrow-link { color: var(--gold); }
 
+/* רצועת תחומי העיסוק בדף הבית: כותרות בלבד, כל אריח קישור.
+   השאלה שהאזור הזה עונה עליה היא "האם מה שמטריד אותי נכלל כאן",
+   וזו שאלה שנענית בכותרת. הפירוט המלא ב-/services. */
+.svc-strip { display: grid; gap: var(--space-sm); margin: 0; }
+@media (min-width: 660px) { .svc-strip { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1060px) { .svc-strip { grid-template-columns: repeat(3, 1fr); } }
+
+.svc-tile {
+  --n: 12px; --n-line: var(--border);
+  display: grid; grid-template-columns: auto auto 1fr auto; align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg) var(--space-md) var(--space-md);
+  background-color: var(--surface); color: var(--text); text-decoration: none;
+  transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
+}
+.svc-tile:hover {
+  --n-line: var(--accent);
+  background-color: var(--surface); box-shadow: var(--shadow-sm);
+}
+.svc-tile-num {
+  font-family: var(--font-heading); font-size: 0.85rem; font-weight: 800;
+  color: var(--border); font-variant-numeric: tabular-nums;
+  transition: color var(--transition);
+}
+.svc-tile:hover .svc-tile-num { color: var(--accent); }
+.svc-tile-mark {
+  --n: 8px;
+  display: grid; place-items: center; flex: none; width: 38px; height: 38px;
+  background-color: var(--brand-soft); color: var(--brand);
+}
+.svc-tile-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.02rem; line-height: 1.35; }
+.svc-tile-go { color: var(--accent-strong); transition: transform var(--transition); }
+.svc-tile:hover .svc-tile-go { transform: translateX(-4px); }
+
 /* ====================== התהליך ======================
    ציר התכנון: ארבעה פאנלים קטומים תלויים על מסילת זהב אחת, כשמספר
    כל שלב הוא חרוז שיושב *על* המסילה ולא לידה. שלושת המרכיבים —
@@ -616,6 +652,18 @@
 
 /* --- מסילת הזהב --- */
 .process-rail { position: absolute; z-index: 0; background: rgba(216, 180, 90, 0.3); }
+
+/* משפט המחץ שהיה סופו של אזור שלם על מקרה מהשטח. כטיעון הוא עובד
+   לבד, וכאן הוא במקומו — הוא מסביר למה השלב השני הוא שיחה. */
+.process-punch {
+  max-width: 44ch; margin: clamp(2.25rem, 1.6rem + 2vw, 3.5rem) auto 0;
+  padding-block-start: var(--space-lg);
+  border-block-start: 2px solid var(--gold);
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 1rem + 0.9vw, 1.7rem);
+  font-weight: 700; line-height: 1.4; text-align: center; color: #fff;
+  text-wrap: balance;
+}
 
 @media (min-width: 1000px) {
   /* בלי align-items: start — כך כל הפאנלים נמתחים לגובה הגבוה

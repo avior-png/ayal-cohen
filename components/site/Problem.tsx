@@ -38,24 +38,25 @@ export default function Problem() {
             <span className="report-tag">{problem.panelTag}</span>
           </div>
 
-          {/* שורת כותרות העמודות — בלעדיה הטבלה נקראת כרשימה סתמית,
-              ואי אפשר לדעת מה כל טור מוסר. */}
-          <div className="report-cols" aria-hidden="true">
-            <span>{problem.colFinding}</span>
-            <span>{problem.colMeaning}</span>
-            <span className="report-cols-status">{problem.colStatus}</span>
-          </div>
-
+          {/* סגור כברירת מחדל, ולא במקרה. פרוס, הטבלה הזו הייתה 311
+              מילים — חצי מהטקסט בדף הבית — וכל מי שנכנס קיבל אותה
+              בפנים. עכשיו הוא רואה חמש כותרות ופותח מה שמעניין אותו.
+              שום מידע לא נמחק; הוא פשוט לא נכפה. */}
           <ol className="report-rows">
             {problem.findings.map((f, i) => (
-              <li key={f.title} className="report-row">
-                <span className="report-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                <div className="report-finding">
-                  <h3 className="report-row-title">{f.title}</h3>
-                  <p className="report-row-text">{f.text}</p>
-                </div>
-                <p className="report-meaning">{f.meaning}</p>
-                <span className="report-flag notch notch-outline">{f.flag}</span>
+              <li key={f.title}>
+                <details className="report-row">
+                  <summary>
+                    <span className="report-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                    <h3 className="report-row-title">{f.title}</h3>
+                    <span className="report-flag notch notch-outline">{f.flag}</span>
+                    <span className="report-toggle" aria-hidden="true" />
+                  </summary>
+                  <div className="report-body">
+                    <p className="report-row-text">{f.text}</p>
+                    <p className="report-meaning">{f.meaning}</p>
+                  </div>
+                </details>
               </li>
             ))}
           </ol>

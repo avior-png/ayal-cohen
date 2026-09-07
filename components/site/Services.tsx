@@ -4,17 +4,17 @@ import Icon from '@/components/site/Icon';
 import type { SiteContent } from '@/lib/site-content';
 
 /**
- * תחומי העיסוק.
+ * תחומי העיסוק — בדף הבית זו רצועת התמצאות, לא קטלוג.
  *
- * הרשימה המסורגלת שהייתה כאן נשאה את המידע אבל לא את המשקל — אזור
- * שירותים צריך להיראות כמו מה שקונים בו. כאן: הפריט הראשון הוא פאנל
- * כהה שתופס שתי עמודות (תכנון הפרישה המלא הוא המוצר, השאר נגזרות
- * ממנו), והחמישה האחרים כרטיסים עם ספרת רפאים גדולה ברקע, אייקון
- * וקו זהב שנמשך בריחוף.
+ * קודם היו כאן שישה כרטיסים עם גוף טקסט: 249 מילים, שישית מכל
+ * הטקסט בעמוד. אתר תדמית לא מבקש מהקורא לקרוא שישה תיאורי שירות
+ * לפני שהוא יודע אם להרים טלפון — הוא צריך לענות על שאלה אחת,
+ * "האם מה שמטריד אותי נכלל כאן", וזה עובד בכותרות.
+ *
+ * הפירוט המלא, כולל הסבר לכל מונח, קיים ב-/services. כל אריח כאן
+ * הוא קישור לשם.
  */
 export default function Services({ services }: { services: SiteContent['services'] }) {
-  const [lead, ...rest] = services.items;
-
   return (
     <section id="services" className="section" aria-labelledby="services-title">
       <div className="container">
@@ -24,24 +24,20 @@ export default function Services({ services }: { services: SiteContent['services
           <p className="section-lead">{services.lead}</p>
         </div>
 
-        <ul className="svc-grid">
-          <li className="svc-card svc-card-lead">
-            <span className="svc-ghost" aria-hidden="true">01</span>
-            <span className="svc-mark notch"><Icon name={lead.icon} size={30} /></span>
-            <h3 className="svc-card-title">{lead.title}</h3>
-            <p className="svc-card-text">{lead.text}</p>
-            <Link className="arrow-link" href={asset('/services')}>
-              לפירוט התהליך
-              <span className="visually-hidden"> — {lead.title}</span>
-            </Link>
-          </li>
-
-          {rest.map((item, i) => (
-            <li key={item.title} className="svc-card">
-              <span className="svc-ghost" aria-hidden="true">{String(i + 2).padStart(2, '0')}</span>
-              <span className="svc-mark notch"><Icon name={item.icon} size={24} /></span>
-              <h3 className="svc-card-title">{item.title}</h3>
-              <p className="svc-card-text">{item.text}</p>
+        {/* בדף הבית: כותרות בלבד. הגרסה עם גוף הטקסט הייתה 249 מילים,
+            והיא קיימת במלואה ב-/services. כאן זו רצועת התמצאות —
+            "האם מה שמטריד אותי נכלל" — ולא קטלוג לקריאה. */}
+        <ul className="svc-strip">
+          {services.items.map((item, i) => (
+            <li key={item.title}>
+              <Link className="svc-tile notch notch-outline" href={asset('/services')}>
+                <span className="svc-tile-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span className="svc-tile-mark notch" aria-hidden="true">
+                  <Icon name={item.icon} size={22} />
+                </span>
+                <span className="svc-tile-title">{item.title}</span>
+                <span className="svc-tile-go" aria-hidden="true">←</span>
+              </Link>
             </li>
           ))}
         </ul>

@@ -1,6 +1,6 @@
 import { asset } from '@/lib/asset';
 import PhotoLayer from '@/components/site/PhotoLayer';
-import { process } from '@/content/site';
+import { process, caseStudy } from '@/content/site';
 
 /**
  * ציר התכנון.
@@ -11,8 +11,11 @@ import { process } from '@/content/site';
  *
  * הגרסה הקודמת הייתה ארבעה בלוקי טקסט חופשיים עם גל זהב שריחף
  * מעליהם ולא נגע בהם. היא נקראה כארבעה דברים, לא כתהליך אחד.
+ *
+ * `compact` — בדף הבית מוצגות רק הכותרת והמטא. התיאורים המלאים
+ * מוצגים בעמודים הפנימיים, שאליהם מגיע מי שכבר רוצה לקרוא.
  */
-export default function Process() {
+export default function Process({ compact = false }: { compact?: boolean }) {
   return (
     <section id="process" className="section on-dark process" aria-labelledby="process-title">
       {/* התצלום כרקע: ארבע התחנות שבו עומדות מאחורי ארבעת השלבים,
@@ -41,13 +44,23 @@ export default function Process() {
                 </span>
                 <div className="step-body notch notch-outline">
                   <h3 className="step-title">{step.title}</h3>
-                  <p className="step-text">{step.text}</p>
+                  {/* בדף הבית רק הכותרת והזמן. ארבעה תיאורים של 35
+                      מילים כל אחד הם 149 מילים שאף אחד לא קורא
+                      בסריקה — הם קיימים במלואם ב-/services. */}
+                  {!compact && <p className="step-text">{step.text}</p>}
                   <span className="step-meta notch notch-outline">{step.meta}</span>
                 </div>
               </li>
             ))}
           </ol>
         </div>
+
+        {/* המשפט הזה היה סוף אזור שלם של 152 מילים על מקרה מהשטח.
+            כטיעון הוא עובד לבד, וכאן הוא במקומו: הוא מסביר למה
+            השלב השני הוא שיחה ולא טופס. הסיפור המלא ב-/who-its-for. */}
+        {compact && (
+          <p className="process-punch">{caseStudy.punch}</p>
+        )}
 
         <p className="section-more">
           <a className="btn btn-gold" href={asset('/contact')}>

@@ -6,6 +6,7 @@ import { fit, disclaimer } from '@/content/site';
 import PageHeader from '@/components/site/PageHeader';
 import Icon from '@/components/site/Icon';
 import Process from '@/components/site/Process';
+import CaseStudy from '@/components/site/CaseStudy';
 import ContactCta from '@/components/site/ContactCta';
 
 export const metadata: Metadata = {
@@ -73,6 +74,10 @@ export default async function WhoItsForPage() {
             </ul>
           </div>
         </section>
+
+        {/* מקרה מהשטח ירד מדף הבית והגיע לכאן, וזה מקומו הנכון: כל
+            העמוד הזה הוא מצבים קונקרטיים, והמקרה הוא אחד מהם. */}
+        <CaseStudy />
 
         <Process />
 

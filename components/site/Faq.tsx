@@ -7,6 +7,8 @@ import { faq } from '@/content/site';
  */
 export default function Faq() {
   return (
+    /* ארבע שאלות בדף הבית ולא שש, והכפתור מוביל לעמוד השאלות המלא
+       (ארבע-עשרה שאלות בארבע קבוצות) ולא לטופס. */
     <section id="faq" className="section section-alt" aria-labelledby="faq-title">
       <div className="container faq-inner">
         <div className="faq-aside">
@@ -15,8 +17,8 @@ export default function Faq() {
             <h2 id="faq-title" className="section-title">{faq.title}</h2>
             <p className="section-lead">{faq.lead}</p>
           </div>
-          <a className="btn btn-secondary" href={asset('/contact')}>
-            לשאלה שלא נמצאת כאן
+          <a className="btn btn-secondary" href={asset('/faq')}>
+            לכל השאלות והתשובות
             <span className="btn-arrow" aria-hidden="true">←</span>
           </a>
 
@@ -27,7 +29,7 @@ export default function Faq() {
         </div>
 
         <div className="faq-list">
-          {faq.items.map((item) => (
+          {faq.items.slice(0, 4).map((item) => (
             <details key={item.q} className="faq-item" name="faq">
               <summary>
                 <span>{item.q}</span>

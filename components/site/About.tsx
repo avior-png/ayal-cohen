@@ -16,7 +16,6 @@ import type { SiteContent } from '@/lib/site-content';
  * גוזלת תשומת לב מהדיוקן בלי להוסיף מסר.
  */
 export default function About({ about }: { about: SiteContent['about'] }) {
-  const [first] = about.paragraphs;
   const points = about.points.slice(0, 3);
 
   return (
@@ -26,7 +25,9 @@ export default function About({ about }: { about: SiteContent['about'] }) {
           <p className="eyebrow">{about.eyebrow}</p>
           <h2 id="about-title" className="section-title about-title">{about.title}</h2>
 
-          <p className="about-lead">{first}</p>
+          {/* `short` ולא הפסקה הראשונה: זה אתר תדמית, והביוגרפיה
+              המלאה — כולל הרישוי וההכשרות — היא ב-/about. */}
+          <p className="about-lead">{aboutContent.short}</p>
 
           <ul className="check-list about-points">
             {points.map((point) => <li key={point}>{point}</li>)}

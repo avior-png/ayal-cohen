@@ -9,7 +9,6 @@ import PlanMap from '@/components/site/PlanMap';
 import Process from '@/components/site/Process';
 import About from '@/components/site/About';
 import BrandBand from '@/components/site/BrandBand';
-import CaseStudy from '@/components/site/CaseStudy';
 import Press from '@/components/site/Press';
 import Faq from '@/components/site/Faq';
 import Gallery from '@/components/site/Gallery';
@@ -65,27 +64,37 @@ export default async function HomePage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       )}
       <main id="main">
-        {/* הסדר הוא הטיעון, ומאז ביקורת "אני לא מבין מה עושים כאן"
-            הוא מתחיל בבהירות ולא בטיעון: מה עושים כאן → מה מתגלה
-            בבדיקה → מה מקבלים → מה נכלל → איך זה עובד → מקרה שמראה
-            למה זו שיחה → מי עושה את זה → הוכחה חיצונית.
+        {/* ‼️ זה אתר תדמית, לא כתבה.
+            דף הבית הגיע ל-1,485 מילים ול-12,700px, והביקורת הייתה
+            מדויקת: "נכנס לאתר ויש מלא מידע לפרצוף". לא משנה כמה טוב
+            העיצוב — קורא שמקבל בפנים 1,500 מילים לא מקבל מסר.
 
-            מקרה מהשטח ירד מהמקום השלישי: הוא סיפור על זכאות רפואית,
-            ובתור המסך השלישי הוא גרם לאתר להיראות כאילו הוא עוסק
-            במקרי קצה. אחרי התהליך הוא עושה בדיוק את מה שהוא טוב בו —
-            מסביר למה התהליך הוא שיחה ולא טופס.
+            שבעה אזורים, כל אחד רעיון אחד, וכל פירוט עבר לעמוד שקיים
+            לו ממילא:
+              היררו      מי זה, מה הבעיה, ומה הצעד הראשון
+              מה עושים   שלוש שורות: מה בודקים / מקבלים / נדרש ממך
+              מה מתגלה   חמש כותרות; ההסבר נפתח בלחיצה
+              מה מקבלים  התוצר — האזור הקונקרטי ביותר בעמוד
+              איך עובד   ארבעה שלבים, כותרת וזמן בלבד
+              מי זה      דיוקן, שתי שורות וציטוט
+              בתקשורת    הוכחה חיצונית, קצרה מטבעה
+            ואחריהם רצועת תחומי העיסוק (כותרות בלבד) וארבע שאלות.
 
-            הסדר הוא גם מה שקובע את קצב הרקעים: כהה, בהיר, כהה, בהיר. */}
+            מקרה מהשטח ירד מדף הבית: 152 מילים על זכאות רפואית גרמו
+            לאתר להיראות כאילו הוא עוסק במקרי קצה. משפט המחץ שלו עבר
+            לאזור התהליך, שם הוא הטיעון היחיד שצריך; הסיפור המלא
+            עבר ל-/who-its-for.
+
+            הסדר גם קובע את קצב הרקעים: כהה, בהיר, כהה, בהיר. */}
         {on.hero && <Hero hero={c.hero} showStats={on.trust} />}
         {on.offer && <Offer />}
         {on.problem && <Problem />}
         {on.planMap && <PlanMap />}
-        {on.services && <Services services={c.services} />}
-        {on.process && <Process />}
-        {on.caseStudy && <CaseStudy />}
+        {on.process && <Process compact />}
         {on.about && <About about={c.about} />}
         {on.band && <BrandBand />}
         {on.press && <Press />}
+        {on.services && <Services services={c.services} />}
         {on.faq && <Faq />}
         {on.gallery && <Gallery gallery={c.gallery} />}
         {on.testimonials && <Testimonials testimonials={c.testimonials} />}

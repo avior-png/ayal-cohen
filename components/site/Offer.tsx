@@ -11,6 +11,10 @@ import Icon from '@/components/site/Icon';
  *
  * שלושת הטורים ממוספרים כשלבים, ולכן הם גם תקציר של התהליך שמופיע
  * בהמשך: מי שקורא רק את האזור הזה יודע כבר מה עומד לקרות לו.
+ *
+ * שורה אחת לכל טור, ולא פסקה. הגרסה הראשונה כאן הייתה 135 מילים
+ * והיא סתרה את עצם קיומה — אזור שנועד לתת בהירות מיידית לא יכול
+ * לבקש מהקורא לקרוא שלוש פסקאות.
  */
 export default function Offer() {
   return (
@@ -33,7 +37,6 @@ export default function Offer() {
               </div>
               <h3 className="offer-card-title">{col.title}</h3>
               <p className="offer-card-text">{col.text}</p>
-              <p className="offer-note">{col.note}</p>
             </li>
           ))}
         </ol>
