@@ -28,6 +28,7 @@ export default function BrandBand({
   lead = band.lead,
   cta = band.cta,
   image = band.image,
+  variant = 'photo',
   align = 'center',
   scrim,
   position = 'center 58%',
@@ -36,37 +37,70 @@ export default function BrandBand({
   titleAccent?: string;
   lead?: string;
   cta?: { label: string; href: string };
-  image?: { src: string; alt: string };
+  image?: { src: string; alt: string; width?: number; height?: number };
+  /**
+   * 'photo'  — התצלום הוא רקע האזור, והטקסט עליו.
+   * 'object' — התצלום הוא אובייקט חתוך בצד, והטקסט לצדו. לוויזואל
+   *            שיש לו צורה משל עצמו זה עדיף: כרקע הוא נחתך בשולי
+   *            האזור ויושב מתחת לטקסט, וכאובייקט הוא נראה שלם.
+   */
+  variant?: 'photo' | 'object';
   /** 'center' לתצלום סימטרי, 'start' כשהוויזואל א-סימטרי ותופס את המרכז. */
   align?: 'center' | 'start';
   scrim?: string;
   position?: string;
 }) {
-  const centered = align === 'center';
+  const isObject = variant === 'object';
+  const centered = !isObject && align === 'center';
+
+  const text = (
+    <div className="brand-band-inner">
+      <span className="band-rule" aria-hidden="true" />
+      <p id="band-title" className="brand-band-title">
+        <span className="band-lead">{title}</span>
+        <span className="band-hero">{titleAccent}</span>
+      </p>
+      <p className="band-note">{lead}</p>
+      <a className="btn btn-gold" href={asset(cta.href)}>
+        {cta.label}
+        <span className="btn-arrow" aria-hidden="true">←</span>
+      </a>
+    </div>
+  );
 
   return (
     <section
-      className={`brand-band on-dark${centered ? '' : ' brand-band-start'}`}
+      className={
+        'brand-band on-dark'
+        + (isObject ? ' brand-band-object' : '')
+        + (centered ? '' : ' brand-band-start')
+      }
       aria-labelledby="band-title"
     >
-      <PhotoLayer
-        src={image.src}
-        scrim={scrim ?? (centered ? BAND_SCRIM_CENTER : BAND_SCRIM_FLAT)}
-        position={position}
-      />
+      {!isObject && (
+        <PhotoLayer
+          src={image.src}
+          scrim={scrim ?? (centered ? BAND_SCRIM_CENTER : BAND_SCRIM_FLAT)}
+          position={position}
+        />
+      )}
       <div className="container">
-        <div className="brand-band-inner">
-          <span className="band-rule" aria-hidden="true" />
-          <p id="band-title" className="brand-band-title">
-            <span className="band-lead">{title}</span>
-            <span className="band-hero">{titleAccent}</span>
-          </p>
-          <p className="band-note">{lead}</p>
-          <a className="btn btn-gold" href={asset(cta.href)}>
-            {cta.label}
-            <span className="btn-arrow" aria-hidden="true">←</span>
-          </a>
-        </div>
+        {isObject ? (
+          <div className="band-split">
+            {text}
+            <figure className="band-object">
+              <img
+                src={asset(image.src)}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                loading="lazy"
+              />
+            </figure>
+          </div>
+        ) : (
+          text
+        )}
       </div>
     </section>
   );

@@ -58,7 +58,7 @@ export default async function ServicesPage() {
           </div>
         </section>
 
-        <BrandBand {...servicesBand} align="start" />
+        <BrandBand {...servicesBand} variant="object" />
 
         <Process />
 

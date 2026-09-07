@@ -814,14 +814,14 @@
 }
 /* שתי הדרגות של הטיעון: הפתיחה בלבן, והנקודה עצמה בזהב ובאותו גודל
    — לא הקטנה, כי היא לא כותרת משנה אלא סוף המשפט. */
-.band-lead {
-  font-size: clamp(1.7rem, 1.1rem + 2.1vw, 2.9rem);
-  line-height: 1.1; letter-spacing: -0.02em; color: #fff;
+.band-lead, .band-hero {
+  /* משתנה ולא ערך קבוע: בווריאנט האובייקט הטקסט יושב בטור צר יותר
+     וצריך גופן קטן יותר, אחרת הכותרת נשברת לארבע-חמש שורות. */
+  font-size: var(--band-display, clamp(1.7rem, 1.1rem + 2.1vw, 2.9rem));
+  line-height: 1.1; letter-spacing: -0.02em;
 }
-.band-hero {
-  font-size: clamp(1.7rem, 1.1rem + 2.1vw, 2.9rem);
-  line-height: 1.1; letter-spacing: -0.02em; color: var(--gold);
-}
+.band-lead { color: #fff; }
+.band-hero { color: var(--gold); }
 /* ההסבר: מה עושים עם הטיעון. */
 .band-note {
   max-width: 52ch; margin: 0;
@@ -830,6 +830,43 @@
   text-shadow: 0 1px 12px rgba(5, 22, 35, 0.5);
 }
 .brand-band-inner .btn { margin-top: var(--space-xs); }
+
+/* --- וריאנט "אובייקט": הוויזואל בצד ולא ברקע ---
+   כרקע ברוחב מלא הטבעות היו נחתכות בשולי האזור ויושבות מתחת
+   לטקסט. כאובייקט חתוך הן נראות שלמות — וזה בדיוק הרעיון שלהן,
+   שלושה דברים שלובים זה בזה. */
+.brand-band-object {
+  /* בלי תצלום רקע: זוהר זהב רך מונע מהנייבי להיות שטוח. */
+  background:
+    radial-gradient(90% 120% at 22% 52%, rgba(176, 128, 31, 0.2), rgba(176, 128, 31, 0) 62%),
+    var(--ink);
+  text-align: start;
+  --band-display: clamp(1.45rem, 0.95rem + 1.5vw, 2.3rem);
+}
+.band-split { display: grid; gap: var(--space-xl); align-items: center; }
+.band-split .brand-band-inner {
+  justify-items: start; margin-inline: 0; text-align: start; max-width: 46ch;
+}
+.band-object { margin: 0; display: grid; justify-items: center; }
+.band-object img {
+  width: 100%; height: auto;
+  /* הצל מחזיר לאובייקט החתוך את הנפח שאבד עם הרקע. */
+  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.45));
+}
+
+@media (min-width: 900px) {
+  /* הטבעות בצד השמאלי הפיזי, הטקסט בצד ההתחלה — סדר ה-DOM הוא
+     טקסט ואז תצלום, וב-RTL זה בדיוק הסדר הזה. */
+  .band-split { grid-template-columns: 1.12fr 0.88fr; gap: var(--space-2xl); }
+  .band-object img { max-width: 480px; }
+}
+@media (max-width: 899px) {
+  /* במסך צר התצלום יורד מתחת לטקסט ומוגבל בגובה, כדי שלא ידחוף
+     את הכפתור מחוץ למסך הראשון. */
+  .brand-band-object { text-align: center; }
+  .band-split .brand-band-inner { justify-items: center; text-align: center; margin-inline: auto; }
+  .band-object img { max-width: 340px; }
+}
 
 /* ====================== מקרה מהשטח ====================== */
 .case { position: relative; overflow: hidden; }
