@@ -891,6 +891,43 @@
 }
 .footer-legal { display: flex; flex-wrap: wrap; gap: var(--space-md); margin: 0; }
 
+/* ====================== עמוד אודות ====================== */
+/* פנקס ההכשרות: כל שורה היא רשומה בתיק — תג בזהב, ערך בכתב הכותרות. */
+.credentials {
+  display: grid; gap: var(--space-md); margin: 0;
+}
+@media (min-width: 760px) {
+  .credentials-2col { grid-template-columns: 1fr 1fr; column-gap: var(--space-lg); }
+}
+.credential {
+  position: relative;
+  display: grid; grid-template-columns: auto 1fr; align-items: start;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--surface);
+  border: var(--hairline);
+  border-inline-start: var(--bracket-w) solid var(--accent);
+  /* החיתוך פיזי, לא לוגי: כאן הוא בפינה השמאלית-עליונה כדי שלא
+     יחתוך את פס הזהב שיושב בצד ההתחלה (מימין) של הכרטיס. */
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.credential:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
+.credential-year {
+  min-width: 5.25rem;
+  padding: 0.3rem 0.55rem;
+  background: var(--accent-soft); color: var(--accent-strong);
+  font-family: var(--font-heading); font-weight: 800;
+  font-size: var(--fs-micro); letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+}
+.credential-text {
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: 1.02rem; line-height: 1.5; color: var(--text);
+}
+
 /* ====================== עמוד תחומי העיסוק ====================== */
 .service-rows { display: grid; margin: 0; border-block-start: var(--hairline); }
 .service-row {
