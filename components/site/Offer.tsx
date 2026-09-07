@@ -15,6 +15,11 @@ import Icon from '@/components/site/Icon';
  * שורה אחת לכל טור, ולא פסקה. הגרסה הראשונה כאן הייתה 135 מילים
  * והיא סתרה את עצם קיומה — אזור שנועד לתת בהירות מיידית לא יכול
  * לבקש מהקורא לקרוא שלוש פסקאות.
+ *
+ * לכל כרטיס לוחית עליונה עם האייקון וספרת השלב. זה גם עיצוב וגם
+ * הכנה: כשיתקבלו תצלומים הם ייכנסו בדיוק לשם, בלי לשנות פריסה.
+ * הרצף בין שלושת הכרטיסים מסומן בקו זהב עם חץ — אלה שלושה שלבים
+ * של דבר אחד, לא שלוש תיבות.
  */
 export default function Offer() {
   return (
@@ -27,16 +32,22 @@ export default function Offer() {
         </div>
 
         <ol className="offer-grid reveal-stagger">
-          {offer.columns.map((col) => (
-            <li key={col.title} className="offer-card notch notch-outline">
-              <div className="offer-card-head">
-                <span className="offer-icon notch notch-outline" aria-hidden="true">
+          {offer.columns.map((col, i) => (
+            <li key={col.title} className="offer-card">
+              {/* הלוחית העליונה היא המקום שבו ייכנס תצלום. עד אז
+                  היא נושאת את האייקון ואת ספרת השלב הגדולה, ולכן
+                  החלפתה בתמונה לא תשנה את הפריסה. */}
+              <div className="offer-plate">
+                <span className="offer-plate-num" aria-hidden="true">{i + 1}</span>
+                <span className="offer-icon" aria-hidden="true">
                   <Icon name={col.icon} size={26} />
                 </span>
-                <span className="offer-label">{col.label}</span>
               </div>
-              <h3 className="offer-card-title">{col.title}</h3>
-              <p className="offer-card-text">{col.text}</p>
+              <div className="offer-body">
+                <span className="offer-label">{col.label}</span>
+                <h3 className="offer-card-title">{col.title}</h3>
+                <p className="offer-card-text">{col.text}</p>
+              </div>
             </li>
           ))}
         </ol>

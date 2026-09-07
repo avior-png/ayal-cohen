@@ -33,7 +33,7 @@ export default function About({ about }: { about: SiteContent['about'] }) {
             {points.map((point) => <li key={point}>{point}</li>)}
           </ul>
 
-          <blockquote className="about-quote notch">
+          <blockquote className="about-quote">
             <span className="about-quote-mark" aria-hidden="true" />
             {aboutContent.quote}
           </blockquote>

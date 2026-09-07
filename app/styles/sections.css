@@ -178,21 +178,52 @@
 @media (max-width: 699px) {
   .hero { display: grid; grid-template-rows: auto 93vw; align-content: start; min-height: 154vw; }
   .hero-inner { grid-row: 1; }
+  /* קומפוזיציה ממורכזת: הדמות במרכז התחתית, ולכן טקסט מיושר לצד
+     נראה מוסט ממנה. הכל על ציר אחד. */
+  .hero { text-align: center; }
+  .hero-text { display: grid; justify-items: center; }
+  .hero-byline { border-block-start-width: 2px; }
+  .hero-lead { margin-inline: auto; }
+  /* כפתורים ברוחב אחיד ולא מתוחים על כל המסך: רוחב מינימלי אחד
+     לשניהם, מרכוז, ותקרה שמונעת מהם להימתח בטלפונים רחבים. */
+  .hero-actions { display: grid; justify-content: center; width: 100%; }
+  .hero-actions .btn { width: 100%; min-width: 15rem; max-width: 20rem; margin-inline: auto; justify-content: center; }
+  /* הכותרת גדולה יותר במובייל — היא הדבר היחיד בחצי העליון. */
+  .hero { --hero-title: clamp(2.15rem, 1.1rem + 6.4vw, 3rem); }
   /* בשתי שורות התיבה גבוהה יותר, ולכן גם החצי שיוצא מכל צד. */
   .hero-stats-wrap { --stats-half: 104px; }
 }
 
+/* שתי השורות של הכותרת הן שתי דרגות, לא שורה שנשברה: השאלה בלבן
+   ובמשקל מלא, התשובה בזהב ובכ-70% מגודלה. הן ‎display: block‎ ולכן
+   אין צורך ב-‎<br>‎, והמרווח ביניהן נשלט ולא תלוי בגובה השורה. */
 .hero-title {
-  font-size: var(--hero-title, var(--fs-display)); line-height: var(--lh-tight);
-  margin-bottom: var(--space-lg); color: #fff;
+  font-size: var(--hero-title, var(--fs-display));
+  line-height: 1.04; letter-spacing: -0.03em;
+  font-weight: 800; margin-bottom: var(--space-md); color: #fff;
+  text-wrap: balance;
 }
 .hero-title .accent {
-  display: inline-block; margin-top: 0.18em;
-  font-size: 0.74em; color: var(--gold); font-style: normal;
+  display: block; margin-top: 0.24em;
+  font-size: 0.68em; line-height: 1.12; letter-spacing: -0.02em;
+  color: var(--gold); font-style: normal;
+}
+/* שורת הזיהוי: הטקסט שהיה ה-eyebrow, עכשיו כתת-כותרת. מרווח אותיות
+   פתוח וקו זהב דק מעליה — היא מפרידה בין הכותרת לפסקה. */
+.hero-byline {
+  display: inline-block;
+  padding-block-start: var(--space-md);
+  border-block-start: 1px solid rgba(216, 180, 90, 0.45);
+  font-family: var(--font-heading);
+  font-size: clamp(0.92rem, 0.86rem + 0.28vw, 1.08rem);
+  font-weight: 600; letter-spacing: 0.06em;
+  color: var(--gold);
+  margin-bottom: var(--space-md);
 }
 .hero-lead {
-  font-size: var(--fs-lead); color: var(--on-ink-muted);
-  max-width: 54ch; margin-bottom: var(--space-xl);
+  font-size: var(--fs-lead); line-height: var(--lh-lead);
+  color: var(--on-ink-muted);
+  max-width: 46ch; margin-bottom: var(--space-xl);
 }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-md); }
 
@@ -254,10 +285,8 @@
   margin-block: calc(var(--stats-half) * -1);
 }
 .hero-stats {
-  /* אותה צורה: פס הזהב העליון ממשיך סביב הפינה הקטומה. */
-  --n: var(--notch); --n-w: 1px; --n-line: rgba(216, 180, 90, 0.28);
-  --n-dw: 2px; --n-dline: var(--gold);
   display: grid; grid-template-columns: repeat(2, 1fr); margin: 0;
+  border: 1px solid rgba(216, 180, 90, 0.28);
   background-color: var(--ink-alt);
   border-block-start: 2px solid var(--gold);
   box-shadow: var(--shadow-lg);
@@ -288,39 +317,76 @@
 /* ====================== מה עושים כאן ====================== */
 .offer { background: var(--bg); }
 .offer-grid { display: grid; gap: var(--space-lg); margin: 0; }
-@media (min-width: 820px) { .offer-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 820px) {
+  .offer-grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); }
+}
 
 .offer-card {
-  --n-line: var(--border);
-  /* הפס העליון ממשיך סביב הפינה הקטומה בעובי ובצבע שלו. */
-  --n-dw: 3px; --n-dline: var(--brand);
-  display: grid; align-content: start; gap: var(--space-sm);
-  padding: clamp(1.4rem, 1.1rem + 1vw, 2.1rem);
+  position: relative;
+  display: grid; grid-template-rows: auto 1fr; align-content: start;
   background-color: var(--surface);
+  border: var(--hairline);
   border-block-start: 3px solid var(--brand);
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 .offer-card:hover {
+  --n-dline: var(--accent);
   border-block-start-color: var(--accent);
-  box-shadow: var(--shadow-md); transform: translateY(-2px);
+  box-shadow: var(--shadow-md); transform: translateY(-3px);
 }
-.offer-card-head { display: flex; align-items: center; gap: var(--space-sm); }
+
+/* --- הלוחית: המקום שבו ייכנס תצלום --- */
+.offer-plate {
+  position: relative; overflow: hidden;
+  display: grid; place-items: center;
+  aspect-ratio: 16 / 7;
+  background:
+    radial-gradient(120% 140% at 84% 12%, rgba(18, 64, 110, 0.09), rgba(18, 64, 110, 0) 62%),
+    var(--brand-soft);
+  border-block-end: 1px solid var(--border);
+}
+/* ספרת השלב כרפאים גדולה — עוגן ויזואלי, לא מידע. */
+.offer-plate-num {
+  position: absolute; inset-block-start: -0.22em; inset-inline-start: 0.1em;
+  font-family: var(--font-heading); font-weight: 800;
+  font-size: clamp(5rem, 3.5rem + 5vw, 8rem); line-height: 1;
+  color: rgba(18, 64, 110, 0.09);
+  font-variant-numeric: lining-nums; pointer-events: none;
+}
 .offer-icon {
-  --n: 12px; --n-line: rgba(18, 64, 110, 0.22);
-  display: grid; place-items: center; flex: none; width: 48px; height: 48px;
-  background-color: var(--brand-soft); color: var(--brand);
+  position: relative;
+  display: grid; place-items: center; width: 54px; height: 54px;
+  background-color: var(--surface); color: var(--brand);
+  border: 1px solid rgba(18, 64, 110, 0.18);
+  box-shadow: var(--shadow-sm);
+}
+
+.offer-body {
+  display: grid; align-content: start; gap: var(--space-xs);
+  padding: var(--space-lg) clamp(1.2rem, 1rem + 0.8vw, 1.8rem) clamp(1.4rem, 1.1rem + 1vw, 2rem);
 }
 .offer-label {
   font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.12em;
   color: var(--accent-strong);
 }
-.offer-card-title { font-size: var(--fs-h4); margin: 0; }
+.offer-card-title { font-size: var(--fs-h3); margin: 0; }
 .offer-card-text { color: var(--text-muted); }
-/* ההערה הקטנה היא הסרת החסם: מה *לא* נדרש ממך. */
-.offer-note {
-  margin-top: var(--space-sm); padding-top: var(--space-sm);
-  border-block-start: var(--hairline);
-  font-size: var(--fs-small); font-weight: 600; color: var(--brand);
+
+/* --- הרצף בין הכרטיסים: קו זהב וחץ, כמו מסילת התהליך --- */
+@media (min-width: 820px) {
+  /* מהכרטיס אל הבא אחריו. ב-RTL הבא נמצא בצד השמאלי הפיזי, ולכן
+     המחבר יוצא מ-‎inset-inline-end‎ (=שמאל) של כל כרטיס פרט לאחרון. */
+  .offer-card:not(:last-child)::after {
+    content: '←'; position: absolute; z-index: 2;
+    inset-block-start: calc((100% / 16 * 7) / 2);
+    inset-inline-end: calc(var(--space-xl) / -2);
+    translate: 50% -50%;
+    display: grid; place-items: center;
+    width: 30px; height: 30px;
+    background: var(--surface); border: 1px solid var(--accent);
+    border-radius: 50%;
+    font-size: 0.9rem; color: var(--accent-strong); line-height: 1;
+  }
 }
 
 /* ====================== מפת התכנון (התוצר) ====================== */
@@ -408,8 +474,20 @@
    טבלה ולא רשימה: כותרות עמודות, טור סטטוס ברוחב קבוע שכל התוויות
    מתיישרות בו, ושורת סיכום בתחתית. בלי אלה חמש שורות טקסט נקראות
    כרשימה מקרית ולא כממצאי בדיקה. */
+/* הפאנל הוא האובייקט המוביל של האזור, ולכן הוא זה שנושא את הצורה.
+   ראה את הכלל ב-docs/BRAND.md פרק 2ב. */
 .report {
-  background: var(--surface); border: 1px solid #CFDBEA;
+  --n: var(--notch); --n-w: 1px; --n-line: #CFDBEA;
+  background-color: var(--surface);
+  border: var(--n-w) solid var(--n-line);
+  background-image: linear-gradient(45deg,
+    transparent calc(50% - var(--n-w)), var(--n-line) calc(50% - var(--n-w)),
+    var(--n-line) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-position: top right;
+  background-size: var(--n) var(--n);
+  clip-path: polygon(0 0, calc(100% - var(--n)) 0, 100% var(--n), 100% 100%, 0 100%);
   box-shadow: var(--shadow);
 }
 .report-head {
@@ -426,21 +504,37 @@
    הממצא במלואו. פרוסות, חמש השורות היו 311 מילים — חצי מהטקסט בדף
    הבית — וכל מי שנכנס קיבל אותן בפנים. */
 .report-row { border-block-end: 1px solid #E4EAF2; }
+.report-intro {
+  padding: var(--space-sm) clamp(1rem, 0.7rem + 1vw, 1.6rem);
+  background: var(--accent-soft);
+  border-block-end: 1px solid rgba(176, 128, 31, 0.24);
+  font-size: var(--fs-micro); font-weight: 600; color: var(--accent-strong);
+}
 .report-row > summary {
-  display: grid; align-items: center;
-  grid-template-columns: auto 1fr auto auto;
-  gap: var(--space-md);
-  padding: clamp(0.9rem, 0.75rem + 0.5vw, 1.2rem) clamp(1rem, 0.7rem + 1vw, 1.6rem);
+  display: grid; align-items: start;
+  grid-template-columns: auto 1fr auto;
+  gap: 0 var(--space-md);
+  padding: clamp(1rem, 0.85rem + 0.5vw, 1.35rem) clamp(1rem, 0.7rem + 1vw, 1.6rem);
   cursor: pointer; list-style: none;
   transition: background var(--transition);
 }
 .report-row > summary::-webkit-details-marker { display: none; }
 .report-row > summary:hover { background: var(--bg-alt); }
 .report-num {
-  font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700;
+  font-family: var(--font-heading); font-size: 0.95rem; font-weight: 800;
   color: var(--accent-strong); font-variant-numeric: tabular-nums;
+  padding-top: 0.15em;
 }
+.report-finding { display: grid; gap: 0.3rem; min-width: 0; }
 .report-row-title { font-size: var(--fs-h4); margin: 0; }
+/* התשובה ל"מה זה אומר עליי" — מוצגת מיד, בלי לחיצה. הקו בצד
+   ההתחלה מסמן שזו נגזרת של השורה שמעליה ולא ממצא נוסף. */
+.report-meaning {
+  padding-inline-start: var(--space-sm);
+  border-inline-start: 2px solid var(--accent);
+  font-size: var(--fs-small); line-height: 1.55; color: var(--text-muted);
+  max-width: 62ch;
+}
 /* פלוס/מינוס בקווים, לא גליף — כדי שיסתובב בפתיחה בלי החלפת תו. */
 .report-toggle {
   position: relative; flex: none; width: 22px; height: 22px;
@@ -460,109 +554,21 @@
   padding: 0 clamp(1rem, 0.7rem + 1vw, 1.6rem) var(--space-lg);
   background: var(--bg-alt);
 }
-.report-row-text { color: var(--text-muted); font-size: var(--fs-small); margin: 0; max-width: 74ch; }
-/* "מה זה אומר בפועל" — הוא שהופך ממצא טכני למשהו שאפשר להבין. */
-.report-meaning {
-  margin: 0; padding-inline-start: var(--space-md);
-  border-inline-start: 2px solid var(--accent);
-  font-size: var(--fs-small); font-weight: 600; color: var(--text); max-width: 74ch;
-}
-.report-flag {
-  justify-self: start;
-  padding: 0.28rem 0.7rem;
-  --n: 7px; --n-line: rgba(176, 128, 31, 0.42);
-  background-color: var(--accent-soft); color: var(--accent-strong);
-  font-size: var(--fs-micro); font-weight: 700; white-space: nowrap;
-}
+.report-row-text { color: var(--text); font-size: var(--fs-small); margin: 0; max-width: 74ch; }
 .report-foot {
   padding: var(--space-md) clamp(1rem, 0.7rem + 1vw, 1.6rem);
   background: var(--ink-alt); color: var(--on-ink-muted);
   font-size: var(--fs-small); font-weight: 600;
 }
-@media (max-width: 560px) {
-  /* במסך צר התווית יורדת שורה — ארבעה טורים באותה שורה דוחסים את
-     הכותרת לשתי מילים בשורה. */
-  .report-row > summary { grid-template-columns: auto 1fr auto; }
-  .report-flag { grid-column: 2; grid-row: 2; margin-top: 0.4rem; }
+@media (max-width: 480px) {
+  /* במסך צר גם המספר יורד: שלושה טורים דוחסים את הכותרת לשתי
+     מילים בשורה. */
+  .report-row > summary { grid-template-columns: 1fr auto; }
+  .report-num { display: none; }
 }
 
 /* ====================== תחומי העיסוק ====================== */
-.svc-grid { display: grid; gap: var(--space-md); margin: 0; }
-@media (min-width: 700px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1050px) { .svc-grid { grid-template-columns: repeat(3, 1fr); } }
 
-.svc-card {
-  position: relative; overflow: hidden;
-  display: flex; flex-direction: column; gap: 0.5rem;
-  padding: clamp(1.4rem, 1.1rem + 1.1vw, 2rem);
-  background: var(--surface); border: 1px solid var(--border);
-  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
-}
-/* קו הזהב שנמשך לרוחב הכרטיס — אותה תנועה של הכפתורים */
-.svc-card::after {
-  content: ''; position: absolute; inset-block-start: 0; inset-inline: 0;
-  height: 2px; background: var(--accent);
-  transform: scaleX(0); transform-origin: inline-end;
-  transition: transform var(--transition-slow);
-}
-.svc-card:hover { border-color: #C3D2E4; box-shadow: var(--shadow); transform: translateY(-3px); }
-.svc-card:hover::after { transform: scaleX(1); transform-origin: inline-start; }
-
-/* ספרת רפאים: נותנת לכרטיס עומק וסדר בלי לצרוך שטח קריאה */
-.svc-ghost {
-  position: absolute; inset-block-start: -0.3em; inset-inline-start: 0.15em;
-  font-family: var(--font-heading); font-weight: 800; font-size: 7rem; line-height: 1;
-  color: rgba(18, 64, 110, 0.055); pointer-events: none;
-  font-variant-numeric: lining-nums;
-}
-.svc-mark {
-  position: relative; display: grid; place-items: center;
-  width: 48px; height: 48px; margin-bottom: var(--space-xs);
-  background: var(--brand-soft); color: var(--brand);
-  --n: 13px;
-  transition: background var(--transition), color var(--transition);
-}
-.svc-card:hover .svc-mark { background: var(--ink); color: var(--gold); }
-.svc-card-title { position: relative; font-size: var(--fs-h4); }
-.svc-card-text { position: relative; color: var(--text-muted); font-size: var(--fs-small); }
-.svc-card .arrow-link { position: relative; margin-top: auto; padding-top: var(--space-md); }
-
-/* --- הפריט המוביל: המוצר עצמו, ולכן פאנל כהה ורחב --- */
-/* הפאנל המוביל. הקו האלכסוני בזהב ובעובי הפס העליון, ולכן הוא
-   נקרא כהמשך שלו סביב הפינה ולא כמסגרת נפרדת. */
-.svc-card-lead {
-  /* --n חייב להיות מוגדר: בלעדיו ‎background-size: var(--n) var(--n)‎
-     אינו תקף, הוא נופל ל-auto, והגרדיאנט מותח קו אלכסוני ענק על
-     כל הפאנל במקום פס קטן בפינה. */
-  --n: var(--notch); --n-w: 2px; --n-line: var(--gold);
-  background-color: #0A2748;
-  background-image:
-    linear-gradient(45deg,
-      transparent calc(50% - var(--n-w)), var(--n-line) calc(50% - var(--n-w)),
-      var(--n-line) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-    linear-gradient(158deg, #143B63 0%, #0A2748 58%, #07182C 100%);
-  background-repeat: no-repeat;
-  background-origin: border-box;
-  background-position: top right, 0 0;
-  background-size: var(--n) var(--n), cover;
-  border-color: rgba(216, 180, 90, 0.3);
-  border-block-start: var(--n-w) solid var(--gold);
-  padding: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
-}
-.svc-card-lead::after { display: none; }
-.svc-card-lead:hover { border-color: var(--gold); }
-/* בשלוש עמודות הפאנל תופס 2×2 מתוך 9 תאים, וחמשת הכרטיסים ממלאים
-   בדיוק את החמישה שנותרו — בלי שורה קטועה בסוף. בשתי עמודות הוא לא
-   נפרס כלל, ואז שישה פריטים יורדים לשלוש שורות מלאות. */
-@media (min-width: 1050px) {
-  .svc-card-lead { grid-column: span 2; grid-row: span 2; }
-}
-.svc-card-lead .svc-ghost { color: rgba(216, 180, 90, 0.12); font-size: 9rem; }
-.svc-card-lead .svc-mark { background: rgba(216, 180, 90, 0.14); color: var(--gold); width: 56px; height: 56px; }
-.svc-card-lead:hover .svc-mark { background: var(--gold); color: var(--ink); }
-.svc-card-lead .svc-card-title { font-size: var(--fs-h3); color: #fff; }
-.svc-card-lead .svc-card-text { color: var(--on-ink-muted); font-size: var(--fs-body); max-width: 52ch; }
-.svc-card-lead .arrow-link { color: var(--gold); }
 
 /* רצועת תחומי העיסוק בדף הבית: כותרות בלבד, כל אריח קישור.
    השאלה שהאזור הזה עונה עליה היא "האם מה שמטריד אותי נכלל כאן",
@@ -572,17 +578,14 @@
 @media (min-width: 1060px) { .svc-strip { grid-template-columns: repeat(3, 1fr); } }
 
 .svc-tile {
-  --n: 12px; --n-line: var(--border);
+  border: var(--hairline);
   display: grid; grid-template-columns: auto auto 1fr auto; align-items: center;
   gap: var(--space-sm);
   padding: var(--space-md) var(--space-lg) var(--space-md) var(--space-md);
   background-color: var(--surface); color: var(--text); text-decoration: none;
   transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
 }
-.svc-tile:hover {
-  --n-line: var(--accent);
-  background-color: var(--surface); box-shadow: var(--shadow-sm);
-}
+.svc-tile:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
 .svc-tile-num {
   font-family: var(--font-heading); font-size: 0.85rem; font-weight: 800;
   color: var(--border); font-variant-numeric: tabular-nums;
@@ -590,7 +593,6 @@
 }
 .svc-tile:hover .svc-tile-num { color: var(--accent); }
 .svc-tile-mark {
-  --n: 8px;
   display: grid; place-items: center; flex: none; width: 38px; height: 38px;
   background-color: var(--brand-soft); color: var(--brand);
 }
@@ -632,19 +634,19 @@
 
 /* --- הפאנל --- */
 .step-body {
-  --n-line: rgba(216, 180, 90, 0.24);
-  background-color: rgba(255, 255, 255, 0.045);
+  background-color: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(216, 180, 90, 0.3);
   padding: var(--space-lg);
   transition: background-color var(--transition), border-color var(--transition);
 }
-.step-body:hover { background-color: rgba(255, 255, 255, 0.075); --n-line: rgba(216, 180, 90, 0.5); }
+.step-body:hover { background-color: rgba(255, 255, 255, 0.1); border-color: rgba(216, 180, 90, 0.5); }
 .step-title { font-size: var(--fs-h4); margin-bottom: var(--space-xs); color: #fff; }
 .step-text { color: var(--on-ink-muted); font-size: var(--fs-small); }
 /* התווית התחתונה כשבב קטום — "כמה זמן" הוא נתון, ולכן הוא ממוסגר. */
 .step-meta {
-  --n: 7px; --n-line: rgba(216, 180, 90, 0.4);
   display: inline-block; margin-top: var(--space-md);
   padding: 0.22rem 0.55rem;
+  border: 1px solid rgba(216, 180, 90, 0.4);
   background-color: rgba(216, 180, 90, 0.1);
   font-size: var(--fs-micro); font-weight: 700; color: var(--gold);
   letter-spacing: 0.04em;
@@ -745,19 +747,10 @@
 .about-quote {
   position: relative;
   margin: 0; padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
-  --n: var(--notch); --n-w: 2px; --n-line: var(--gold);
-  background-color: #0A2748;
-  background-image:
-    linear-gradient(45deg,
-      transparent calc(50% - var(--n-w)), var(--n-line) calc(50% - var(--n-w)),
-      var(--n-line) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-    linear-gradient(158deg, #143B63 0%, #0A2748 60%, #07182C 100%);
-  background-repeat: no-repeat;
-  background-origin: border-box;
-  background-position: top right, 0 0;
-  background-size: var(--n) var(--n), cover;
-  clip-path: polygon(0 0, calc(100% - var(--n)) 0, 100% var(--n), 100% 100%, 0 100%);
-  border-block-start: var(--n-w) solid var(--gold);
+  /* בלי הפינה הקטומה: באזור האודות הדיוקן הוא המוביל, והציטוט
+     לצדו. פס הזהב העליון מספיק כדי לקשור אותו לשפה. */
+  background: linear-gradient(158deg, #143B63 0%, #0A2748 60%, #07182C 100%);
+  border-block-start: 2px solid var(--gold);
   font-family: var(--font-heading);
   font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.4rem);
   font-weight: 700; line-height: 1.55; color: #fff;
@@ -946,7 +939,6 @@
   display: grid; place-items: center; flex: none;
   width: 40px; height: 40px;
   background: rgba(216, 180, 90, 0.14); color: var(--gold);
-  --n: 9px;
   transition: background var(--transition), color var(--transition);
 }
 .press-source-lg {
@@ -1163,8 +1155,8 @@
   display: grid; grid-template-columns: auto 1fr; align-items: start;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  --n-line: var(--border);
   background-color: var(--surface);
+  border: var(--hairline);
   border-inline-start: var(--bracket-w) solid var(--accent);
   transition: border-color var(--transition), box-shadow var(--transition);
 }
@@ -1177,7 +1169,6 @@
   font-size: var(--fs-micro); letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
   text-align: center;
-  --n: 8px;
 }
 .credential-text {
   font-family: var(--font-heading); font-weight: 600;
@@ -1186,6 +1177,8 @@
 
 /* ====================== עמוד תחומי העיסוק ====================== */
 .service-rows { display: grid; margin: 0; border-block-start: var(--hairline); }
+/* הכותרת הדביקה מסתירה כ-96px; בלי זה עוגן לשירות היה נוחת מתחתיה. */
+.service-row { scroll-margin-top: 110px; }
 .service-row {
   display: grid; grid-template-columns: auto 1fr; align-items: start;
   gap: var(--space-md) var(--space-lg);
@@ -1199,7 +1192,6 @@
 .service-row-icon {
   display: grid; place-items: center; width: 60px; height: 60px;
   background: var(--brand-soft); color: var(--brand);
-  --n: 14px;
 }
 .service-row-body > * + * { margin-top: var(--space-sm); }
 .service-row-title { font-size: var(--fs-h3); }
@@ -1253,7 +1245,6 @@
   background: var(--ink); color: var(--gold);
   font-family: var(--font-heading); font-weight: 800; font-size: 1.05rem;
   font-variant-numeric: tabular-nums;
-  --n: 11px;
 }
 .qa-group-title { font-size: var(--fs-h3); margin: 0; }
 
@@ -1276,9 +1267,8 @@
 .fit-card {
   display: grid; align-content: start; gap: var(--space-sm);
   padding: clamp(1.25rem, 1rem + 0.8vw, 1.9rem);
-  --n-line: var(--border);
-  --n-dw: 3px; --n-dline: var(--brand);
   background-color: var(--surface);
+  border: var(--hairline);
   border-block-start: 3px solid var(--brand);
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
 }
@@ -1290,13 +1280,11 @@
 .fit-card-icon {
   display: grid; place-items: center; flex: none; width: 46px; height: 46px;
   background: var(--brand-soft); color: var(--brand);
-  --n: 11px;
 }
 .fit-card-tag {
   padding: 0.22rem 0.5rem;
   background: var(--accent-soft); color: var(--accent-strong);
   font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.05em;
-  --n: 7px;
 }
 /* המספר נדחק לקצה ומשמש עוגן ויזואלי, לא מידע. */
 .fit-card-num {
@@ -1371,7 +1359,6 @@
   display: grid; place-items: center; width: 42px; height: 42px;
   margin-bottom: var(--space-xs);
   background: var(--accent-soft); color: var(--accent-strong);
-  --n: 10px;
 }
 .contact-card-label {
   font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.1em; color: var(--text-muted);
@@ -1383,11 +1370,6 @@ a.contact-card-value:hover { color: var(--brand); text-decoration: underline; }
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-md); }
 
 /* ====================== התאמות למסך צר ====================== */
-@media (max-width: 560px) {
-  /* שני כפתורים ברוחב שונה על מסך צר נראים כתקלה ולא כהיררכיה. */
-  .hero-actions { display: grid; }
-  .hero-actions .btn { width: 100%; }
-}
 @media (max-width: 700px) {
   /* מסגרת הזהב המוסטת נוגעת בקצה המסך ברוחב מלא — כאן היא מתקרבת. */
   .about-media::before { inset-block: 14px -14px; inset-inline: -12px 12px; }

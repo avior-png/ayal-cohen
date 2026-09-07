@@ -22,7 +22,7 @@ export default function Faq() {
             <span className="btn-arrow" aria-hidden="true">←</span>
           </a>
 
-          <figure className="faq-media notch">
+          <figure className="faq-media">
             <img src={asset(faq.image.src)} alt={faq.image.alt}
                  width={1200} height={800} loading="lazy" />
           </figure>

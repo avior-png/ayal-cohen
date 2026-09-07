@@ -5,9 +5,12 @@
 /* ============================ Reset ============================ */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 96px; /* גובה הכותרת הדביקה */ }
+/* ‎scroll-behavior: smooth‎ הוסר בכוונה: Next מגלגל לראש העמוד בכל
+   מעבר, ועם גלילה חלקה זו הייתה אנימציה ארוכה מתחתית עמוד אחד לראש
+   האחר — בדיוק ה"קפיצה" שנראתה כתקלה. ‎scroll-padding-top‎ נשאר,
+   והוא מה שמונע מהכותרת הדביקה להסתיר אנקור. */
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
@@ -109,7 +112,7 @@ ul[class], ol[class] { list-style: none; padding: 0; }
 
 .section-head { max-width: 64ch; margin-bottom: clamp(2rem, 1.2rem + 2.4vw, 3.5rem); }
 .section-head-center { margin-inline: auto; text-align: center; }
-.section-head-center .eyebrow { justify-content: center; }
+.section-head-center .eyebrow { align-self: center; }
 .section-title { font-size: var(--fs-h2); margin-bottom: var(--space-md); }
 /* ‎--lh-body‎ (1.75) נכון לגוף הטקסט ורופף מדי לפסקה מובילה בגודל
    1.3rem — היא צריכה שורות צמודות יותר ומידה קצרה יותר. */
@@ -119,21 +122,30 @@ ul[class], ol[class] { list-style: none; padding: 0; }
 }
 .section-head-center .section-lead { margin-inline: auto; }
 
-/* כותרת עם קו זהב — החתימה הוויזואלית של המותג. */
+/* תווית האזור — שבב קטן עם רקע ומסגרת. קודם היה כאן קו זהב ואחריו
+   טקסט; השבב נקרא כתווית ולא כקישוט. עדין בכוונה: זו תווית שאומרת
+   לקורא מה הוא עומד לקרוא, לא כותרת שנייה.
+
+   ⚠️  בלי הפינה הקטומה. התווית מופיעה בכל אזור בכל עמוד — כשהיא
+   נשאה את הצורה, הצורה הופיעה כ-18 פעמים באתר וחדלה להיות חתימה.
+   הכלל: הצורה מסמנת את המוביל, ותווית אזור אינה מובילה דבר. */
 .eyebrow {
-  display: inline-flex; align-items: center; gap: 0.7em;
+  display: inline-flex; align-items: center;
+  padding: 0.32rem 0.68rem;
+  margin-bottom: var(--space-md);
   font-family: var(--font-body);
   font-size: var(--fs-micro); font-weight: 700;
-  letter-spacing: var(--ls-eyebrow);
+  letter-spacing: 0.11em;
   color: var(--accent-strong);
-  margin-bottom: var(--space-md);
+  background-color: var(--accent-soft);
+  border: 1px solid rgba(176, 128, 31, 0.3);
+  border-radius: var(--radius-sm);
 }
-.eyebrow::before {
-  content: ''; flex: none;
-  width: 30px; height: 2px; background: var(--accent);
+.on-dark .eyebrow {
+  color: var(--gold);
+  background-color: rgba(216, 180, 90, 0.1);
+  border-color: rgba(216, 180, 90, 0.34);
 }
-.on-dark .eyebrow { color: var(--gold); }
-.on-dark .eyebrow::before { background: var(--gold); }
 
 /* ====================== טקסט ארוך ====================== */
 .prose { max-width: 68ch; }

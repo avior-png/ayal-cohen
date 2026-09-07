@@ -38,9 +38,9 @@ export default async function ServicesPage() {
               {services.items.map((item, i) => {
                 const row = rows[i];
                 return (
-                  <li key={item.title} className="service-row">
+                  <li key={item.title} id={`svc-${i + 1}`} className="service-row">
                     <span className="service-row-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="service-row-icon notch" aria-hidden="true"><Icon name={item.icon} size={28} /></span>
+                    <span className="service-row-icon" aria-hidden="true"><Icon name={item.icon} size={28} /></span>
                     <div className="service-row-body">
                       <h2 className="service-row-title">{item.title}</h2>
                       <p className="service-row-text">{item.text}</p>

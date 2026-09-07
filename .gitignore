@@ -11,3 +11,4 @@ public/uploads/*
 preview.html
 .env
 app/studio-baked.css
+.fin.mjs

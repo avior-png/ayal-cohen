@@ -26,7 +26,7 @@ export default function Press() {
           <div className="press-list">
             <a className="press-feature notch" href={f.href} target="_blank" rel="noopener noreferrer">
               <span className="press-feature-top">
-                <span className="press-mark notch" aria-hidden="true"><Icon name={f.icon} size={22} /></span>
+                <span className="press-mark" aria-hidden="true"><Icon name={f.icon} size={22} /></span>
                 <span className="press-kind">{f.kind}</span>
               </span>
               <span className="press-source-lg">{f.source}</span>
@@ -43,7 +43,7 @@ export default function Press() {
               {press.items.map((item) => (
                 <li key={item.href}>
                   <a className="press-row" href={item.href} target="_blank" rel="noopener noreferrer">
-                    <span className="press-mark notch" aria-hidden="true"><Icon name={item.icon} size={20} /></span>
+                    <span className="press-mark" aria-hidden="true"><Icon name={item.icon} size={20} /></span>
                     <span className="press-row-body">
                       <span className="press-source">{item.source}</span>
                       <span className="press-row-title">{item.title}</span>

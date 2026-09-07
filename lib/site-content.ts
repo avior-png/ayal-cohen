@@ -39,7 +39,8 @@ export async function getSiteContent() {
 
     hero: {
       ...seed.hero,
-      eyebrow: settings?.heroEyebrow || seed.hero.eyebrow,
+      // heroEyebrow במערכת הניהול מזין עכשיו את שורת הזיהוי שמתחת לכותרת.
+      byline: settings?.heroEyebrow || seed.hero.byline,
       title: settings?.heroTitle || seed.hero.title,
       lead: settings?.heroLead || seed.hero.lead,
     },

@@ -4,11 +4,13 @@ import { problem } from '@/content/site';
 /**
  * "מה בדרך כלל מתגלה".
  *
- * הגרסה הקודמת הייתה רשימה מסורגלת — נכונה בתוכן, אבל היא נקראה
- * כטקסט ולא כממצא. הקהל כאן שאנן, ולכן האזור צריך להיראות כמו מה
- * שהוא באמת: דוח בדיקה. כותרת דוח, שורות ממוספרות, ולכל שורה תווית
- * מצב בזהב שאומרת מה נמצא — "לא הותאם", "רדום", "לא נוצל".
- * התווית היא מה שהופך רשימה להתראה.
+ * האזור נראה כמו מה שהוא באמת: דוח בדיקה. כותרת דוח, שורת הסבר
+ * למבנה, וחמש שורות ממוספרות.
+ *
+ * ⚠️  היו כאן תוויות מצב בזהב — "לא מרוכז", "לא הותאם", "רדום".
+ *     הן נראו טוב ולא אמרו כלום, וזו הייתה הביקורת: "אני לא מבין
+ *     מה זה הלא מרוכז". במקומן כל שורה מציגה מיד את *המשמעות* —
+ *     מה הממצא אומר עליך בפועל — והפירוט נפתח בלחיצה.
  *
  * התצלום ברקע רך מאוד ואינו תחת התוכן אלא מאחורי האזור כולו:
  * שכבות מסמכים זו מאחורי זו הן בדיוק המסר — כספים מפוזרים בין
@@ -38,6 +40,10 @@ export default function Problem() {
             <span className="report-tag">{problem.panelTag}</span>
           </div>
 
+          {/* מסביר את מבנה הפאנל. בלעדיו הקורא רואה חמש שורות ולא
+              יודע מה הוא מסתכל עליו — וזו הייתה הביקורת. */}
+          <p className="report-intro">{problem.panelIntro}</p>
+
           {/* סגור כברירת מחדל, ולא במקרה. פרוס, הטבלה הזו הייתה 311
               מילים — חצי מהטקסט בדף הבית — וכל מי שנכנס קיבל אותה
               בפנים. עכשיו הוא רואה חמש כותרות ופותח מה שמעניין אותו.
@@ -48,13 +54,16 @@ export default function Problem() {
                 <details className="report-row">
                   <summary>
                     <span className="report-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                    <h3 className="report-row-title">{f.title}</h3>
-                    <span className="report-flag notch notch-outline">{f.flag}</span>
+                    <span className="report-finding">
+                      <h3 className="report-row-title">{f.title}</h3>
+                      {/* מוצג מיד ולא בהרחבה: זו התשובה ל"מה זה אומר
+                          עליי", והיא מה שהופך ממצא לרלוונטי. */}
+                      <span className="report-meaning">{f.meaning}</span>
+                    </span>
                     <span className="report-toggle" aria-hidden="true" />
                   </summary>
                   <div className="report-body">
                     <p className="report-row-text">{f.text}</p>
-                    <p className="report-meaning">{f.meaning}</p>
                   </div>
                 </details>
               </li>

@@ -61,7 +61,7 @@ export default async function FaqPage() {
               {faqPage.groups.map((group, gi) => (
                 <section key={group.title} id={`qa-${gi}`} className="qa-group" aria-labelledby={`qa-t-${gi}`}>
                   <div className="qa-group-head">
-                    <span className="qa-group-num notch" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span>
+                    <span className="qa-group-num" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span>
                     <h2 id={`qa-t-${gi}`} className="qa-group-title">{group.title}</h2>
                   </div>
 

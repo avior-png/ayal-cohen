@@ -49,12 +49,14 @@ export default function Hero({
 
         <div className="container hero-inner">
           <div className="hero-text">
-            <p className="eyebrow">{hero.eyebrow}</p>
             <h1 id="hero-title" className="hero-title">
               {hero.title}
-              <br />
               <span className="accent">{heroContent.titleAccent}</span>
             </h1>
+            {/* שורת הזיהוי — מי הוא ומה תפקידו — מתחת לכותרת ולא
+                מעליה. כתווית קטנה מעל הכותרת היא גזלה ממנה את השורה
+                הראשונה, ובמובייל נראתה כמו כותרת שלישית. */}
+            <p className="hero-byline">{hero.byline}</p>
             <p className="hero-lead">{hero.lead}</p>
 
             <div className="hero-actions">
@@ -75,7 +77,7 @@ export default function Hero({
           בדיוק בקו התפר. כאן היא שכן יכולה לשבת עליו. */}
       {showStats && (
         <div className="container hero-stats-wrap">
-          <ul className="hero-stats notch notch-outline" aria-label="נתונים בקצרה">
+          <ul className="hero-stats" aria-label="נתונים בקצרה">
             {trust.map((item) => (
               <li key={item.label}>
                 <span className="hero-stat-value">{item.value}</span>

@@ -30,9 +30,11 @@ export default function Services({ services }: { services: SiteContent['services
         <ul className="svc-strip">
           {services.items.map((item, i) => (
             <li key={item.title}>
-              <Link className="svc-tile notch notch-outline" href={asset('/services')}>
+              {/* עוגן לשירות עצמו ולא לראש העמוד: לחיצה על אריח
+                  ספציפי צריכה לפתוח את העמוד באותו שירות. */}
+              <Link className="svc-tile" href={`${asset('/services')}#svc-${i + 1}`}>
                 <span className="svc-tile-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                <span className="svc-tile-mark notch" aria-hidden="true">
+                <span className="svc-tile-mark" aria-hidden="true">
                   <Icon name={item.icon} size={22} />
                 </span>
                 <span className="svc-tile-title">{item.title}</span>

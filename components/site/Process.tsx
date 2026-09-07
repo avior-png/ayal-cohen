@@ -1,3 +1,4 @@
+import type React from 'react';
 import { asset } from '@/lib/asset';
 import PhotoLayer from '@/components/site/PhotoLayer';
 import { process, caseStudy } from '@/content/site';
@@ -18,11 +19,12 @@ import { process, caseStudy } from '@/content/site';
 export default function Process({ compact = false }: { compact?: boolean }) {
   return (
     <section id="process" className="section on-dark process" aria-labelledby="process-title">
-      {/* התצלום כרקע: ארבע התחנות שבו עומדות מאחורי ארבעת השלבים,
-          והכהיה חזקה מספיק כדי שהקריאוּת לא תלויה בו. */}
+      {/* התצלום כרקע: ארבע התחנות שבו עומדות מאחורי ארבעת השלבים.
+          ההכהיה חזקה במיוחד — אחרי שהאזור התקצר, ‎cover‎ מציג חלק
+          בהיר יותר של התצלום והפאנלים נבלעו בו. */}
       <PhotoLayer
         src={process.image.src}
-        scrim="linear-gradient(rgba(7,24,44,.82), rgba(7,24,44,.9))"
+        scrim="linear-gradient(rgba(7,24,44,.9), rgba(7,24,44,.95))"
       />
       <div className="container">
         <div className="section-head section-head-center">
@@ -36,19 +38,19 @@ export default function Process({ compact = false }: { compact?: boolean }) {
 
           <ol className="process-steps">
             {process.steps.map((step, i) => (
-              <li key={step.title} className="step">
+              <li key={step.title} className="step" style={{ '--i': i } as React.CSSProperties}>
                 <span className="step-node" aria-hidden="true">
                   <span className="step-num notch notch-outline">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                 </span>
-                <div className="step-body notch notch-outline">
+                <div className="step-body">
                   <h3 className="step-title">{step.title}</h3>
                   {/* בדף הבית רק הכותרת והזמן. ארבעה תיאורים של 35
                       מילים כל אחד הם 149 מילים שאף אחד לא קורא
                       בסריקה — הם קיימים במלואם ב-/services. */}
                   {!compact && <p className="step-text">{step.text}</p>}
-                  <span className="step-meta notch notch-outline">{step.meta}</span>
+                  <span className="step-meta">{step.meta}</span>
                 </div>
               </li>
             ))}

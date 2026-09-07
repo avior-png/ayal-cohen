@@ -23,16 +23,21 @@
 .btn:hover { transform: translateY(-2px); }
 .btn:active { transform: translateY(0); }
 
-/* השבב של החץ: מרובע עם פינה חתוכה, נפרד מהתווית בקו דק. */
-.btn:has(.btn-arrow) { padding-inline-end: 0.5rem; }
-.btn .btn-arrow {
-  display: grid; place-items: center; flex: none;
-  width: 36px; height: 36px; font-size: 1.05rem; line-height: 1;
+/* החץ בכפתור. בכפתור הראשי הוא שבב עם פינה חתוכה; בכל השאר הוא
+   רק גליף. ההבדל הזה הוא הכלל של כל האתר בקטן: הצורה מסמנת את
+   הראשי, והמשני נשאר נקי. ראה docs/BRAND.md פרק 2ב. */
+.btn-arrow { flex: none; line-height: 1; transition: transform var(--transition); }
+.btn:hover .btn-arrow { transform: translateX(-3px); }
+
+.btn-gold:has(.btn-arrow), .press-feature-cta { padding-inline-end: 0.5rem; }
+.btn-gold .btn-arrow, .press-feature-cta .btn-arrow {
+  display: grid; place-items: center;
+  width: 36px; height: 36px; font-size: 1.05rem;
   background: rgba(255, 255, 255, 0.16);
   clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
   transition: background var(--transition), transform var(--transition);
 }
-.btn:hover .btn-arrow { background: rgba(255, 255, 255, 0.28); transform: translateX(-3px); }
+.btn-gold:hover .btn-arrow, .press-feature-cta:hover .btn-arrow { background: rgba(255, 255, 255, 0.28); }
 
 /* --- מלא: כחול --- */
 .btn-primary { background: var(--brand); color: var(--text-on-brand); }
@@ -115,8 +120,7 @@
 .card-icon {
   display: grid; place-items: center;
   width: 56px; height: 56px; margin-bottom: var(--space-sm);
-  /* החיתוך והמסגרת מגיעים מ-.notch .notch-outline שב-HTML. */
-  --n: 13px; --n-line: rgba(18, 64, 110, 0.22);
+  border: 1px solid rgba(18, 64, 110, 0.22);
   background-color: var(--brand-soft); color: var(--brand);
   transition: background-color var(--transition), color var(--transition), border-color var(--transition);
 }
@@ -339,7 +343,34 @@
       animation-timeline: view();
       animation-range: entry 2% entry 48%;
     }
+
+    /* --- ציר התכנון --- */
+    /* המסילה נמשכת מצד ההתחלה אל צד הסוף כשהאזור נכנס למסך:
+       ‎inset()‎ ולא ‎scaleX()‎, כי scaleX על אלמנט של 2px מרסק את
+       הדהייה שבקצותיו. ב-RTL צד ההתחלה הוא הימני, ולכן החיתוך
+       נסגר משמאל. */
+    .process-rail {
+      animation: rail-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 12% entry 62%;
+    }
+    /* כל חרוז נכנס בתורו. ה-‎animation-range‎ נגזר מ-‎--i‎ שנקבע
+       ב-HTML, ולכן הארבעה נדלקים ברצף ולא ביחד. */
+    .step-node { animation: bead-in linear both; }
+    .step-body { animation: reveal-up linear both; }
+    .step-node, .step-body {
+      animation-timeline: view();
+      animation-range: entry calc(8% + var(--i, 0) * 9%) entry calc(46% + var(--i, 0) * 9%);
+    }
   }
+}
+@keyframes rail-draw {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0); }
+}
+@keyframes bead-in {
+  from { opacity: 0; scale: 0.6; }
+  to   { opacity: 1; scale: 1; }
 }
 @keyframes reveal-up {
   from { opacity: 0; transform: translateY(26px); }
