@@ -6,9 +6,9 @@ import type { SiteContent } from '@/lib/site-content';
 /**
  * אודות.
  *
- * בלי תצלום אמיתי של איל, האזור נשען כולו על טיפוגרפיה — ולכן היא
- * צריכה לעבוד קשה: פסקה ראשונה בגודל מוביל, ציטוט כפאנל כהה שהוא
- * מרכז הכובד הוויזואלי של האזור, וההסמכות כטבלת מפרט עם תוויות זהב.
+ * העמודה הצדית היא שלישייה שנקראת מלמעלה למטה: מי זה (דיוקן), מה הוא
+ * אומר (ציטוט), ומה מאחורי זה (הסמכות כטבלת מפרט). הדיוקן ראשון כי
+ * אמון באזור כזה מתחיל בפנים, וכל השאר הוא אימות שלו.
  * הרקע החם מפריד את האזור מהלבן שמעליו ומתחתיו.
  */
 export default function About({ about }: { about: SiteContent['about'] }) {
@@ -34,6 +34,16 @@ export default function About({ about }: { about: SiteContent['about'] }) {
         </div>
 
         <aside className="about-aside">
+          <figure className="about-portrait">
+            <img
+              src={asset(aboutContent.image.src)}
+              alt={aboutContent.image.alt}
+              width={aboutContent.image.width}
+              height={aboutContent.image.height}
+              loading="lazy"
+            />
+          </figure>
+
           <blockquote className="about-quote">
             <span className="about-quote-mark" aria-hidden="true" />
             {aboutContent.quote}

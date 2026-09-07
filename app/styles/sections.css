@@ -135,31 +135,55 @@
   padding-block: 0;
 }
 .hero .bg-photo { z-index: -3; }
-/* זוהר זהב רך מאחורי הכותרת. */
-.hero::before {
-  content: ''; position: absolute; z-index: -2;
-  inset-block-start: -22%; inset-inline-end: -12%;
-  width: min(760px, 85%); aspect-ratio: 1;
-  background: radial-gradient(circle, rgba(176, 128, 31, 0.30), rgba(176, 128, 31, 0) 62%);
-  pointer-events: none;
-}
-.hero-inner { display: grid; gap: clamp(2.5rem, 1.5rem + 4vw, 4.5rem); align-items: center; }
+/* אין כאן זוהר זהב מוסף: לקומפוזיציה של התצלום יש קווי זהב משלה,
+   ושכבה שנייה מעליהם רק עוכרת אותם. */
 .hero-inner { position: relative; z-index: 1; padding-block: clamp(2.75rem, 1.5rem + 4.5vw, 4.75rem); }
-/* חצי מיכל בלבד: החצי השני תפוס בתצלום שמאחורי המיכל. */
-@media (min-width: 1000px) { .hero-text { max-width: 50%; padding-inline-end: var(--space-xl); } }
-/* במובייל התצלום מגיע אחרי הכותרת והכפתורים. */
-@media (max-width: 999px) {
-  /* כותרת וכפתורים קודם, התצלום אחריהם — ובנוכחות אמיתית. */
-  .hero { display: flex; flex-direction: column; }
-  .hero-inner { order: 1; }
-  .hero-photo { order: 2; margin-block-start: var(--space-xl); }
-  .hero-photo img { height: 400px; }
+
+/* ── מצב דסקטופ: הדמות בצד, הטקסט בשטח שהקומפוזיציה השאירה ──────────
+   ‎min(56vw, 780px)‎ אינו שרירותי: יחס הצלעות של התצלום הוא 1.78, ובגובה
+   הזה יחס האזור לא יורד מתחתיו — כלומר object-fit: cover חותך רק מלמטה
+   ואף פעם לא מהצדדים, ולכן הדמות נשארת שלמה בכל רוחב. */
+@media (min-width: 1200px) {
+  .hero { min-height: min(56vw, 780px); display: grid; align-content: center; }
+  /* 50% ולא יותר: כתפי הדמות מגיעות ל-47% מרוחב התצלום. */
+  .hero-text { max-width: 50%; padding-inline-end: var(--space-xl); }
+  /* הכותרת מכוילת לעמודה, לא למסך: ‎--fs-display‎ בנוי לרוחב מלא,
+     ובעמודה של כ-570px הוא נשבר לשלוש שורות ומנפח את האזור.
+     דרך משתנה ולא סלקטור, כי הכלל הבסיסי מופיע בקובץ אחרי הבלוק הזה. */
+  .hero { --hero-title: clamp(2.4rem, 1.2rem + 2.4vw, 3.25rem); }
+}
+
+/* ── מצב טאבלט (700–1199): התצלום כפאנל בצד ───────────────────────
+   כאן אין רוחב לפריסה של הדסקטופ: בכיסוי מלא גובה האזור נקבע בטקסט,
+   האזור נעשה מרובע יותר מיחס הצלעות של התצלום, והחיתוך מתחיל לאכול
+   מהצדדים — כלומר הדמות מתנפחת ופולשת אל הטקסט. לכן התצלום מוגבל
+   לצד השמאלי הפיזי (שם הדמות בקובץ) והטקסט מקבל את השאר. */
+@media (min-width: 700px) and (max-width: 1199px) {
+  .hero { --hero-title: clamp(1.9rem, 0.7rem + 2.6vw, 2.75rem); }
+  .hero-text { max-width: 54%; padding-inline-end: var(--space-lg); }
+  /* הצד הפנוי אינו נייבי שטוח: קווי הזהב של הקומפוזיציה נשארים
+     מעברו השני, וכאן זוהר רך שומר על עומק. */
+  .hero::before {
+    content: ''; position: absolute; z-index: 0;
+    inset-block-start: -18%; inset-inline-end: -10%;
+    width: min(620px, 70%); aspect-ratio: 1; pointer-events: none;
+    background: radial-gradient(circle, rgba(176, 128, 31, 0.22), rgba(176, 128, 31, 0) 62%);
+  }
+}
+
+/* ── מצב מובייל: הדמות בתחתית, הטקסט באוויר שמעליה ─────────────────
+   ‎154vw‎ הוא יחס הצלעות של החיתוך המוביילי (924×2000) — בגובה הזה
+   התצלום נראה שלם. שורת הדמות היא ‎93vw‎ ולא פחות: מרווח קטן מזה
+   ותחתית הטקסט יורדת על הפנים, כי הראש מתחיל ב-57% מגובה התצלום. */
+@media (max-width: 699px) {
+  .hero { display: grid; grid-template-rows: auto 93vw; align-content: start; min-height: 154vw; }
+  .hero-inner { grid-row: 1; }
   /* בשתי שורות התיבה גבוהה יותר, ולכן גם החצי שיוצא מכל צד. */
   .hero-stats-wrap { --stats-half: 104px; }
 }
 
 .hero-title {
-  font-size: var(--fs-display); line-height: var(--lh-tight);
+  font-size: var(--hero-title, var(--fs-display)); line-height: var(--lh-tight);
   margin-bottom: var(--space-lg); color: #fff;
 }
 .hero-title .accent {
@@ -170,40 +194,50 @@
   font-size: var(--fs-lead); color: var(--on-ink-muted);
   max-width: 54ch; margin-bottom: var(--space-xl);
 }
-.hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-bottom: var(--space-xl); }
-.hero-proof {
-  display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-lg); margin: 0;
-  padding-block-start: var(--space-lg);
-  border-block-start: 1px solid rgba(255, 255, 255, 0.13);
-}
-.hero-proof li {
-  display: inline-flex; align-items: center; gap: 0.5em;
-  font-size: var(--fs-small); color: var(--on-ink-muted);
-}
-.hero-proof li::before {
-  content: ''; width: 7px; height: 7px; rotate: 45deg; flex: none;
-  background: var(--gold);
-}
+.hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-md); }
 
-/* --- כרטיס "מפת התכנון" --- */
 /* --- תצלום ההיררו ---
-   חצי מסך, נוגע בשולי האזור. מיקום מוחלט ולא עמודת גריד, כי עמודה
-   נעצרת בשולי המיכל והתצלום צריך לרדת עד קצה המסך. */
-.hero-photo { position: relative; z-index: 0; }
-.hero-photo img { width: 100%; height: 320px; object-fit: cover; object-position: 50% center; display: block; }
-/* המעבר יושב על הקצה הפנימי בלבד — לא מכהה את התצלום כולו. */
+   התצלום הוא הרקע של האזור כולו, לא עמודה בתוכו: הוא ממולא במיקום
+   מוחלט מול ה-section, כי עמודת גריד נעצרת בשולי המיכל ואילו כאן
+   התצלום צריך לרדת עד קצה המסך.
+
+   ‎object-position: left top‎ פיזי בכוונה, לא לוגי: הדמות נמצאת בצד
+   השמאלי הפיזי של קובץ התצלום, והעגינה שם היא מה שמבטיח שהחיתוך
+   ייקח מהנייבי הריק ולא מהכתפיים. העגינה למעלה משאירה את הראש במקומו
+   והחיתוך יורד מהתחתית — שם הדמות ממילא יוצאת מהמסגרת, ולכן היא
+   נראית נטועה בשולי האזור ולא מרחפת בו. */
+.hero-photo { position: absolute; inset: 0; z-index: 0; }
+.hero-photo picture { display: block; height: 100%; }
+.hero-photo img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: left top;
+}
+/* שכבת קריאוּת מהצד שבו יושב הטקסט. הקומפוזיציה כבר משאירה שם נייבי,
+   וזו רק רשת ביטחון לקו הזהב שחוצה את התצלום מתחת למרכזו. */
 .hero-photo::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to bottom, var(--ink) 0%, rgba(7, 24, 44, 0.55) 14%, transparent 42%);
+  background: linear-gradient(to left, rgba(7, 24, 44, 0.62) 0%, rgba(7, 24, 44, 0.24) 42%, rgba(7, 24, 44, 0) 68%);
 }
-@media (min-width: 1000px) {
-  .hero-photo {
-    position: absolute; inset-block: 0; inset-inline-end: 0;
-    width: 54%; z-index: 0;
-  }
-  .hero-photo img { height: 100%; min-height: 640px; object-position: 48% center; }
+
+/* בפאנל הצדי המעבר יושב על הקצה הפנימי בלבד — הוא מחבר את התצלום
+   לנייבי שלצדו, ולא מכהה את הדמות. */
+@media (min-width: 700px) and (max-width: 1199px) {
+  /* ‎inset-inline-end‎ הוא הצד השמאלי הפיזי ב-RTL, ושם הדמות בקובץ.
+     חייב להופיע כאן ולא בבלוק הפריסה שלמעלה, כי ‎inset: 0‎ שבכלל
+     הבסיסי מופיע אחריו בקובץ והיה גובר עליו. */
+  .hero-photo { inset-inline-start: auto; inset-inline-end: 0; width: 44%; }
+  .hero-photo img { object-position: left center; }
   .hero-photo::after {
-    background: linear-gradient(to left, var(--ink) 0%, rgba(7, 24, 44, 0.84) 12%, transparent 38%);
+    background: linear-gradient(to right, rgba(7, 24, 44, 0) 62%, rgba(7, 24, 44, 0.9) 100%);
+  }
+}
+
+/* במובייל הדמות בתחתית: העגינה יורדת לתחתית והחיתוך אוכל מלמעלה,
+   והשכבה מכהה את החלק העליון שבו יושב הטקסט. */
+@media (max-width: 699px) {
+  .hero-photo img { object-position: center bottom; }
+  .hero-photo::after {
+    background: linear-gradient(to bottom, rgba(7, 24, 44, 0.72) 0%, rgba(7, 24, 44, 0.34) 34%, rgba(7, 24, 44, 0) 52%);
   }
 }
 
@@ -520,9 +554,6 @@
 .about { background: var(--paper); }
 .about-inner { display: grid; gap: clamp(2.25rem, 1.4rem + 3vw, 4rem); align-items: start; }
 @media (min-width: 1000px) { .about-inner { grid-template-columns: 1.1fr 0.9fr; } }
-.about-inner-solo { grid-template-columns: 1fr; }
-@media (min-width: 1000px) { .about-inner-solo { grid-template-columns: 1fr; } }
-.about-inner-solo .about-text { max-width: 78ch; }
 
 .about-title { max-width: 18ch; }
 /* הפסקה הראשונה בגודל מוביל — נותנת לאזור נקודת כניסה. */
@@ -536,6 +567,23 @@
 
 .about-aside { display: grid; gap: var(--space-lg); align-content: start; }
 @media (min-width: 1000px) { .about-aside { position: sticky; top: 140px; } }
+
+/* הדיוקן: אותו מוטיב שחוזר באתר — פינה חתוכה ומסגרת זהב מוסטת
+   שמציצה מהצד. התצלום עצמו מעל המסגרת ולא נחתך בה. */
+.about-portrait { position: relative; margin: 0; }
+.about-portrait::before {
+  content: ''; position: absolute; z-index: 0;
+  inset-block: 18px -18px; inset-inline: -18px 18px;
+  border: var(--bracket-w) solid var(--accent);
+}
+.about-portrait img {
+  position: relative; z-index: 1;
+  display: block; width: 100%; height: auto;
+  aspect-ratio: 4 / 5; object-fit: cover; object-position: center 12%;
+  clip-path: polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+}
+/* בתוך העמודה הצדית הדיוקן לא צריך למלא את כל הרוחב במסך צר. */
+@media (max-width: 640px) { .about-portrait { max-width: 380px; } }
 
 /* הציטוט הוא מרכז הכובד של האזור, ולכן הוא הפאנל הכהה היחיד בו. */
 .about-quote {

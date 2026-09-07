@@ -24,8 +24,7 @@ export default async function AboutPage() {
 
       <main id="main">
         <section className="section">
-          {/* בלי עמודת תמונה — ראה ההערה ב-content/site.ts תחת about. */}
-          <div className="container about-inner about-inner-solo">
+          <div className="container about-inner">
             <div className="about-text">
               <h2 className="section-title">{about.title}</h2>
               {about.paragraphs.map((p, i) => <p key={i} className="about-paragraph">{p}</p>)}
@@ -34,6 +33,18 @@ export default async function AboutPage() {
                 {about.points.map((point) => <li key={point}>{point}</li>)}
               </ul>
             </div>
+
+            <aside className="about-aside">
+              <figure className="about-portrait">
+                <img
+                  src={asset(aboutSeed.image.src)}
+                  alt={aboutSeed.image.alt}
+                  width={aboutSeed.image.width}
+                  height={aboutSeed.image.height}
+                  loading="eager"
+                />
+              </figure>
+            </aside>
           </div>
         </section>
 

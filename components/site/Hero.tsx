@@ -5,12 +5,17 @@ import type { SiteContent } from '@/lib/site-content';
 /**
  * ההיררו.
  *
- * תצלום אחד, חצי מסך, נוגע בשולי האזור — לא בתוך מסגרת ולא ככרטיס.
- * אין עליו טקסט ואין מעליו overlay; רק מעבר רך בקצה הפנימי שמחבר
- * אותו למשטח הנייבי, כדי שהמפגש בין השניים לא ייראה כחתך.
+ * התצלום הוא קומפוזיציה מוכנה — איל על רקע הנייבי של המותג — והוא
+ * ממלא את האזור כולו. הטקסט לא יושב *ליד* התצלום אלא *בתוך* השטח
+ * שהקומפוזיציה השאירה לו פנוי, ולכן ההיררו עובד בשלושה מצבים:
  *
- * במובייל הסדר מתהפך: כותרת וכפתורים קודם, התצלום אחריהם — מי שנכנס
- * מהטלפון צריך להגיע ל-CTA בלי לגלול תצלום.
+ *   ‎≥1200px‎  התצלום ממלא את האזור, הדמות בצד והטקסט בשאר הרוחב.
+ *   ‎700–1199‎ התצלום מצטמצם לפאנל בצד — בכיסוי מלא הדמות הייתה
+ *             מתנפחת ופולשת אל הטקסט, ראה ההערה ב-sections.css.
+ *   ‎<700px‎   החיתוך המובייל: הדמות בתחתית, הטקסט באוויר שמעליה.
+ *
+ * שני החיתוכים הם `<picture>` עם art direction ולא srcset של אותה
+ * תמונה — זו לא אותה קומפוזיציה בשני גדלים, אלה שתי קומפוזיציות.
  */
 export default function Hero({
   hero, showStats = true,
@@ -18,19 +23,28 @@ export default function Hero({
   hero: SiteContent['hero'];
   showStats?: boolean;
 }) {
+  const { photo, photoMobile } = heroContent;
+
   return (
     <>
       <section className="hero" aria-labelledby="hero-title">
-        {/* התצלום ממוקם מול ה-section כולו ויורד עד תחתיתו. */}
         <div className="hero-photo">
-          <img
-            src={asset(heroContent.photo.src)}
-            alt={heroContent.photo.alt}
-            width={1568}
-            height={1003}
-            loading="eager"
-            fetchPriority="high"
-          />
+          <picture>
+            <source
+              media="(max-width: 699px)"
+              srcSet={asset(photoMobile.src)}
+              width={photoMobile.width}
+              height={photoMobile.height}
+            />
+            <img
+              src={asset(photo.src)}
+              alt={photo.alt}
+              width={photo.width}
+              height={photo.height}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </picture>
         </div>
 
         <div className="container hero-inner">
@@ -52,17 +66,13 @@ export default function Hero({
                 {hero.secondaryCta.label}
               </a>
             </div>
-
-            <ul className="hero-proof">
-              {heroContent.proof.map((item) => <li key={item}>{item}</li>)}
-            </ul>
           </div>
         </div>
       </section>
 
       {/* מחוץ ל-section בכוונה: ההיררו חותך את מה שגולש ממנו
-          (overflow: hidden עבור התצלום והזוהר), ובתוכו התיבה הייתה
-          נחתכת בדיוק בקו התפר. כאן היא שכן יכולה לשבת עליו. */}
+          (overflow: hidden עבור התצלום), ובתוכו התיבה הייתה נחתכת
+          בדיוק בקו התפר. כאן היא שכן יכולה לשבת עליו. */}
       {showStats && (
         <div className="container hero-stats-wrap">
           <ul className="hero-stats" aria-label="נתונים בקצרה">
