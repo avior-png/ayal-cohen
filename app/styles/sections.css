@@ -789,52 +789,47 @@
 .brand-band {
   position: relative; overflow: hidden;
   display: grid; align-content: center;
-  min-height: clamp(340px, 24vw + 200px, 520px);
+  min-height: clamp(360px, 24vw + 210px, 540px);
   padding-block: var(--space-2xl);
   text-align: center;
 }
 /* שכבת נייבי מעל התצלום — קריאוּת הטקסט לא תלויה בתצלום עצמו. */
 .brand-band .bg-photo { z-index: 0; }
 .brand-band > .container { position: relative; z-index: 1; }
-/* קומפוזיציה ממורכזת: הקווים והשורות חולקים ציר אחד. */
+/* קומפוזיציה ממורכזת: הקווים, השורות והכפתור חולקים ציר אחד. */
 .brand-band-inner {
-  display: grid; justify-items: center; gap: clamp(1.25rem, 0.9rem + 1.2vw, 2rem);
-  max-width: min(940px, 100%); margin-inline: auto; text-align: center;
+  display: grid; justify-items: center; gap: clamp(1rem, 0.8rem + 0.8vw, 1.6rem);
+  max-width: min(760px, 100%); margin-inline: auto; text-align: center;
 }
-/* שני קווי זהב אסימטריים — הפתיחה קצרה, הסגירה רחבה ודקה. */
 .band-rule { display: block; width: 44px; height: 2px; background: var(--gold); }
 /* וריאנט מיושר-התחלה: אותה היררכיה, בלי המרכוז. */
 .brand-band-start { text-align: start; }
 .brand-band-start .brand-band-inner { justify-items: start; margin-inline: 0; text-align: start; }
-.band-rule-end { width: 128px; height: 2px; background: rgba(216, 180, 90, 0.55); }
 
 .brand-band-title {
-  display: grid; gap: clamp(0.35rem, 0.2rem + 0.5vw, 0.7rem);
+  display: grid; gap: 0.12em;
   margin: 0; text-wrap: balance;
   text-shadow: 0 2px 18px rgba(5, 22, 35, 0.55);
+  font-family: var(--font-heading); font-weight: 800;
 }
-/* דרגה 1 — ההנחה: קטנה, מרוּוחת, בגופן הגוף. */
+/* שתי הדרגות של הטיעון: הפתיחה בלבן, והנקודה עצמה בזהב ובאותו גודל
+   — לא הקטנה, כי היא לא כותרת משנה אלא סוף המשפט. */
 .band-lead {
-  font-family: var(--font-body);
-  font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.2rem);
-  font-weight: 600; letter-spacing: 0.05em; line-height: 1.5;
-  color: rgba(255, 255, 255, 0.88);
-  max-width: 42ch;
+  font-size: clamp(1.7rem, 1.1rem + 2.1vw, 2.9rem);
+  line-height: 1.1; letter-spacing: -0.02em; color: #fff;
 }
-/* דרגה 2 — הטיעון: הקול הראשי של הפס. */
 .band-hero {
-  font-family: var(--font-heading);
-  font-size: clamp(2.1rem, 1.25rem + 3.9vw, 4.4rem);
-  font-weight: 800; line-height: 1.02; letter-spacing: -0.02em;
-  color: var(--gold);
+  font-size: clamp(1.7rem, 1.1rem + 2.1vw, 2.9rem);
+  line-height: 1.1; letter-spacing: -0.02em; color: var(--gold);
 }
-/* דרגה 3 — המסקנה: חוזרת ללבן, בכ-45% מגודל הטיעון. */
-.band-tail {
-  font-family: var(--font-heading);
-  font-size: clamp(1.1rem, 0.9rem + 1.05vw, 1.95rem);
-  font-weight: 600; line-height: 1.32; color: #fff;
-  max-width: 24ch;
+/* ההסבר: מה עושים עם הטיעון. */
+.band-note {
+  max-width: 52ch; margin: 0;
+  font-size: var(--fs-lead); line-height: var(--lh-lead);
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 12px rgba(5, 22, 35, 0.5);
 }
+.brand-band-inner .btn { margin-top: var(--space-xs); }
 
 /* ====================== מקרה מהשטח ====================== */
 .case { position: relative; overflow: hidden; }

@@ -1,3 +1,4 @@
+import { asset } from '@/lib/asset';
 import PhotoLayer from '@/components/site/PhotoLayer';
 import { band } from '@/content/site';
 
@@ -10,16 +11,22 @@ const BAND_SCRIM_CENTER =
 const BAND_SCRIM_FLAT = 'linear-gradient(rgba(5,22,35,.6), rgba(5,22,35,.6))';
 
 /**
- * רגע מותג — פס תצלום ברוחב מלא בין שני סקשנים בהירים.
+ * רגע ההמרה של אמצע העמוד — פס תצלום ברוחב מלא בין שני סקשנים.
  *
- * הקומפוזיציה ממורכזת ובנויה בשלוש דרגות: הנחה (קטן ומרוּוח),
- * הטיעון (גדול, בזהב) והמסקנה (בינוני, בלבן). אין כאן eyebrow
- * ואין כפתור: זה פס נשימה, וכל תווית נוספת גוזלת מהמשפט את הבמה.
+ * ⚠️  היה כאן אפוריזם ("החלטות טובות מתחילות בלראות את כל התמונה"),
+ *     והוא נשמע כמו ציטוט. זו בדיוק הייתה הבעיה: פס בגובה 520px
+ *     באמצע העמוד שלא נותן לקורא שום דבר לעשות איתו הוא חלל.
+ *     עכשיו: טיעון קונקרטי, פסקה שמסבירה מה עושים איתו, וכפתור.
+ *
+ * שלוש הדרגות: הטיעון (גדול, וחלקו בזהב — הוא הנקודה), ההסבר
+ * (בינוני), והפעולה. `align="start"` לעמוד שבו הוויזואל א-סימטרי
+ * ותופס את המרכז — ראה ההערה ב-sections.css.
  */
 export default function BrandBand({
   title = band.title,
   titleAccent = band.titleAccent,
-  titleRest = band.titleRest,
+  lead = band.lead,
+  cta = band.cta,
   image = band.image,
   align = 'center',
   scrim,
@@ -27,7 +34,8 @@ export default function BrandBand({
 }: {
   title?: string;
   titleAccent?: string;
-  titleRest?: string;
+  lead?: string;
+  cta?: { label: string; href: string };
   image?: { src: string; alt: string };
   /** 'center' לתצלום סימטרי, 'start' כשהוויזואל א-סימטרי ותופס את המרכז. */
   align?: 'center' | 'start';
@@ -35,29 +43,30 @@ export default function BrandBand({
   position?: string;
 }) {
   const centered = align === 'center';
+
   return (
     <section
       className={`brand-band on-dark${centered ? '' : ' brand-band-start'}`}
-      aria-label={`${title} ${titleAccent} ${titleRest}`}
+      aria-labelledby="band-title"
     >
-      {/* וינייטה ולא הכהיה אחידה: כהה במרכז שבו יושב הטקסט, מתבהרת
-          בשוליים ומשאירה את התצלום עצמו נראה. */}
       <PhotoLayer
         src={image.src}
         scrim={scrim ?? (centered ? BAND_SCRIM_CENTER : BAND_SCRIM_FLAT)}
         position={position}
       />
       <div className="container">
-        <figure className="brand-band-inner">
+        <div className="brand-band-inner">
           <span className="band-rule" aria-hidden="true" />
-          {/* דרגה אחת פר שורה: ההנחה, הטיעון, המסקנה. */}
-          <p className="brand-band-title">
+          <p id="band-title" className="brand-band-title">
             <span className="band-lead">{title}</span>
             <span className="band-hero">{titleAccent}</span>
-            <span className="band-tail">{titleRest}</span>
           </p>
-          <span className="band-rule band-rule-end" aria-hidden="true" />
-        </figure>
+          <p className="band-note">{lead}</p>
+          <a className="btn btn-gold" href={asset(cta.href)}>
+            {cta.label}
+            <span className="btn-arrow" aria-hidden="true">←</span>
+          </a>
+        </div>
       </div>
     </section>
   );
