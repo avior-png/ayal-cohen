@@ -15,8 +15,25 @@ Server Action, ושניהם לא קיימים באחסון סטטי. GitHub Page
 1. **vercel.com** → Add New → Project → Import Git Repository → בחירת המאגר
 2. Framework: Next.js (מזוהה אוטומטית). **בלי לגעת בשום הגדרה.**
 3. Deploy
+4. ⚠️ **Settings → Git → Production Branch → `claude/trusting-rubin-a6o6ca`**
+   → Redeploy
 
-זה הכול. הקישור שמתקבל הוא הקישור ל-QA.
+הקישור שמתקבל הוא הקישור ל-QA.
+
+### ⚠️ שלב 4 הוא לא אופציונלי
+
+Vercel פורס את **ברירת המחדל של המאגר**, וברירת המחדל כאן היא
+`claude/github-connection-check-k3prb4` — הענף שאליו הועלו קובצי הזיפ,
+ובו התבנית הבסיסית בלבד. **כל עבודת האתר יושבת על
+`claude/trusting-rubin-a6o6ca`.** בלי שלב 4 הקישור ל-QA יציג אתר אחר.
+
+שתי דרכים לפתור את זה לתמיד, ושתיהן עדיפות על תיקון בהגדרות Vercel:
+- **מיזוג** `claude/trusting-rubin-a6o6ca` אל ענף ברירת המחדל, או
+- **החלפת ענף ברירת המחדל** במאגר ל-`claude/trusting-rubin-a6o6ca`
+  (GitHub → Settings → Branches → Default branch)
+
+אגב: שלושת קובצי הזיפ וה-PNG שהועלו לשורש ענף ברירת המחדל אינם חלק
+מהאתר ואפשר למחוק אותם.
 
 ### מה עובד ומה לא בלי מסד
 
