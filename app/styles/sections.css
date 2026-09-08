@@ -23,9 +23,9 @@
   display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg);
   min-height: 78px;
 }
-.site-logo { display: inline-flex; align-items: center; gap: 0.65rem; text-decoration: none; }
-/* המגן צבוע במפורש: currentColor היה יורש את צבע הטקסט, ועל הכותרת
-   הכהה זה נותן נייבי על נייבי — כלומר לוגו שלא רואים. */
+.site-logo { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+/* הריבוע צבוע במפורש: currentColor היה יורש את צבע הטקסט, ועל
+   הכותרת הכהה זה נותן נייבי על נייבי — כלומר לוגו שלא רואים. */
 .logo-mark { flex: none; color: var(--brand); }
 .is-dark .logo-mark, .site-footer .logo-mark { color: #1B4C7E; }
 .site-logo-img { height: 42px; width: auto; }
@@ -36,8 +36,18 @@
   font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem;
 }
 .site-logo-text { display: grid; line-height: 1.1; }
-.site-logo-name { font-family: var(--font-heading); font-size: 1.32rem; font-weight: 700; color: var(--text); }
-.site-logo-sub { font-size: 0.7rem; letter-spacing: 0.13em; color: var(--text-muted); font-weight: 600; }
+/* 800 ולא 700: זה אותו משקל של h1/h2, והשם הוא הכותרת הראשית של
+   הכותרת. הצמצום הקל מהדק את המילים לגוש אחד לצד הריבוע. */
+.site-logo-name {
+  font-family: var(--font-heading); font-size: 1.34rem; font-weight: 800;
+  letter-spacing: -0.015em; color: var(--text);
+}
+/* קטן יותר ומרווח יותר מקודם — כך הוא נקרא כשורת זיהוי מתחת לשם
+   ולא כשורה שנייה שמתחרה בו. הצבע מהמשפחה של הזהב שבאות א. */
+.site-logo-sub {
+  font-size: 0.66rem; letter-spacing: 0.16em; font-weight: 700;
+  color: var(--accent-strong);
+}
 .is-dark .site-logo-name { color: #fff; }
 .is-dark .site-logo-sub { color: var(--gold); }
 
@@ -100,7 +110,7 @@
   /* בתפריט פתוח הכותרת חייבת להיות אטומה — לוח כהה על רקע שקוף לא קריא. */
   .header-stack.is-open { background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(12px); }
   .header-stack.is-open .site-logo-name { color: var(--text); }
-  .header-stack.is-open .site-logo-sub { color: var(--text-muted); }
+  .header-stack.is-open .site-logo-sub { color: var(--accent-strong); }
   .header-stack.is-open .site-logo-img { filter: none; }
   .header-stack.is-open .nav-toggle { border-color: var(--border); }
   .header-stack.is-open .nav-toggle-bars { background: transparent; }
