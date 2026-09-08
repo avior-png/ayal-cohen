@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { asset } from '@/lib/asset';
 
 const KEY = 'cookie-choice';
 
@@ -33,7 +32,7 @@ export default function CookieBanner() {
       <p className="cookie-text">
         אנחנו משתמשים בעוגיות כדי להפעיל את האתר ולהבין כיצד משתמשים בו.
         אפשר לסרב, והאתר ימשיך לעבוד במלואו.{' '}
-        <Link href={asset('/privacy')}>מדיניות הפרטיות</Link>
+        <Link href="/privacy">מדיניות הפרטיות</Link>
       </p>
       <div className="cookie-actions">
         <button type="button" className="btn btn-secondary" onClick={() => decide('rejected')}>

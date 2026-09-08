@@ -156,8 +156,13 @@ ul[class], ol[class] { list-style: none; padding: 0; }
 .prose ul { display: grid; gap: var(--space-xs); padding-inline-start: 1.3rem; }
 .prose ol { display: grid; gap: var(--space-xs); padding-inline-start: 1.3rem; color: var(--text-muted); }
 .prose img { margin-block: var(--space-lg); border-radius: var(--radius); box-shadow: var(--shadow); }
-.prose a { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
-.prose a:hover { color: var(--accent-strong); }
+/* ‎:not(.btn)‎ — בלעדיו הכלל הזה (0,2,0) גובר על ‎.btn-primary‎
+   (0,1,0), וכפתור בתוך ‎.prose‎ יוצא נייבי על נייבי: יחס 1:1,
+   כלומר כפתור בלי טקסט. נמדד בעמוד ה-404, ואותו כלל חל על כל
+   ‎.btn‎ בתוך ‎.prose‎ בעמודים המשפטיים. אותו טיפול כמו
+   ‎.on-dark a:not(.btn)‎ ב-sections.css, ומאותה סיבה. */
+.prose a:not(.btn) { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
+.prose a:not(.btn):hover { color: var(--accent-strong); }
 .prose blockquote {
   margin-block: var(--space-lg);
   padding-inline-start: var(--space-lg);

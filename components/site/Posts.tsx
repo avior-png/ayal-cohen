@@ -35,7 +35,7 @@ export default function Posts({ posts }: { posts: SiteContent['posts'] }) {
         </ul>
 
         <p className="section-more">
-          <Link className="btn btn-secondary" href={asset('/blog')}>
+          <Link className="btn btn-secondary" href="/blog">
             לכל המאמרים
             <span className="btn-arrow" aria-hidden="true">←</span>
           </Link>

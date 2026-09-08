@@ -59,7 +59,7 @@ export default async function BlogPage() {
                         <time dateTime={post.date}>{post.dateLabel}</time>
                       </p>
                       <h2 className="post-title">
-                        <Link href={asset(post.href)}>{post.title}</Link>
+                        <Link href={post.href}>{post.title}</Link>
                       </h2>
                       <p className="post-excerpt">{post.excerpt}</p>
                       <p className="post-more"><span className="arrow-link" aria-hidden="true">לקריאה</span></p>

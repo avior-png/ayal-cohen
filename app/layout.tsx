@@ -5,7 +5,6 @@ import './studio-baked.css';
 import StudioLoader from '@/studio/StudioLoader';
 import { dna } from '@/dna';
 import { dnaCss, dnaFontsHref } from '@/lib/dna';
-import { asset } from '@/lib/asset';
 
 // כל המטא־דאטה נגזרת מ-dna.ts — אין כאן ערך מותג קשיח.
 export const metadata: Metadata = {
@@ -21,7 +20,9 @@ export const metadata: Metadata = {
     siteName: dna.brand.name,
     title: `${dna.brand.name} — ${dna.brand.tagline}`,
     description: dna.seo.description,
-    images: [asset(dna.seo.ogImage)],
+    /* בלי ‎asset()‎: Next מצרף את ה-basePath למטא-דאטה בעצמו,
+       וקריאה נוספת הכפילה אותו — ‎/ayal-cohen/ayal-cohen/images/og.jpg‎. */
+    images: [dna.seo.ogImage],
   },
 };
 

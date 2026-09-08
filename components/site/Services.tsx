@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { asset } from '@/lib/asset';
 import Icon from '@/components/site/Icon';
 import type { SiteContent } from '@/lib/site-content';
 
@@ -32,7 +31,7 @@ export default function Services({ services }: { services: SiteContent['services
             <li key={item.title}>
               {/* עוגן לשירות עצמו ולא לראש העמוד: לחיצה על אריח
                   ספציפי צריכה לפתוח את העמוד באותו שירות. */}
-              <Link className="svc-tile" href={`${asset('/services')}#svc-${i + 1}`}>
+              <Link className="svc-tile" href={`/services/#svc-${i + 1}`}>
                 <span className="svc-tile-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <span className="svc-tile-mark" aria-hidden="true">
                   <Icon name={item.icon} size={22} />
@@ -45,7 +44,7 @@ export default function Services({ services }: { services: SiteContent['services
         </ul>
 
         <p className="section-more">
-          <Link className="btn btn-secondary" href={asset('/services')}>
+          <Link className="btn btn-secondary" href="/services">
             לפירוט המלא של תחומי העיסוק
             <span className="btn-arrow" aria-hidden="true">←</span>
           </Link>

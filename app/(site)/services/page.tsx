@@ -59,7 +59,7 @@ export default async function ServicesPage() {
                       <div className="service-row-body">
                         <h2 className="service-row-title">{item.title}</h2>
                         <p className="service-row-text">{item.text}</p>
-                        <Link className="arrow-link" href={asset(row ? `/services/${row.id}` : '/contact')}>
+                        <Link className="arrow-link" href={row ? `/services/${row.id}` : '/contact'}>
                           {row ? 'לפרטי השירות' : 'לשיחה בנושא הזה'}
                           <span className="visually-hidden"> — {item.title}</span>
                         </Link>

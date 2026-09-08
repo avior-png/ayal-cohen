@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { asset } from '@/lib/asset';
 import { dna } from '@/dna';
 import PageHeader from '@/components/site/PageHeader';
 
@@ -57,7 +58,7 @@ export default function TermsPage() {
 
             <h2>פרטיות</h2>
             <p>
-              איסוף המידע ושמירתו מוסדרים ב<a href="/privacy">מדיניות הפרטיות</a>,
+              איסוף המידע ושמירתו מוסדרים ב<a href={asset('/privacy')}>מדיניות הפרטיות</a>,
               המהווה חלק בלתי נפרד מתנאים אלה.
             </p>
 

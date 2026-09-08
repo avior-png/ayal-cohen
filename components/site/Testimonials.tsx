@@ -31,7 +31,7 @@ export default function Testimonials({ testimonials }: { testimonials: SiteConte
           ))}
         </ul>
         <p className="section-more">
-          <Link className="btn btn-secondary" href={asset('/testimonials')}>לכל ההמלצות</Link>
+          <Link className="btn btn-secondary" href="/testimonials">לכל ההמלצות</Link>
         </p>
       </div>
     </section>

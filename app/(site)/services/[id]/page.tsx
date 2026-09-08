@@ -50,7 +50,7 @@ export default async function ServicePage({ params }: Props) {
               ? service.body.split(/\n{2,}/).map((p, i) => <p key={i}>{p.trim()}</p>)
               : <p>{service.summary}</p>}
             <p>
-              <Link className="btn btn-primary" href={asset('/contact')}>
+              <Link className="btn btn-primary" href="/contact">
                 לפנייה בנושא {service.title}
               </Link>
             </p>

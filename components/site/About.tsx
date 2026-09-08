@@ -39,7 +39,7 @@ export default function About({ about }: { about: SiteContent['about'] }) {
           </blockquote>
 
           <p className="about-more">
-            <Link className="arrow-link" href={asset('/about')}>הסיפור המלא והכשרות מקצועיות</Link>
+            <Link className="arrow-link" href="/about">הסיפור המלא והכשרות מקצועיות</Link>
           </p>
         </div>
 

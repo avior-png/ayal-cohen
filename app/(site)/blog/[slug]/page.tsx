@@ -77,7 +77,7 @@ export default async function PostPage({ params }: Props) {
 
             {post.body.split(/\n{2,}/).map((p, i) => <p key={i}>{p.trim()}</p>)}
 
-            <p><Link href={asset('/blog')}>← חזרה לכל המאמרים</Link></p>
+            <p><Link href="/blog">← חזרה לכל המאמרים</Link></p>
           </div>
         </article>
       </main>

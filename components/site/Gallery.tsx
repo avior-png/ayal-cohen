@@ -20,7 +20,7 @@ export default function Gallery({ gallery }: { gallery: SiteContent['gallery'] }
           ))}
         </ul>
         <p className="section-more">
-          <Link className="btn btn-secondary" href={asset('/gallery')}>לגלריה המלאה</Link>
+          <Link className="btn btn-secondary" href="/gallery">לגלריה המלאה</Link>
         </p>
       </div>
     </section>

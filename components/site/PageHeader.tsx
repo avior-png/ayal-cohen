@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { asset } from '@/lib/asset';
 import PhotoLayer from '@/components/site/PhotoLayer';
 
 /**
@@ -27,9 +26,9 @@ export default function PageHeader({
       <div className="container">
         <nav className="breadcrumbs" aria-label="מיקומך באתר">
           <ol>
-            <li><Link href={asset('/')}>בית</Link></li>
+            <li><Link href="/">בית</Link></li>
             {crumbs.map((c) => (
-              <li key={c.href}><Link href={asset(c.href)}>{c.label}</Link></li>
+              <li key={c.href}><Link href={c.href}>{c.label}</Link></li>
             ))}
             <li aria-current="page">{crumbLabel ?? title}</li>
           </ol>
