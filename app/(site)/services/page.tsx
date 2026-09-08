@@ -42,22 +42,39 @@ export default async function ServicesPage() {
                    השוטף — ושם הוא אומר משהו שהטקסט לא אומר. */
                 const image = item.image;
                 return (
-                  <li key={item.title} id={`svc-${i + 1}`}
-                      className={'service-row' + (image ? ' service-row-media' : '')}>
-                    <span className="service-row-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="service-row-icon" aria-hidden="true"><Icon name={item.icon} size={28} /></span>
-                    <div className="service-row-body">
-                      <h2 className="service-row-title">{item.title}</h2>
-                      <p className="service-row-text">{item.text}</p>
-                      <Link className="arrow-link" href={asset(row ? `/services/${row.id}` : '/contact')}>
-                        {row ? 'לפרטי השירות' : 'לשיחה בנושא הזה'}
-                        <span className="visually-hidden"> — {item.title}</span>
-                      </Link>
+                  <li
+                    key={item.title}
+                    id={`svc-${i + 1}`}
+                    className={
+                      'service-row'
+                      + (image ? ' service-row-media' : '')
+                      /* צד התצלום מתחלף בין שורה לשורה. שש תמונות באותו
+                         צד הן טור, וטור נקרא כגלריה ולא כשש שורות. */
+                      + (image && i % 2 === 1 ? ' service-row-flip' : '')
+                    }
+                  >
+                    <div className="service-row-main">
+                      <span className="service-row-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="service-row-icon" aria-hidden="true"><Icon name={item.icon} size={28} /></span>
+                      <div className="service-row-body">
+                        <h2 className="service-row-title">{item.title}</h2>
+                        <p className="service-row-text">{item.text}</p>
+                        <Link className="arrow-link" href={asset(row ? `/services/${row.id}` : '/contact')}>
+                          {row ? 'לפרטי השירות' : 'לשיחה בנושא הזה'}
+                          <span className="visually-hidden"> — {item.title}</span>
+                        </Link>
+                      </div>
                     </div>
                     {image && (
                       <figure className="media-frame service-row-figure">
-                        <img src={asset(image.src)} alt={image.alt}
-                             width={image.width} height={image.height} loading="lazy" />
+                        <img
+                          src={asset(image.src)}
+                          alt={image.alt}
+                          width={image.width}
+                          height={image.height}
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </figure>
                     )}
                   </li>

@@ -3,15 +3,23 @@
 import { useActionState } from 'react';
 import { submitEnquiry, type EnquiryState } from '@/lib/enquiry';
 import PhotoLayer from '@/components/site/PhotoLayer';
+import { asset } from '@/lib/asset';
 import { contact as contactContent } from '@/content/site';
 import type { SiteContent } from '@/lib/site-content';
 
 export default function ContactCta({
-  site, contact, headingLevel = 2,
+  site, contact, headingLevel = 2, image,
 }: {
   site: SiteContent['site'];
   contact: SiteContent['contact'];
   headingLevel?: 1 | 2;
+  /**
+   * תצלום אופציונלי בעמודת הטקסט, מתחת לפרטי הקשר. עמוד יצירת
+   * הקשר בלבד: שם הטופס הוא כל העמוד וצריך לצדו משהו אנושי.
+   * באזור ה-CTA שחוזר בסוף כל עמוד אין לו מקום — הוא היה הופך
+   * חתימה לאזור.
+   */
+  image?: { src: string; alt: string; width: number; height: number };
 }) {
   const [state, action, pending] = useActionState<EnquiryState, FormData>(submitEnquiry, {});
   const err = state.fields ?? {};
@@ -52,6 +60,19 @@ export default function ContactCta({
               <span className="cta-contact-value">{site.hours}</span>
             </li>
           </ul>
+
+          {image && (
+            <figure className="cta-media media-frame">
+              <img
+                src={asset(image.src)}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          )}
         </div>
 
         <form className="contact-form notch notch-outline" action={action} noValidate>

@@ -360,7 +360,10 @@
 .offer-plate {
   position: relative; overflow: hidden;
   display: grid; place-items: center;
-  aspect-ratio: 16 / 7;
+  /* 16:9 ולא 16:7 — זה היחס שבו נוצרו שלושת התצלומים, וחיתוך
+     שלהם ל-16:7 היה אוכל מהם שביעית. שלושת הכרטיסים חולקים את
+     היחס הזה בין אם הם נושאים תצלום ובין אם לא, ולכן גובהם זהה. */
+  aspect-ratio: 16 / 9;
   background:
     radial-gradient(120% 140% at 84% 12%, rgba(18, 64, 110, 0.09), rgba(18, 64, 110, 0) 62%),
     var(--brand-soft);
@@ -400,6 +403,7 @@
 }
 
 .offer-body {
+  position: relative;
   display: grid; align-content: start; gap: var(--space-xs);
   padding: var(--space-lg) clamp(1.2rem, 1rem + 0.8vw, 1.8rem) clamp(1.4rem, 1.1rem + 1vw, 2rem);
 }
@@ -410,13 +414,21 @@
 .offer-card-title { font-size: var(--fs-h3); margin: 0; }
 .offer-card-text { color: var(--text-muted); }
 
-/* --- הרצף בין הכרטיסים: קו זהב וחץ, כמו מסילת התהליך --- */
+/* --- הרצף בין הכרטיסים: חץ בעיגול, כמו מסילת התהליך ---
+   ⚠️  המחבר היה על ‎.offer-card‎ במרחק ‎(100%/16*7)/2‎ מלמעלה, מתוך
+   כוונה להתייחס לחצי גובה הלוחית. אחוז ב-‎inset-block-start‎ נמדד
+   מול **גובה** ההורה ולא מול רוחבו, ולכן הוא לא היה חצי הלוחית
+   אלא 7/32 מגובה הכרטיס — ובמקרה נראה סביר. מהרגע שהלוחית נושאת
+   תצלום, עיגול שצף עליו נראה כמו מדבקה.
+
+   עכשיו הוא על ‎.offer-body‎ ב-‎top: 0‎: כלומר בדיוק על התפר שבין
+   התצלום לגוף הכרטיס, בלי מתמטיקה של אחוזים ובלי לרחוף על התצלום. */
 @media (min-width: 820px) {
   /* מהכרטיס אל הבא אחריו. ב-RTL הבא נמצא בצד השמאלי הפיזי, ולכן
      המחבר יוצא מ-‎inset-inline-end‎ (=שמאל) של כל כרטיס פרט לאחרון. */
-  .offer-card:not(:last-child)::after {
+  .offer-card:not(:last-child) .offer-body::after {
     content: '←'; position: absolute; z-index: 2;
-    inset-block-start: calc((100% / 16 * 7) / 2);
+    inset-block-start: 0;
     inset-inline-end: calc(var(--space-xl) / -2);
     translate: 50% -50%;
     display: grid; place-items: center;
@@ -1188,6 +1200,15 @@
 .cta-title { font-size: var(--fs-h2); margin-bottom: var(--space-md); color: #fff; }
 .cta-lead { color: var(--on-ink-muted); font-size: var(--fs-lead); max-width: 46ch; }
 .cta-contact-list { display: grid; gap: 0; margin-top: var(--space-xl); border-block-start: 1px solid rgba(255, 255, 255, 0.14); }
+/* התצלום בעמודת הטקסט, מתחת לפרטי הקשר — עמוד יצירת הקשר בלבד.
+   בדסקטופ העמודה היא חצי הרוחב, וזה 40%–46% מהמסך כפי שנדרש.
+   במסך צר הסדר הוא טקסט, תצלום, טופס — סדר ה-DOM, בלי היפוך. */
+.cta-media { margin-top: var(--space-xl); max-width: 100%; }
+/* חיתוך 16:9 ולא 4:3 של הקובץ: בעמודה של חצי רוחב, 4:3 נותן
+   412px גובה והעמודה יורדת 270px מתחת לטופס. 16:9 מקצר אותה
+   ל-309px ושני הטורים נגמרים בערך יחד. הידיים והטלפון ממורכזים
+   בקובץ ולכן החיתוך לא אוכל אותם. */
+.cta-media img { aspect-ratio: 16 / 9; }
 .cta-contact-list li {
   display: grid; grid-template-columns: 7.5rem 1fr; gap: var(--space-md);
   padding-block: var(--space-sm);
@@ -1340,11 +1361,18 @@
 .service-rows { display: grid; margin: 0; border-block-start: var(--hairline); }
 /* הכותרת הדביקה מסתירה כ-96px; בלי זה עוגן לשירות היה נוחת מתחתיה. */
 .service-row { scroll-margin-top: 110px; }
+/* שתי רמות של רשת: השורה מחזיקה [תוכן | תצלום], והתוכן בתוכה
+   מחזיק [מספר | אייקון | גוף]. שתי רמות ולא ארבע עמודות שטוחות,
+   כי כך אפשר להחליף את צד התצלום בשורה אחת של CSS — בארבע
+   עמודות שטוחות זה מחייב מיקום מפורש לכל אחד מארבעת הילדים. */
 .service-row {
+  display: grid; gap: var(--space-lg);
+  padding-block: clamp(1.75rem, 1.2rem + 1.6vw, 3rem);
+  border-block-end: var(--hairline);
+}
+.service-row-main {
   display: grid; grid-template-columns: auto 1fr; align-items: start;
   gap: var(--space-md) var(--space-lg);
-  padding-block: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
-  border-block-end: var(--hairline);
 }
 .service-row-index {
   font-family: var(--font-heading); font-weight: 700; font-size: 1.05rem;
@@ -1358,20 +1386,37 @@
 .service-row-title { font-size: var(--fs-h3); }
 .service-row-text { color: var(--text-muted); max-width: 74ch; }
 @media (min-width: 780px) {
-  .service-row { grid-template-columns: auto auto 1fr; }
+  .service-row-main { grid-template-columns: auto auto 1fr; }
   .service-row-index { padding-top: 1.1rem; }
 }
-/* השורה היחידה שנושאת תצלום מקבלת עמודה רביעית. הטקסט מצטמצם
-   בהתאם — 74ch לצד תצלום היו נותנים שורה ארוכה מדי. */
+
+/* --- שורה עם תצלום ---
+   הצד מתחלף בין שורה לשורה: שש תמונות באותו צד יוצרות טור, וטור
+   נקרא כגלריה ולא כשש שורות שכל אחת צמודה להסבר שלה. */
 .service-row-figure { align-self: center; }
 @media (min-width: 1000px) {
-  .service-row-media { grid-template-columns: auto auto 1fr minmax(0, 320px); }
-  .service-row-media .service-row-text { max-width: 52ch; }
-  .service-row-figure { margin-inline-start: var(--space-lg); }
+  .service-row-media { grid-template-columns: 1fr minmax(0, 420px); align-items: center; }
+  /* מיקום מפורש ולא ‎order‎: כך ה-DOM נשאר טקסט ואז תצלום — הסדר
+     שקורא מסך שומע ושהמובייל יורש בלי היפוך.
+
+     ⚠️  ‎grid-row: 1‎ הוא חובה, לא קוסמטיקה. עמודה מפורשת בלי שורה
+     מפורשת משאירה את המיקום האנכי לאלגוריתם ה-sparse: הוא מציב את
+     הפריט הראשון (הטקסט) בעמודה 2, סמן ההצבה עובר את עמודה 1,
+     והפריט הבא שמבקש עמודה 1 נדחף ל**שורה שנייה**. נמדד: שורות
+     מהופכות היו בגובה 625px מול 400px, והתצלום ירד מתחת לטקסט
+     במקום לשבת לצדו. */
+  .service-row-media .service-row-main { grid-column: 1; grid-row: 1; }
+  .service-row-media .service-row-figure { grid-column: 2; grid-row: 1; }
+  .service-row-flip { grid-template-columns: minmax(0, 420px) 1fr; }
+  .service-row-flip .service-row-main { grid-column: 2; grid-row: 1; }
+  .service-row-flip .service-row-figure { grid-column: 1; grid-row: 1; }
+  /* 74ch לצד תצלום נותנים שורה ארוכה מדי לעין. */
+  .service-row-media .service-row-text { max-width: 56ch; }
 }
 @media (max-width: 999px) {
-  /* במסך צר התצלום נופל לשורה שנייה ותופס את כל רוחב הכרטיס. */
-  .service-row-figure { grid-column: 1 / -1; max-width: 100%; margin-top: var(--space-sm); }
+  /* במסך צר הטקסט קודם והתצלום מתחתיו, ברוחב מלא. */
+  .service-row { gap: var(--space-md); }
+  .service-row-figure { max-width: 100%; }
 }
 
 .page-disclaimer {
@@ -1541,4 +1586,6 @@
 
 /* ריחוף על שורת שירות — משוב עדין בלי להזיז את הפריסה */
 .service-row { transition: background var(--transition); }
-.service-row:hover { background: var(--bg-alt); }
+/* ‎:hover‎ על שורה שנושאת תצלום — רקע שמשתנה מתחת לתצלום נראה
+   כתקלה ולא כמשוב, ולכן רק השורות שהן טקסט מגיבות. */
+.service-row:not(.service-row-media):hover { background: var(--bg-alt); }

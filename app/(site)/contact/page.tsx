@@ -5,7 +5,7 @@ import PageHeader from '@/components/site/PageHeader';
 import Faq from '@/components/site/Faq';
 import ContactCta from '@/components/site/ContactCta';
 import { asset } from '@/lib/asset';
-import { contactImage, process as processContent } from '@/content/site';
+import { contactAction, contactImage, process as processContent } from '@/content/site';
 
 export const metadata: Metadata = {
   title: 'יצירת קשר',
@@ -35,6 +35,7 @@ export default async function ContactPage() {
         <ContactCta
           site={site}
           contact={{ ...contact, eyebrow: 'השארת פרטים', title: 'מה קורה אחרי שאתם שולחים' }}
+          image={contactAction}
         />
 
         <section className="section" aria-labelledby="next-title">
