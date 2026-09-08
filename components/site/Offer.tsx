@@ -1,4 +1,5 @@
 import { offer } from '@/content/site';
+import { asset } from '@/lib/asset';
 import Icon from '@/components/site/Icon';
 
 /**
@@ -34,14 +35,30 @@ export default function Offer() {
         <ol className="offer-grid reveal-stagger">
           {offer.columns.map((col, i) => (
             <li key={col.title} className="offer-card">
-              {/* הלוחית העליונה היא המקום שבו ייכנס תצלום. עד אז
-                  היא נושאת את האייקון ואת ספרת השלב הגדולה, ולכן
-                  החלפתה בתמונה לא תשנה את הפריסה. */}
-              <div className="offer-plate">
-                <span className="offer-plate-num" aria-hidden="true">{i + 1}</span>
-                <span className="offer-icon" aria-hidden="true">
-                  <Icon name={col.icon} size={26} />
-                </span>
+              {/* הלוחית העליונה היא המקום שבו נכנס התצלום. כשיש
+                  תצלום הוא ממלא אותה וספרת השלב יושבת עליו כשבב;
+                  כשאין — היא נושאת את האייקון ואת הספרה הגדולה.
+                  שני המצבים באותו גובה, ולכן ההחלפה לא מזיזה כלום. */}
+              <div className={'offer-plate' + (col.image ? ' offer-plate-photo' : '')}>
+                {col.image ? (
+                  <>
+                    <img
+                      src={asset(col.image.src)}
+                      alt={col.image.alt}
+                      width={col.image.width}
+                      height={col.image.height}
+                      loading="lazy"
+                    />
+                    <span className="offer-plate-badge notch notch-outline" aria-hidden="true">{i + 1}</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="offer-plate-num" aria-hidden="true">{i + 1}</span>
+                    <span className="offer-icon" aria-hidden="true">
+                      <Icon name={col.icon} size={26} />
+                    </span>
+                  </>
+                )}
               </div>
               <div className="offer-body">
                 <span className="offer-label">{col.label}</span>

@@ -22,7 +22,10 @@ export default function Problem() {
         <div className="problem-aside">
           <div className="section-head">
             <p className="eyebrow">{problem.eyebrow}</p>
-            <h2 id="problem-title" className="section-title">{problem.title}</h2>
+            <h2 id="problem-title" className="section-title problem-title">
+              <span className="problem-title-lead">{problem.title}</span>
+              <span className="problem-title-turn">{problem.titleAccent}</span>
+            </h2>
             <p className="section-lead">{problem.lead}</p>
           </div>
           <p className="problem-note">{problem.note}</p>
@@ -33,10 +36,6 @@ export default function Problem() {
             <span className="report-title">{problem.panelTitle}</span>
             <span className="report-tag">{problem.panelTag}</span>
           </div>
-
-          {/* מסביר את מבנה הפאנל. בלעדיו הקורא רואה חמש שורות ולא
-              יודע מה הוא מסתכל עליו — וזו הייתה הביקורת. */}
-          <p className="report-intro">{problem.panelIntro}</p>
 
           {/* סגור כברירת מחדל, ולא במקרה. פרוס, הטבלה הזו הייתה 311
               מילים — חצי מהטקסט בדף הבית — וכל מי שנכנס קיבל אותה

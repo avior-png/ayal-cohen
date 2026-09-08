@@ -52,10 +52,13 @@ export const dna: Dna = {
     email: 'office@el-hahon.co.il',
     address: 'ישראל — פגישות פרונטליות ובזום בכל הארץ',
     hours: "ימים א׳–ה׳, 09:00–18:00",
+    /* `key` קובע איזה אייקון מוצג בפוטר — ראה components/site/SocialIcon.tsx.
+       המפתחות האפשריים: linkedin | facebook | youtube | instagram | whatsapp.
+       ⚠️  הקישורים כאן הם Placeholder ('#') וממתינים לכתובות האמיתיות. */
     social: [
-      { label: 'לינקדאין', href: '#' },
-      { label: 'פייסבוק', href: '#' },
-      { label: 'יוטיוב', href: '#' },
+      { key: 'linkedin', label: 'לינקדאין', href: '#' },
+      { key: 'facebook', label: 'פייסבוק', href: '#' },
+      { key: 'youtube', label: 'יוטיוב', href: '#' },
     ],
   },
 

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { getSiteContent } from '@/lib/site-content';
 import { requireSection } from '@/lib/page-guard';
 import PageHeader from '@/components/site/PageHeader';
-import Icon from '@/components/site/Icon';
 import Faq from '@/components/site/Faq';
 import ContactCta from '@/components/site/ContactCta';
 import { asset } from '@/lib/asset';
@@ -28,33 +27,11 @@ export default async function ContactPage() {
       />
 
       <main id="main">
-        <section className="section-tight">
-          <div className="container">
-            <ul className="contact-cards">
-              <li className="contact-card">
-                <span className="contact-card-icon"><Icon name="phone" /></span>
-                <span className="contact-card-label">טלפון</span>
-                <a className="contact-card-value" href={site.phoneHref}>{site.phone}</a>
-              </li>
-              <li className="contact-card">
-                <span className="contact-card-icon"><Icon name="mail" /></span>
-                <span className="contact-card-label">אימייל</span>
-                <a className="contact-card-value" href={`mailto:${site.email}`}>{site.email}</a>
-              </li>
-              <li className="contact-card">
-                <span className="contact-card-icon"><Icon name="clock" /></span>
-                <span className="contact-card-label">זמינות</span>
-                <span className="contact-card-value">{site.hours}</span>
-              </li>
-              <li className="contact-card">
-                <span className="contact-card-icon"><Icon name="pin" /></span>
-                <span className="contact-card-label">פגישות</span>
-                <span className="contact-card-value">{site.address}</span>
-              </li>
-            </ul>
-          </div>
-        </section>
-
+        {/* ⚠️  הייתה כאן רצועה של ארבעה כרטיסים — טלפון, אימייל,
+            זמינות, פגישות — ובאזור הטופס שמתחתיה מופיעות **אותן
+            ארבע העובדות** שוב, ברשימה שלצד הטופס. אותו מידע פעמיים
+            במסך אחד לא מחזק אותו, והוא בדיוק מה שהפך את העמוד
+            לרצף של תיבות קטנות. הכותרת זורמת ישר לטופס. */}
         <ContactCta
           site={site}
           contact={{ ...contact, eyebrow: 'השארת פרטים', title: 'מה קורה אחרי שאתם שולחים' }}

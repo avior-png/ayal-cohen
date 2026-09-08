@@ -1,4 +1,5 @@
 import { disclaimer, legalLinks, nav } from '@/content/site';
+import SocialIcon from '@/components/site/SocialIcon';
 import { asset } from '@/lib/asset';
 import { dna } from '@/dna';
 import { LogoMark } from '@/components/site/Logo';
@@ -44,9 +45,16 @@ export default function Footer({ site }: { site: SiteContent['site'] }) {
               </span>
             </span>
             <p className="footer-about-text">{site.tagline}</p>
+            {/* אייקונים ולא שמות: שלושה שבבים עם "לינקדאין / פייסבוק /
+                יוטיוב" בעברית נראו כמו עוד רשימת קישורים בפוטר שכבר
+                מלא רשימות. הסמל מזוהה מיד, והשם נשאר לקורא מסך. */}
             <ul className="footer-social">
               {dna.identity.social.map((s) => (
-                <li key={s.label}><a href={s.href}>{s.label}</a></li>
+                <li key={s.label}>
+                  <a className="notch notch-outline" href={s.href} aria-label={s.label}>
+                    <SocialIcon name={s.key} />
+                  </a>
+                </li>
               ))}
             </ul>
           </div>

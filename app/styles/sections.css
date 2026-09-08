@@ -366,6 +366,23 @@
     var(--brand-soft);
   border-block-end: 1px solid var(--border);
 }
+/* עם תצלום: הוא ממלא את הלוחית באותו יחס, וספרת השלב יושבת עליו
+   כשבב קטום קטן. היחס 16:7 נשאר — כך שלושת הכרטיסים בגובה זהה,
+   עם תצלומים או בלעדיהם. */
+.offer-plate-photo { background: var(--ink); border-block-end-color: transparent; }
+.offer-plate-photo img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+}
+.offer-plate-badge {
+  --n: 9px; --n-w: 1px; --n-line: rgba(255, 255, 255, 0.3);
+  position: absolute; inset-block-start: 0; inset-inline-start: 0;
+  display: grid; place-items: center; width: 34px; height: 34px;
+  background-color: rgba(7, 24, 44, 0.82);
+  font-family: var(--font-heading); font-size: 0.95rem; font-weight: 800;
+  color: var(--gold); font-variant-numeric: lining-nums;
+}
+
 /* ספרת השלב כרפאים גדולה — עוגן ויזואלי, לא מידע. */
 .offer-plate-num {
   position: absolute; inset-block-start: -0.22em; inset-inline-start: 0.1em;
@@ -481,6 +498,32 @@
   .problem-aside { position: sticky; top: 120px; }
 }
 .problem-aside .section-head { margin-bottom: var(--space-lg); }
+
+/* הכותרת כתפנית בשתי דרגות. המשפט הזה בנוי כך: חצי ראשון שמאשר
+   ("עשית הכל לפי הספר"), חצי שני שמפיל ("זה עדיין לא אומר..."),
+   וכשהוא שורה אחת אפורה באותו גודל התפנית נעלמת.
+
+   ⚠️  הניסיון הראשון הגדיל את שני החצאים ל-3rem. הטור הזה הוא
+   0.62fr מ-1220 — כלומר 378px — והכותרת נשברה לארבע שורות
+   וגלשה. כאן ההשקעה היא בהיררכיה ולא בגודל: החצי המאשר קטן,
+   מרווח ומעומעם — שורת הנחה — והחצי שמפיל הוא הכותרת עצמה. */
+.problem-title {
+  display: grid; gap: 0.5em;
+  font-size: var(--fs-h2); line-height: 1.08; letter-spacing: var(--ls-h2);
+  text-wrap: balance;
+}
+.problem-title-lead {
+  font-family: var(--font-body);
+  font-size: 0.44em; font-weight: 700; line-height: 1.3;
+  letter-spacing: 0.02em; color: var(--text-muted);
+}
+/* שורת ההנחה מסומנת בקו זהב קצר — אותו קו של פס המותג, ולכן
+   העין קוראת את שתי השורות כיחידה אחת ולא כשתי כותרות. */
+.problem-title-lead::after {
+  content: ''; display: block; width: 38px; height: 2px;
+  margin-block-start: 0.7em; background: var(--accent);
+}
+.problem-title-turn { color: var(--text); }
 .problem-note {
   padding-inline-start: var(--space-md);
   border-inline-start: 3px solid var(--accent);
@@ -521,12 +564,6 @@
    הממצא במלואו. פרוסות, חמש השורות היו 311 מילים — חצי מהטקסט בדף
    הבית — וכל מי שנכנס קיבל אותן בפנים. */
 .report-row { border-block-end: 1px solid #E4EAF2; }
-.report-intro {
-  padding: var(--space-sm) clamp(1rem, 0.7rem + 1vw, 1.6rem);
-  background: var(--accent-soft);
-  border-block-end: 1px solid rgba(176, 128, 31, 0.24);
-  font-size: var(--fs-micro); font-weight: 600; color: var(--accent-strong);
-}
 .report-row > summary {
   display: grid; align-items: start;
   grid-template-columns: auto 1fr auto;
@@ -744,9 +781,11 @@
 }
 .about-paragraph { margin-top: var(--space-md); color: var(--text-muted); }
 .about-points { margin-top: var(--space-xl); }
-/* אוויר אמיתי מעל הציטוט: הווי האחרון ברשימה נגע בפינה הקטומה
-   של הפאנל, וזה נקרא כהתנגשות. */
-.about-quote { margin-top: clamp(2.25rem, 1.5rem + 2vw, 3.25rem); }
+/* אוויר אמיתי סביב הציטוט: הווי האחרון ברשימה נגע בפאנל הכהה,
+   וזה נקרא כהתנגשות ולא כשתי יחידות נפרדות. בעמוד האודות הציטוט
+   יושב *בין* פסקאות לרשימה, ולכן האוויר סימטרי. */
+.about-quote { margin-block: clamp(2.25rem, 1.5rem + 2vw, 3.25rem); }
+.about-text .about-quote + .check-list { margin-top: clamp(2rem, 1.4rem + 1.6vw, 2.75rem); }
 .about-more { margin-top: var(--space-lg); }
 
 .about-aside { display: grid; gap: var(--space-lg); align-content: start; }
@@ -772,7 +811,12 @@
 /* הציטוט הוא מרכז הכובד של האזור, ולכן הוא הפאנל הכהה היחיד בו. */
 .about-quote {
   position: relative;
-  margin: 0; padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+  /* ⚠️  היה כאן ‎margin: 0‎ — והוא איפס את ‎margin-top‎ שנקבע לציטוט
+     24 שורות מעל, כי הכלל הזה מגיע אחריו. התוצאה: הפאנל הכהה נגע
+     בווי האחרון של הרשימה שמעליו. ‎margin-inline‎ בלבד, כדי שהריווח
+     האנכי יישאר בשליטת הכלל שמעל. */
+  margin-inline: 0; margin-block-end: 0;
+  padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
   /* בלי הפינה הקטומה: באזור האודות הדיוקן הוא המוביל, והציטוט
      לצדו. פס הזהב העליון מספיק כדי לקשור אותו לשפה. */
   background: linear-gradient(158deg, #143B63 0%, #0A2748 60%, #07182C 100%);
@@ -846,10 +890,45 @@
 .brand-band-inner .btn { margin-top: var(--space-xs); }
 
 /* הוויזואל בצד: `object` הוא חיתוך שקוף (הטבעות) שיושב על הנייבי
-   בלי מסגרת, ו-`split` הוא תצלום אמיתי בתוך מסגרת 4:3. */
+   בלי מסגרת, ו-`split` הוא תצלום שזולג מהשוליים ונמסך אל הנייבי.
+
+   ⚠️  ב-`split` היה כאן תצלום בתוך מסגרת 4:3, והוא נראה כמו תמונה
+   שהודבקה בפס: מלבן עם צל באמצע שדה נייבי, בלי קשר לאזור סביבו.
+   תצלום שזולג מהשוליים ודוהה אל הרקע הוא חלק מהאזור. */
+.brand-band-split { position: relative; overflow: hidden; }
+.brand-band-split > .container { position: relative; z-index: 1; }
+.band-photo-bleed { position: absolute; z-index: 0; }
+.band-photo-bleed img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* הדהייה: שתי שכבות נייבי חצי-שקופות מעל התצלום — אחת לכיוון
+   הטקסט ואחת לשוליים העליונים והתחתונים. שכבת overlay ולא ‎mask‎
+   בכוונה: ‎mask-composite‎ עדיין דורש קידומות ומתנהג שונה בין
+   מנועים, ושתי שכבות רקע נמסכות זו על זו בכל דפדפן. */
+.band-photo-bleed::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, var(--ink) 0%, rgba(7, 24, 44, 0) 16%,
+                    rgba(7, 24, 44, 0) 84%, var(--ink) 100%),
+    /* ⚠️  התחנה האחרונה מגיעה לנייבי מלא ב-92% ולא ב-100%: כשהיא
+       ב-100%, הפיקסל שלפני שולי השכבה עדיין שקוף ב-8% והתצלום
+       מבצבץ בו — ואז הגבול של השכבה נראה כתפר אנכי. 8% הרוחב
+       האחרונים חייבים להיות נייבי אטום, זהה לרקע שמעבר. */
+    linear-gradient(to right, rgba(7, 24, 44, 0.1) 0%, rgba(7, 24, 44, 0.45) 38%,
+                    rgba(7, 24, 44, 0.86) 70%, var(--ink) 92%, var(--ink) 100%);
+}
 /* בפס עם תצלום יש יותר רוחב לטקסט מאשר בפס עם הטבעות (שם האובייקט
    רחב יותר ביחס), ולכן הכותרת שם גדולה יותר. */
-.brand-band-split { --band-display: clamp(1.6rem, 1rem + 1.9vw, 2.6rem); }
+/* ‎.brand-band.brand-band-split‎ ולא ‎.brand-band-split‎ לבד: הכלל
+   הכללי הוא ‎.brand-band.on-dark‎ (0,2,0) והוא היה מנצח, כך שהזוהר
+   נשאר — ואיתו תפר אנכי נראה בגבול שכבת התצלום. נמדד: 7,24,44
+   מימין לגבול מול 18,31,43 משמאלו. */
+.brand-band.brand-band-split {
+  --band-display: clamp(1.6rem, 1rem + 1.6vw, 2.4rem);
+  /* נייבי שטוח ובלי הזוהר הרדיאלי של הפס הכללי: הזוהר יושב ב-22%
+     מהרוחב — כלומר *מתחת* לתצלום — ולכן הוא לא נראה, אבל כן יוצר
+     תפר אנכי נראה בגבול שבו שכבת התצלום נגמרת (שם היא נייבי טהור
+     והרקע מסביב נייבי + זוהר). כאן התצלום הוא העניין. */
+  background: var(--ink);
+}
 .band-split { display: grid; gap: var(--space-xl); align-items: center; }
 /* ‎display:block‎ ולא ‎grid‎ עם ‎justify-items:center‎: ברשת כזו פריט
    עם ‎width:100%‎ בתוך תא ‎max-content‎ הוא הגדרה מעגלית, והתצלום
@@ -863,6 +942,13 @@
 }
 
 @media (min-width: 900px) {
+  /* בווריאנט התצלום: השכבה תופסת את החצי השמאלי הפיזי (‎left‎ ולא
+     לוגי — זו קומפוזיציה, לא זרימת טקסט), והטקסט נדחק לצד הימני. */
+  .band-photo-bleed { inset-block: 0; left: 0; width: 54%; }
+  .brand-band-split .band-split { grid-template-columns: 1fr; }
+  /* ‎start‎ ולא ‎end‎: ב-RTL ‎start‎ הוא הצד הימני הפיזי, וזה הצד
+     שהתצלום (שיושב ב-‎left‎) מפנה. ‎end‎ הדביק את הטקסט *על* התצלום. */
+  .brand-band-split .brand-band-inner { justify-self: start; max-width: 44ch; }
   /* הוויזואל בצד השמאלי הפיזי, הטקסט בצד ההתחלה — סדר ה-DOM הוא
      טקסט ואז תצלום, וב-RTL זה בדיוק הסדר הזה. */
   .band-split { grid-template-columns: 1.12fr 0.88fr; gap: clamp(2.5rem, 1.5rem + 2.5vw, 4rem); }
@@ -874,6 +960,19 @@
   .band-object { max-width: 480px; }
 }
 @media (max-width: 899px) {
+  /* במסך צר אין רוחב לשני טורים: התצלום הוא רצועה עליונה שדוהה
+     כלפי מטה אל הנייבי, והטקסט מתחתיה. הריפוד העליון קטן מגובה
+     הרצועה, וההפרש הוא בדיוק האזור שבו הדהייה קורית. */
+  /* ‎.brand-band.brand-band-split‎ — הכלל הכללי ‎.brand-band.on-dark‎
+     קובע ‎padding-block‎ בספציפיות 0,2,0 וניצח, כך שהריפוד לא חל
+     והטקסט נשאר על התצלום. */
+  .brand-band.brand-band-split { padding-block-start: 264px; }
+  .band-photo-bleed { inset-inline: 0; inset-block-start: 0; height: 300px; }
+  .band-photo-bleed::after {
+    background:
+      linear-gradient(to bottom, rgba(7, 24, 44, 0.28) 0%, rgba(7, 24, 44, 0.55) 58%,
+                      var(--ink) 96%);
+  }
   /* במסך צר הטקסט קודם והתצלום מתחתיו, מוגבל ברוחב כדי שלא ידחוף
      את הכפתור מחוץ למסך. */
   .brand-band { text-align: center; }
@@ -1166,15 +1265,22 @@
 .footer-list a:hover, .site-footer a:not(.btn):hover { color: #fff; }
 .footer-contact li { display: grid; grid-template-columns: 24px 1fr; gap: var(--space-xs); align-items: start; }
 .footer-ico { color: var(--gold); opacity: 0.8; padding-top: 2px; }
+/* אייקונים בריבועים קטומים ולא שבבי טקסט עם שמות הרשתות. הקטימה
+   כאן במקומה: זה שדה של שלושה משטחים קטנים וזהים, והצורה היא מה
+   שקושר אותם לשפה. השם נשאר ב-`aria-label` לקוראי מסך. */
 .footer-social { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
 .footer-social li { display: block; }
 .footer-social a {
-  display: inline-block; padding: 0.3rem 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: var(--fs-micro); font-weight: 600;
-  transition: border-color var(--transition), color var(--transition);
+  --n: 10px; --n-w: 1px; --n-line: rgba(255, 255, 255, 0.22);
+  display: grid; place-items: center; width: 40px; height: 40px;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: color var(--transition), background-color var(--transition);
 }
-.footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+.footer-social a:hover {
+  --n-line: var(--gold);
+  color: var(--gold); background-color: rgba(216, 180, 90, 0.12);
+}
 
 .footer-disclaimer {
   margin-top: var(--space-2xl);
@@ -1415,26 +1521,9 @@
 /* ראש "מכאן ממשיכים כך": כותרת ותצלום זה לצד זה, ומתחתיהם
    ארבעת השלבים. הרווח כאן הוא מה שהיה קודם על ה-wide-media. */
 .contact-next-head { margin-bottom: var(--space-xl); }
-.contact-cards { display: grid; gap: var(--space-md); margin: 0; }
-@media (min-width: 620px) { .contact-cards { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1000px) { .contact-cards { grid-template-columns: repeat(4, 1fr); } }
-.contact-card {
-  display: grid; gap: 0.2rem;
-  padding: var(--space-lg);
-  background: var(--surface); border: var(--hairline); border-radius: var(--radius);
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-.contact-card:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
-.contact-card-icon {
-  display: grid; place-items: center; width: 42px; height: 42px;
-  margin-bottom: var(--space-xs);
-  background: var(--accent-soft); color: var(--accent-strong);
-}
-.contact-card-label {
-  font-size: var(--fs-micro); font-weight: 700; letter-spacing: 0.1em; color: var(--text-muted);
-}
-.contact-card-value { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; color: var(--text); text-decoration: none; }
-a.contact-card-value:hover { color: var(--brand); text-decoration: underline; }
+/* ⚠️  ‎.contact-cards‎ / ‎.contact-card‎ הוסרו יחד עם הרצועה בראש
+   עמוד יצירת הקשר. אותן ארבע העובדות מופיעות ברשימה שלצד הטופס,
+   ואותו מידע פעמיים במסך אחד לא מחזק אותו. */
 
 /* שורת כפתורים מחוץ להיררו (עמוד 404, עמודי תוכן) */
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-md); }

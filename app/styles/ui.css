@@ -291,7 +291,17 @@
   display: grid; gap: var(--space-md);
   padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
   background-color: var(--bg);
-  color: var(--text); box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg);
+  /* ⚠️  הטופס הוא אי בהיר בתוך סקשן ‎.on-dark‎, ולכן הוא **מאפס**
+     את משתני הצבע ולא יורש אותם. קודם היה כאן ‎color: var(--text)‎,
+     ו-‎--text‎ בתוך ‎.on-dark‎ הוא לבן — כלומר כל טקסט בטופס שלא קיבל
+     צבע מפורש היה לבן על לבן. כותרת הטופס אכן נעלמה (יחס 1:1).
+     איפוס המשתנים פותר את זה לכל צאצא, גם עתידי. */
+  --text: #0B1B2E;
+  --text-muted: #4A5B70;
+  --border: #DFE6EF;
+  --surface: #ffffff;
+  color: var(--text);
   border-top: 3px solid var(--accent);
 }
 .contact-form .form-title { font-size: var(--fs-h3); }

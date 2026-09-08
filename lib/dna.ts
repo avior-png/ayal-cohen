@@ -12,6 +12,13 @@ export interface NavItem {
   section?: SectionKey;
 }
 
+/** רשת חברתית. `key` בוחר את האייקון — ראה components/site/SocialIcon.tsx. */
+export interface SocialLink {
+  key: 'linkedin' | 'facebook' | 'youtube' | 'instagram' | 'whatsapp';
+  label: string;
+  href: string;
+}
+
 export interface DnaColors {
   brand: string; brandStrong: string; brandSoft: string;
   /** זהב קישוטי על משטח בהיר — קווים, אייקונים, מסגרות. סף 3:1. */
@@ -43,7 +50,7 @@ export interface Dna {
     legalName: string; companyId: string;
     phone: string; phoneHref: string; whatsapp: string | null;
     email: string; address: string; hours: string;
-    social: NavItem[];
+    social: SocialLink[];
   };
   accessibility: {
     level: 'A' | 'AA' | 'AAA';
