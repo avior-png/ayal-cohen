@@ -1,8 +1,15 @@
-# בנייה סטטית ופרסום ל-GitHub Pages.
+# בנייה סטטית ופרסום ל-GitHub Pages דרך ענף gh-pages.
 #
-# הכתובת שמתקבלת: https://<owner>.github.io/<repo>/
+# הכתובת: https://<owner>.github.io/<repo>/
 # ה-BASE_PATH נגזר אוטומטית מ-GITHUB_REPOSITORY בתוך
 # scripts/build-static.mjs — אין מה להגדיר ידנית.
+#
+# ⚠️  למה דחיפה לענף ולא ‎actions/deploy-pages‎:
+#     הפעולות הרשמיות קוראות ל-Pages API, ו-GITHUB_TOKEN של ריצת
+#     Actions אינו מורשה **ליצור** את אתר ה-Pages —
+#     "Resource not accessible by integration". דחיפה לענף עוברת
+#     ב-‎contents: write‎ הרגיל, וההגדרה היחידה שנדרשת פעם אחת היא
+#     בחירת הענף ב-Settings → Pages.
 #
 # ⚠️  זו פריסה **סטטית**: אין מערכת ניהול ואין כתיבה למסד, וטופס
 #     יצירת הקשר פותח וואטסאפ עם הפרטים במקום לשמור אותם.
@@ -15,9 +22,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # פרסום אחד בכל רגע; ריצה חדשה לא מבטלת פרסום שכבר התחיל.
 concurrency:
@@ -25,7 +30,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,28 +40,21 @@ jobs:
           node-version: 22
           cache: npm
 
-      # enablement: true מדליק את Pages במאגר אם הוא כבוי,
-      # ולכן אין צורך בשום לחיצה בהגדרות.
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
       # ה-postinstall מריץ prisma generate, שדורש את הסכמה בלבד
       # ולא מסד חי.
       - run: npm ci
 
       - run: npm run build:static
 
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      # קומיט יחיד ללא היסטוריה בכל פרסום: ענף התוצר לא צריך
+      # היסטוריה, והיא הייתה מנפחת את המאגר בכל בנייה.
+      - name: פרסום ל-gh-pages
+        run: |
+          set -e
+          cd out
+          git init -q
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "פרסום מ-${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages
