@@ -127,7 +127,9 @@ export default function ContactCta({
           <p className="form-note">{contactContent.formNote}</p>
 
           <p className="form-status" role="status" aria-live="polite">
-            {state.ok ? 'תודה! הפנייה נקלטה ואיל יחזור אליך בתוך יום עסקים אחד.' : ''}
+            {state.ok
+              ? (state.okMessage ?? 'תודה! הפנייה נקלטה ואיל יחזור אליך בתוך יום עסקים אחד.')
+              : ''}
           </p>
         </form>
       </div>

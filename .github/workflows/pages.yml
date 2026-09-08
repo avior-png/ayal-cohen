@@ -1,0 +1,62 @@
+# בנייה סטטית ופרסום ל-GitHub Pages.
+#
+# הכתובת שמתקבלת: https://<owner>.github.io/<repo>/
+# ה-BASE_PATH נגזר אוטומטית מ-GITHUB_REPOSITORY בתוך
+# scripts/build-static.mjs — אין מה להגדיר ידנית.
+#
+# ⚠️  זו פריסה **סטטית**: אין מערכת ניהול ואין כתיבה למסד, וטופס
+#     יצירת הקשר פותח וואטסאפ עם הפרטים במקום לשמור אותם.
+#     הפריסה המלאה (Vercel + Postgres) מתועדת ב-docs/DEPLOY.md.
+name: Pages
+
+on:
+  push:
+    branches: [claude/trusting-rubin-a6o6ca]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# פרסום אחד בכל רגע; ריצה חדשה לא מבטלת פרסום שכבר התחיל.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # enablement: true מדליק את Pages במאגר אם הוא כבוי,
+      # ולכן אין צורך בשום לחיצה בהגדרות.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      # ה-postinstall מריץ prisma generate, שדורש את הסכמה בלבד
+      # ולא מסד חי.
+      - run: npm ci
+
+      - run: npm run build:static
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -9,6 +9,21 @@ export default function config(phase) {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
   const studioDir = path.join(import.meta.dirname, 'studio');
 
+  /**
+   * ייצוא סטטי — GitHub Pages.
+   *
+   * ⚠️  זו **לא** הפריסה המלאה. באתר סטטי אין שרת, ולכן אין מערכת
+   *     ניהול ואין כתיבה למסד. שני הדברים האלה מטופלים כך:
+   *       • ‎app/admin‎ מוסתר מהניתוב בזמן הבנייה — ראה
+   *         ‎scripts/build-static.mjs‎, שמשנה את שמו ל-‎_admin‎
+   *         (תיקייה שמתחילה בקו תחתון היא פרטית ואינה נתיב).
+   *       • ה-Server Action של הטופס מוחלף בגרסה שפותחת וואטסאפ
+   *         עם הפרטים — ההחלפה למטה.
+   *     הפריסה המלאה (Vercel + Postgres) לא נוגעת בכלום מזה.
+   */
+  const isStatic = process.env.BUILD_STATIC === '1';
+  const enquiryStatic = path.join(import.meta.dirname, 'lib', 'enquiry.static.ts');
+
   // תת-נתיב לאירוח שאינו בשורש הדומיין (GitHub Pages תחת /REPO/, למשל).
   // ריק כברירת מחדל — פריסה רגילה של לקוח יושבת בשורש.
   const basePath = (process.env.BASE_PATH || '').replace(/\/$/, '');
@@ -20,6 +35,7 @@ export default function config(phase) {
     // ושניהם אינם נתמכים בייצוא סטטי. הפריסה היא לשרת Node (Vercel).
     images: { unoptimized: true },
     trailingSlash: true,
+    ...(isStatic ? { output: 'export' } : {}),
     ...(basePath ? { basePath, assetPrefix: basePath } : {}),
 
     // דגל זמן־ריצה. שכבת הגנה שנייה בלבד — ההסרה בפועל היא בהחלפת המודול שלמטה.
@@ -57,6 +73,18 @@ export default function config(phase) {
                 res.request = stub;
               }),
             );
+
+            /* בבנייה סטטית: הטופס עובר מ-Server Action לגרסה שפותחת
+               וואטסאפ. ההחלפה כאן ולא ב-import כדי שקוד האתר לא
+               יידע בכלל באיזו פריסה הוא רץ. */
+            if (isStatic) {
+              cfg.plugins.push(
+                new webpack.NormalModuleReplacementPlugin(
+                  /(^|\/)lib\/enquiry$|^@\/lib\/enquiry$/,
+                  (res) => { res.request = enquiryStatic; },
+                ),
+              );
+            }
             return cfg;
           },
         }),

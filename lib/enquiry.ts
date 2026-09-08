@@ -8,6 +8,12 @@ export interface EnquiryState {
   ok?: boolean;
   error?: string;
   fields?: Partial<Record<'name' | 'phone' | 'email' | 'message', string>>;
+  /**
+   * הודעת ההצלחה, כשהיא שונה מברירת המחדל. הגרסה הסטטית
+   * (‎lib/enquiry.static.ts‎) לא שומרת כלום אלא פותחת וואטסאפ, ואז
+   * "הפנייה נקלטה" הוא פשוט לא נכון.
+   */
+  okMessage?: string;
 }
 
 /** חלון של 15 דקות ו-5 פניות לכתובת IP, כדי לחסום הצפה של הטופס. */

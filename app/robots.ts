@@ -15,7 +15,10 @@ export const dynamic = 'force-static';
  *     של Vercel, ומחוץ ל-Vercel הוא לא קיים ואז אין מה לחסום.
  */
 const isPreview =
-  process.env.VERCEL_ENV !== undefined && process.env.VERCEL_ENV !== 'production';
+  (process.env.VERCEL_ENV !== undefined && process.env.VERCEL_ENV !== 'production')
+  /* פריסת ההדגמה ב-GitHub Pages. ‎scripts/build-static.mjs‎ מדליק את
+     הדגל, ולכן עותק ה-github.io לא נסרק ולא מתחרה בדומיין האמיתי. */
+  || process.env.PAGES_DEMO === '1';
 
 export default function robots(): MetadataRoute.Robots {
   const base = dna.seo.siteUrl.replace(/\/$/, '');
