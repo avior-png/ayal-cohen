@@ -65,6 +65,9 @@ npm run dev                                  # http://localhost:3000/admin
 האתר דורש שרת Node ומסד Postgres — מערכת הניהול קוראת עוגיות וטופס
 יצירת הקשר הוא Server Action. אחסון סטטי בלבד אינו מספיק.
 
+📄 **[`docs/DEPLOY.md`](docs/DEPLOY.md)** — מסלול QA בחמש דקות (בלי מסד),
+המסלול המלא לפרודקשן, ומה לומר לבודקת מראש.
+
 ### Vercel + Neon — המסלול המומלץ
 1. **neon.tech** → Create project → העתקת ה-Connection string
 2. **vercel.com** → Import Git Repository → בחירת המאגר

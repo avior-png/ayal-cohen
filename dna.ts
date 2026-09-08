@@ -140,7 +140,19 @@ export const dna: Dna = {
 
   // ─── SEO ────────────────────────────────────────────────────────────
   seo: {
-    siteUrl: 'https://el-hahon.co.il',
+    /**
+     * כתובת האתר בפרודקשן. ממנה נגזרים ה-canonical, ה-OG ו-sitemap.
+     *
+     * ⚠️  בפריסת QA או Preview הכתובת שונה, ובלי דריסה כל ה-canonical
+     *     וה-OG יצביעו לדומיין שעוד לא באוויר — כלומר הבודקת תראה
+     *     כרטיסי שיתוף ומפת אתר של אתר אחר. שתי הדריסות:
+     *       • ‎NEXT_PUBLIC_SITE_URL‎ — ידנית, קודמת לכל.
+     *       • ‎VERCEL_URL‎ — נקבעת אוטומטית בכל פריסת Vercel.
+     */
+    siteUrl:
+      process.env.NEXT_PUBLIC_SITE_URL
+      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
+      || 'https://el-hahon.co.il',
     titleTemplate: '%s | אל ההון — איל כהן',
     description:
       'איל כהן, מתכנן פרישה וסוכן פנסיוני עם 18 שנות ניסיון, מפקח מקצועי על 250 סוכנים. תכנון פרישה, קיבוע זכויות, תיקון 190 והתאמת תיק פנסיוני — תמונה פיננסית אחת, ברורה.',

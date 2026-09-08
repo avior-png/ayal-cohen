@@ -2,6 +2,7 @@
 
 import { headers } from 'next/headers';
 import { db } from '@/lib/db';
+import { dna } from '@/dna';
 
 export interface EnquiryState {
   ok?: boolean;
@@ -36,15 +37,31 @@ export async function submitEnquiry(_p: EnquiryState, fd: FormData): Promise<Enq
 
   const ip = (await headers()).get('x-forwarded-for')?.split(',')[0]?.trim() ?? null;
 
-  if (ip) {
-    const recent = await db.enquiry.count({
-      where: { ip, createdAt: { gt: new Date(Date.now() - WINDOW_MS) } },
-    });
-    if (recent >= MAX_PER_WINDOW) {
-      return { error: 'התקבלו מכם מספר פניות. נסו שוב בעוד כמה דקות.' };
+  /**
+   * ⚠️  הכתיבה עטופה. בלי העטיפה, מסד שאינו זמין — ‎DATABASE_URL‎
+   *     חסר בפריסת QA, מסד שנרדם, חיבור שנפל — מפיל את ה-Server
+   *     Action בחריגה לא מטופלת, והמשתמש רואה טופס ששלח ולא קרה
+   *     כלום. הודעה מפורשת עם מספר הטלפון היא הדבר היחיד שמציל
+   *     את הפנייה במצב הזה.
+   */
+  try {
+    if (ip) {
+      const recent = await db.enquiry.count({
+        where: { ip, createdAt: { gt: new Date(Date.now() - WINDOW_MS) } },
+      });
+      if (recent >= MAX_PER_WINDOW) {
+        return { error: 'התקבלו מכם מספר פניות. נסו שוב בעוד כמה דקות.' };
+      }
     }
-  }
 
-  await db.enquiry.create({ data: { name, phone, email: email || null, message, ip } });
-  return { ok: true };
+    await db.enquiry.create({ data: { name, phone, email: email || null, message, ip } });
+    return { ok: true };
+  } catch (err) {
+    console.error('[enquiry] שמירת הפנייה נכשלה', err);
+    return {
+      error:
+        'לא הצלחנו לשמור את הפנייה כרגע. אפשר להתקשר ישירות אל '
+        + `${dna.identity.phone}, ונחזור אליכם.`,
+    };
+  }
 }
