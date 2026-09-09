@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="איור מאמר">
+  <defs>
+    <linearGradient id="b2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#123B62"/><stop offset="1" stop-color="#07182C"/></linearGradient>
+    <pattern id="p2" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0V60M0 60H60" fill="none" stroke="#fff" stroke-opacity="0.05"/></pattern>
+  </defs>
+  <rect width="1200" height="750" fill="url(#b2)"/><rect width="1200" height="750" fill="url(#p2)"/>
+  <g transform="translate(600 375)" fill="none" stroke-linecap="round">
+    <circle r="272" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1.5"/>
+    <circle r="206" stroke="#ffffff" stroke-opacity="0.13" stroke-width="1.5"/>
+    <circle r="140" stroke="#ffffff" stroke-opacity="0.17" stroke-width="1.5"/>
+    <path d="M0-272A272 272 0 0 1 236 136" stroke="#E7C879" stroke-width="5"/>
+    <path d="M0-206A206 206 0 0 1 178-103" stroke="#B0801F" stroke-width="4"/>
+    <path d="M0-140A140 140 0 0 1 121 70" stroke="#E7C879" stroke-width="3" stroke-opacity="0.7"/>
+    <circle cx="0" cy="0" r="16" fill="#E7C879" stroke="none"/>
+    <path d="M0 0 236 136" stroke="#E7C879" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="2 12"/>
+  </g>
+</svg>
