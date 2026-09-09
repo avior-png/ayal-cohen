@@ -66,7 +66,7 @@ export async function submitEnquiry(_p: EnquiryState, fd: FormData): Promise<Enq
   return {
     ok: true,
     okMessage: wa
-      ? 'נפתח וואטסאפ עם הפרטים — נשאר רק ללחוץ שליחה.'
-      : 'נפתחה טיוטת מייל עם הפרטים — נשאר רק לשלוח.',
+      ? 'נפתח וואטסאפ עם הפרטים - נשאר רק ללחוץ שליחה.'
+      : 'נפתחה טיוטת מייל עם הפרטים - נשאר רק לשלוח.',
   };
 }

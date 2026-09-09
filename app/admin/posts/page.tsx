@@ -45,7 +45,7 @@ export default async function PostsPage() {
                     <th scope="row" style={{ fontWeight: 600, color: 'var(--text)' }}>
                       <Link href={`/admin/posts/${p.id}`}>{p.title}</Link>
                     </th>
-                    <td>{p.category ?? '—'}</td>
+                    <td>{p.category ?? '-'}</td>
                     <td>
                       <span className={`adm-pill ${p.status === 'PUBLISHED' ? 'adm-pill-published' : 'adm-pill-draft'}`}>
                         {p.status === 'PUBLISHED' ? 'מפורסם' : 'טיוטה'}

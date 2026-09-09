@@ -121,7 +121,7 @@ export default function ContactCta({
           </div>
 
           <button type="submit" className="btn btn-primary btn-block" disabled={pending}>
-            {pending ? 'שולח…' : 'שליחה — ונחזור אליך'}
+            {pending ? 'שולח…' : 'שליחה - ונחזור אליך'}
           </button>
 
           <p className="form-note">{contactContent.formNote}</p>

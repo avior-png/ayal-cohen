@@ -47,7 +47,7 @@ export default function TwoFactor({
           <form action={offAction} className="adm-form" style={{ maxWidth: 340 }}>
             {offState.error && <p className="adm-alert adm-alert-error" role="alert">{offState.error}</p>}
             <div className="adm-field">
-              <label htmlFor="off-code">כיבוי האימות — נדרש קוד מהאפליקציה</label>
+              <label htmlFor="off-code">כיבוי האימות - נדרש קוד מהאפליקציה</label>
               <input id="off-code" name="code" inputMode="numeric" maxLength={6} required />
             </div>
             <button type="submit" className="adm-btn adm-btn-danger" disabled={disabling}>

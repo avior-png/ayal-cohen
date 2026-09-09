@@ -54,7 +54,7 @@ export default async function EnquiriesPage() {
                         <input type="hidden" name="id" value={e.id} />
                         <button type="submit" className="adm-btn" style={{ minHeight: 34 }}>
                           {e.handled ? 'סימון כלא טופלה' : 'סימון כטופלה'}
-                          <span className="visually-hidden"> — פנייה מאת {e.name}</span>
+                          <span className="visually-hidden"> - פנייה מאת {e.name}</span>
                         </button>
                       </form>
                     </td>

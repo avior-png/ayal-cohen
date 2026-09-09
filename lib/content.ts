@@ -131,7 +131,7 @@ export async function saveService(_p: FormResult, fd: FormData): Promise<FormRes
   const title = str(fd, 'title');
   const summary = str(fd, 'summary');
   if (!title) return { error: 'כותרת היא שדה חובה.' };
-  if (!summary) return { error: 'תיאור קצר הוא שדה חובה — הוא מה שמופיע בכרטיס.' };
+  if (!summary) return { error: 'תיאור קצר הוא שדה חובה - הוא מה שמופיע בכרטיס.' };
 
   const data = {
     title, summary,

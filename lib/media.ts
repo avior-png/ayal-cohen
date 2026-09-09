@@ -35,7 +35,7 @@ export async function uploadMedia(_p: UploadResult, fd: FormData): Promise<Uploa
   const alt = String(fd.get('alt') ?? '').trim();
 
   if (!(file instanceof File) || file.size === 0) return { error: 'לא נבחר קובץ.' };
-  if (!alt) return { error: 'טקסט חלופי הוא שדה חובה — בלעדיו התמונה אינה נגישה.' };
+  if (!alt) return { error: 'טקסט חלופי הוא שדה חובה - בלעדיו התמונה אינה נגישה.' };
   if (alt.length < 3) return { error: 'הטקסט החלופי קצר מדי. תארי מה רואים בתמונה.' };
   if (file.size > MAX_BYTES) return { error: 'הקובץ גדול מ-8MB.' };
 

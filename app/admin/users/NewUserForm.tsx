@@ -14,7 +14,7 @@ export default function NewUserForm() {
         <div className="adm-alert adm-alert-ok" role="status" style={{ display: 'grid', gap: 8 }}>
           <span>המשתמש {state.createdEmail} נוצר.</span>
           <span>
-            <strong>סיסמה ראשונית — מוצגת פעם אחת בלבד:</strong>
+            <strong>סיסמה ראשונית - מוצגת פעם אחת בלבד:</strong>
           </span>
           <code className="adm-secret">{state.tempPassword}</code>
           <span>
@@ -38,8 +38,8 @@ export default function NewUserForm() {
           <div className="adm-field">
             <label htmlFor="u-role">תפקיד</label>
             <select id="u-role" name="role" defaultValue="SITE_EDITOR" aria-describedby="u-role-hint">
-              <option value="SITE_EDITOR">עורך תוכן — הלקוח</option>
-              <option value="ADMIN">מנהל — גישה מלאה</option>
+              <option value="SITE_EDITOR">עורך תוכן - הלקוח</option>
+              <option value="ADMIN">מנהל - גישה מלאה</option>
             </select>
             <p id="u-role-hint" className="adm-hint">
               עורך תוכן יכול לערוך תוכן בלבד: לא קוד, לא תוספים, לא משתמשים.

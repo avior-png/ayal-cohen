@@ -51,7 +51,7 @@ export default async function Dashboard({
       {!needs2fa?.totpEnabledAt && (
         <p className="adm-alert adm-alert-info">
           האימות הדו-שלבי אינו פעיל בחשבון שלך.{' '}
-          <Link href="/admin/security">להפעלה</Link> — לוקח דקה ומגן על האתר.
+          <Link href="/admin/security">להפעלה</Link> - לוקח דקה ומגן על האתר.
         </p>
       )}
 
@@ -67,9 +67,9 @@ export default async function Dashboard({
       <section className="adm-card">
         <h2 className="adm-card-title">מאיפה מתחילים</h2>
         <ul style={{ display: 'grid', gap: 'var(--space-xs)', paddingInlineStart: '1.2rem', color: 'var(--text-muted)' }}>
-          <li><Link href="/admin/settings">הגדרות האתר</Link> — שם העסק, פרטי קשר והטקסטים של עמוד הבית</li>
-          <li><Link href="/admin/media">תמונות</Link> — העלאה לספרייה. לכל תמונה חובה טקסט חלופי</li>
-          <li><Link href="/admin/posts">מאמרים</Link> — כתיבה ופרסום</li>
+          <li><Link href="/admin/settings">הגדרות האתר</Link> - שם העסק, פרטי קשר והטקסטים של עמוד הבית</li>
+          <li><Link href="/admin/media">תמונות</Link> - העלאה לספרייה. לכל תמונה חובה טקסט חלופי</li>
+          <li><Link href="/admin/posts">מאמרים</Link> - כתיבה ופרסום</li>
         </ul>
       </section>
     </Shell>

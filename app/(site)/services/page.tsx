@@ -61,7 +61,7 @@ export default async function ServicesPage() {
                         <p className="service-row-text">{item.text}</p>
                         <Link className="arrow-link" href={row ? `/services/${row.id}` : '/contact'}>
                           {row ? 'לפרטי השירות' : 'לשיחה בנושא הזה'}
-                          <span className="visually-hidden"> — {item.title}</span>
+                          <span className="visually-hidden"> - {item.title}</span>
                         </Link>
                       </div>
                     </div>

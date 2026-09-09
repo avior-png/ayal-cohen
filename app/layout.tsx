@@ -10,7 +10,7 @@ import { dnaCss, dnaFontsHref } from '@/lib/dna';
 export const metadata: Metadata = {
   metadataBase: new URL(dna.seo.siteUrl),
   title: {
-    default: `${dna.brand.name} — ${dna.brand.tagline}`,
+    default: `${dna.brand.name} - ${dna.brand.tagline}`,
     template: dna.seo.titleTemplate,
   },
   description: dna.seo.description,
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: dna.seo.locale,
     siteName: dna.brand.name,
-    title: `${dna.brand.name} — ${dna.brand.tagline}`,
+    title: `${dna.brand.name} - ${dna.brand.tagline}`,
     description: dna.seo.description,
     /* בלי ‎asset()‎: Next מצרף את ה-basePath למטא-דאטה בעצמו,
        וקריאה נוספת הכפילה אותו — ‎/ayal-cohen/ayal-cohen/images/og.jpg‎. */

@@ -10,7 +10,7 @@ import { posts as seed } from '@/content/site';
 
 export const metadata: Metadata = {
   title: 'מאמרים',
-  description: 'קיבוע זכויות, תיקון 190, מסלולי השקעה והעברת קופות — המושגים שחוזרים בכל שיחה על פרישה, מוסברים בפשטות.',
+  description: 'קיבוע זכויות, תיקון 190, מסלולי השקעה והעברת קופות - המושגים שחוזרים בכל שיחה על פרישה, מוסברים בפשטות.',
 };
 
 const fmt = (d: Date) => new Intl.DateTimeFormat('he-IL', { dateStyle: 'long' }).format(d);

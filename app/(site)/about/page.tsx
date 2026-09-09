@@ -11,7 +11,7 @@ import ContactCta from '@/components/site/ContactCta';
 export const metadata: Metadata = {
   title: 'אודות איל כהן',
   description:
-    'איל כהן — מתכנן פרישה וסוכן פנסיוני, 18 שנות ניסיון בענף הפיננסי ומפקח מקצועי על 250 סוכנים. הרקע, ההכשרות ושיטת העבודה.',
+    'איל כהן - מתכנן פרישה וסוכן פנסיוני, 18 שנות ניסיון בענף הפיננסי ומפקח מקצועי על 250 סוכנים. הרקע, ההכשרות ושיטת העבודה.',
 };
 
 export default async function AboutPage() {

@@ -10,7 +10,7 @@ import { contactAction, contactImage, process as processContent } from '@/conten
 export const metadata: Metadata = {
   title: 'יצירת קשר',
   description:
-    'שיחת אבחון ראשונה עם איל כהן — ללא עלות ובלי התחייבות. משאירים פרטים וחוזרים אליכם תוך יום עסקים אחד.',
+    'שיחת אבחון ראשונה עם איל כהן - ללא עלות ובלי התחייבות. משאירים פרטים וחוזרים אליכם תוך יום עסקים אחד.',
 };
 
 export default async function ContactPage() {
@@ -47,7 +47,7 @@ export default async function ContactPage() {
                 <p className="eyebrow">{processContent.eyebrow}</p>
                 <h2 id="next-title" className="section-title">מכאן ממשיכים כך</h2>
                 <p className="section-lead">
-                  ארבעה שלבים. הראשון הוא כמה שאלות קצרות, והשני הוא שיחה —
+                  ארבעה שלבים. הראשון הוא כמה שאלות קצרות, והשני הוא שיחה -
                   בזום או פנים אל פנים, מה שנוח לך.
                 </p>
               </div>

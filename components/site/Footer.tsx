@@ -21,7 +21,7 @@ export default function Footer({ site }: { site: SiteContent['site'] }) {
         <div className="footer-top">
           <p className="footer-cta-text">
             רוצה לדעת איפה אתה עומד? <br />
-            <span className="accent">שיחת אבחון ראשונה — ללא עלות.</span>
+            <span className="accent">שיחת אבחון ראשונה - ללא עלות.</span>
           </p>
           <div className="footer-cta-actions">
             <a className="btn btn-gold" href={asset('/contact')}>

@@ -62,8 +62,8 @@ export function StatusField({ value }: { value?: string }) {
     <div className="adm-field">
       <label htmlFor="f-status">מצב פרסום</label>
       <select id="f-status" name="status" defaultValue={value ?? 'DRAFT'}>
-        <option value="DRAFT">טיוטה — לא מוצג באתר</option>
-        <option value="PUBLISHED">מפורסם — מוצג באתר</option>
+        <option value="DRAFT">טיוטה - לא מוצג באתר</option>
+        <option value="PUBLISHED">מפורסם - מוצג באתר</option>
       </select>
     </div>
   );
@@ -80,8 +80,8 @@ export function MediaPicker({
     <div className="adm-field">
       <label htmlFor={id}>{label}</label>
       <select id={id} name={name} defaultValue={value ?? ''} aria-describedby={`${id}-hint`}>
-        <option value="">— ללא תמונה —</option>
-        {media.map((m) => <option key={m.id} value={m.id}>{m.filename} — {m.alt}</option>)}
+        <option value="">- ללא תמונה -</option>
+        {media.map((m) => <option key={m.id} value={m.id}>{m.filename} - {m.alt}</option>)}
       </select>
       <p id={`${id}-hint`} className="adm-hint">
         {hint ?? 'תמונות מגיעות מספריית התמונות. להעלאה חדשה: עמוד "תמונות".'}

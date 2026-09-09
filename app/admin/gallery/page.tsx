@@ -49,7 +49,7 @@ export default async function GalleryPage({
               <figure key={i.id} className="adm-media-item" style={{ margin: 0 }}>
                 <img src={i.image.path} alt={i.image.alt} loading="lazy" />
                 <figcaption className="adm-media-meta">
-                  <strong>{i.title ?? '—'}</strong>
+                  <strong>{i.title ?? '-'}</strong>
                   <span className={`adm-pill ${i.status === 'PUBLISHED' ? 'adm-pill-published' : 'adm-pill-draft'}`}>
                     {i.status === 'PUBLISHED' ? 'מפורסם' : 'טיוטה'}
                   </span>

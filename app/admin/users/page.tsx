@@ -8,7 +8,7 @@ import NewUserForm from './NewUserForm';
 export const dynamic = 'force-dynamic';
 
 const fmt = (d: Date | null) =>
-  d ? new Intl.DateTimeFormat('he-IL', { dateStyle: 'short', timeStyle: 'short' }).format(d) : '—';
+  d ? new Intl.DateTimeFormat('he-IL', { dateStyle: 'short', timeStyle: 'short' }).format(d) : '-';
 
 export default async function UsersPage() {
   const admin = await requireAdmin();
@@ -20,7 +20,7 @@ export default async function UsersPage() {
         <div>
           <h1 className="adm-h1">משתמשים</h1>
           <p className="adm-sub">
-            {users.length} משתמשים. אין הרשמה עצמית — משתמש נפתח מכאן בלבד.
+            {users.length} משתמשים. אין הרשמה עצמית - משתמש נפתח מכאן בלבד.
           </p>
         </div>
       </div>
