@@ -12,4 +12,6 @@ preview.html
 .env
 app/studio-baked.css
 .fin.mjs
+.srv.mjs
 out/
+.ovf*.mjs
